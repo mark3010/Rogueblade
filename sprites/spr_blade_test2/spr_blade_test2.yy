@@ -23,7 +23,7 @@
     {"resourceType":"GMImageLayer","resourceVersion":"1.0","name":"fdd3dbfb-aa73-4e11-9289-da9f6890b7f6","blendMode":0,"displayName":"default","isLocked":false,"opacity":100.0,"visible":true,},
   ],
   "nineSlice": null,
-  "origin": 9,
+  "origin": 4,
   "parent": {
     "name": "blade",
     "path": "folders/Sprites/blade.yy",
@@ -60,7 +60,7 @@
     "visibleRange": null,
     "volume": 1.0,
     "xorigin": 18,
-    "yorigin": 34,
+    "yorigin": 18,
   },
   "swatchColours": null,
   "swfPrecision": 2.525,

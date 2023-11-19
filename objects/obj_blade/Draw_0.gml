@@ -22,5 +22,6 @@ if global.debugMode {
 	//velocity vector
 	draw_text(x,y,"velocity: "+string(velVector))
 	draw_text(x,y+10,"drag: "+string(dragVector))
+	draw_text(x,y+20,"hitcounter: "+string(cooldown))
 
 }
