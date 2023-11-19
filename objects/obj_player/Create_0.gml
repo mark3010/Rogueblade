@@ -4,5 +4,4 @@
 event_inherited()
 
 //MOVEMENT
-
-moveVel = [0,0]
+acc = .5

@@ -1,2 +1,2 @@
-x += envVel[@ X] + moveVel[@ X]
-y += envVel[@ Y] + moveVel[@ Y]
+x += vel[@ X]// + moveVel[@ X]
+y += vel[@ Y]// + moveVel[@ Y]

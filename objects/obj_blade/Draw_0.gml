@@ -20,6 +20,7 @@ if global.debugMode {
 	draw_circle(arenaBaseX,arenaBaseY,3,true)
 	
 	//velocity vector
-	//draw_line(x,y,x+vel[@ X]*10,y+vel[@ Y]*10)
+	draw_text(x,y,"velocity: "+string(velVector))
+	draw_text(x,y+10,"drag: "+string(dragVector))
 
 }

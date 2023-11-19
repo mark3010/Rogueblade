@@ -31,6 +31,7 @@ if global.debugMode {
 		draw_text(-xpos+gw,ypos+lineDist+shadowDist,"debugMode")
 	
 		// BLADE VARIABLES
+		/*
 		if instance_exists(obj_blade) {
 			var blade = obj_blade
 			draw_set_halign(fa_left)
@@ -39,9 +40,9 @@ if global.debugMode {
 			//draw_text(blade.x+20,blade.y-40,"vel vec:" + string(blade.vel))
 			draw_text(blade.x+20,blade.y-30,"onSlope:" + string(blade.onSlope))
 			draw_text(blade.x+20,blade.y-20,"onBorder:" + string(blade.onBorder))
-		}
+		}*/
 	
-		draw_text(device_mouse_x_to_gui( 0 )+15,device_mouse_y_to_gui( 0 ),"mouseX to gui: " + string(device_mouse_x_to_gui( 0 )))
-		draw_text(device_mouse_x_to_gui( 0 )+15,device_mouse_y_to_gui( 0 )+10,"mouseY to gui: " + string(device_mouse_y_to_gui( 0 )))
+		//draw_text(device_mouse_x_to_gui( 0 )+15,device_mouse_y_to_gui( 0 ),"mouseX to gui: " + string(device_mouse_x_to_gui( 0 )))
+		//draw_text(device_mouse_x_to_gui( 0 )+15,device_mouse_y_to_gui( 0 )+10,"mouseY to gui: " + string(device_mouse_y_to_gui( 0 )))
 	}
 }

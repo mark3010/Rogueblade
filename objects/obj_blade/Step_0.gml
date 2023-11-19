@@ -19,10 +19,8 @@ if onSlope {
 	var dist = point_distance(arenaFlatBorderX,arenaFlatBorderY,arenaSlopedBorderX,arenaSlopedBorderY)
 	var dir = point_direction(arenaFlatBorderX,arenaFlatBorderY,arenaSlopedBorderX,arenaSlopedBorderY)
 	
-	envVel[@ X] -= lengthdir_x(dist,dir)/150 * slantH
-	envVel[@ Y] -= lengthdir_y(dist,dir)/150 * slantV
-	
-
+	vel[@ X] -= lengthdir_x(dist,dir)/150 * slantH
+	vel[@ Y] -= lengthdir_y(dist,dir)/150 * slantV
 }
 
 //CORRECT POSITION TO INSIDE ARENA
@@ -33,3 +31,21 @@ if (x > arenaSlopedBorderX || x < arenaSlopedBorderX) {
 if (y > arenaSlopedBorderY || y < arenaSlopedBorderY) {
 	y = arenaSlopedBorderY
 }
+
+
+
+//DRAG
+//drag only applies to the speed of the blade above the velMax threshold
+if velVector > velMax {
+	surplusVector = velVector / velMax
+	
+	velXSurplus = vel[X] * (surplusVector - 1)
+	velYSurplus = vel[Y] * (surplusVector - 1)
+	
+	vel[X] -= velXSurplus*dragStrength
+	vel[Y] -= velYSurplus*dragStrength
+}
+
+//CALCULATE BLADE PHYSICAL ATTRIBUTES
+velVector = point_distance(0,0,vel[X],vel[Y])
+dragVector = point_distance(0,0,-velXSurplus*dragStrength,-velYSurplus*dragStrength)
