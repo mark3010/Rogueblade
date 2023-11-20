@@ -1,5 +1,7 @@
 // PRECALC
 scr_bladeArenaSync()
+
+cooldownsCalculate()
 // variables provided:
 	// inits objArena
 	// inits "arenaBaseX", "arenaFlatBorderX", "arenaSlopedBorderX" vars. Same for Y
@@ -32,8 +34,6 @@ if (y > arenaSlopedBorderY || y < arenaSlopedBorderY) {
 	y = arenaSlopedBorderY
 }
 
-
-
 //DRAG
 //drag only applies to the speed of the blade above the velMax threshold
 if velVector > velMax {
@@ -46,6 +46,6 @@ if velVector > velMax {
 	vel[Y] -= velYSurplus*dragStrength
 }
 
-//CALCULATE BLADE PHYSICAL ATTRIBUTES
+//CALCULATE BLADE KINETIC ATTRIBUTES
 velVector = point_distance(0,0,vel[X],vel[Y])
 dragVector = point_distance(0,0,-velXSurplus*dragStrength,-velYSurplus*dragStrength)

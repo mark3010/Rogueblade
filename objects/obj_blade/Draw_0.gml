@@ -19,9 +19,20 @@ if global.debugMode {
 	draw_set_color(c_blue)
 	draw_circle(arenaBaseX,arenaBaseY,3,true)
 	
-	//velocity vector
-	draw_text(x,y,"velocity: "+string(velVector))
-	draw_text(x,y+10,"drag: "+string(dragVector))
-	draw_text(x,y+20,"hitcounter: "+string(cooldown))
+	//blade info
+	draw_set_color(c_black)
+	draw_set_halign(fa_left)
+	draw_text(x+40,y,"--INSTANCE ID: "+string(instanceId) +"--")
+	draw_text(x+40,y+10,"velocity: "+string(velVector))
+	draw_text(x+40,y+20,"drag: "+string(dragVector))
+	
+	var j = 0
+	draw_text(x+40,y+40,"--COLLISION LIST--")
+	for (var k = ds_map_find_first(cooldownMap); !is_undefined(k); k = ds_map_find_next(cooldownMap, k)) {
+		j+=10
+		var v = cooldownMap[? k];
+		draw_text(x+40,y+40+j,"key: " + string(k) + " value: "+string(v))
+	}
 
 }
+

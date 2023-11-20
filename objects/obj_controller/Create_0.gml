@@ -4,6 +4,8 @@ global.debugMode = -1
 // RENDER VARIABLES
 global.renderSize = 1
 
+global.instanceIDCounter = 0
+
 //ROOM INSTANTIATION ORDER
 
 	//calculate placement

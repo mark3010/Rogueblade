@@ -24,7 +24,6 @@ repeat(2) { // draws right side, flips to draw left
 	draw_rectangle(x,y-baseRadius,x+baseWidth*flip,y+baseRadius,false)
 	draw_circle(x+baseWidth*flip,y,baseRadius,false)
 		
-		
 	// flat area of arena
 	draw_set_color(c_red)
 	draw_rectangle(x,y-flatRadius,x+baseWidth*flip,y+flatRadius,false)

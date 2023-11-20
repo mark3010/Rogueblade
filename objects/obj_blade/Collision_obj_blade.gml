@@ -1,25 +1,31 @@
 /// @description Insert description here
 // You can write your code in this editor
 
+if cooldownInstanceExists(other.instanceId) == undefined {
+	//collision calculation
+	reflectionVector = -point_direction(x,y,other.x,other.y)
+	var collisionTimer = 5
+	var reflectStrength = 6
+	var velDump = 0.5
 
-//vel = other.vel
+	//me
+	cooldownInstanceAdd(cooldownMap,other.instanceId,collisionTimer)
+	vel[X] *= velDump
+	vel[Y] *= velDump
+	vel[X] -= lengthdir_x(reflectStrength,reflectionVector)
+	vel[Y] += lengthdir_y(reflectStrength,reflectionVector)
+	
+	//other
+	cooldownInstanceAdd(other.cooldownMap,instanceId,collisionTimer)
+	other.vel[X] *= velDump
+	other.vel[Y] *= velDump
+	other.vel[X] += lengthdir_x(reflectStrength,reflectionVector)
+	other.vel[Y] -= lengthdir_y(reflectStrength,reflectionVector)
+	
+	if global.debugMode {
+		show_debug_message("--COLLISION--")
+		show_debug_message("between: "+string(other.instanceId) + " and: "+string(instanceId) )
+		show_debug_message("----")
+	}
+}
 
-//vel[X] = -vel[X]
-//vel[Y] = -vel[Y]
-
-
-reflectionVector = -point_direction(x,y,other.x,other.y)
-var reflectStrength = 6
-var velDump = 0.5
-
-vel[X] *= velDump
-vel[Y] *= velDump
-other.vel[X] *= velDump
-other.vel[Y] *= velDump
-
-vel[X] += lengthdir_x(reflectStrength,reflectionVector)
-vel[Y] += lengthdir_y(reflectStrength,reflectionVector)
-other.vel[X] -= lengthdir_x(reflectStrength,reflectionVector)
-other.vel[Y] -= lengthdir_y(reflectStrength,reflectionVector)
-
-cooldown += 1

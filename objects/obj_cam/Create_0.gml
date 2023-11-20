@@ -8,7 +8,7 @@ stick
 
 state = cam_state.pan //default
 
-panPoint = 20 // 1/panPoint distance between arena and target // PAN STATE ONLY
+panPoint = 5 // 1/panPoint distance between arena and target // PAN STATE ONLY
 
 //VARIABLES
 camWidth = 960
