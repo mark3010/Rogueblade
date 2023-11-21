@@ -1,7 +1,14 @@
 {
-  "FolderOrderSettings": [],
+  "FolderOrderSettings": [
+    {"name":"text","order":5,"path":"folders/Scripts/text.yy",},
+    {"name":"ui","order":1,"path":"folders/Sprites/ui.yy",},
+    {"name":"kinetics","order":3,"path":"folders/Scripts/blade/kinetics.yy",},
+    {"name":"stats","order":4,"path":"folders/Scripts/blade/stats.yy",},
+  ],
   "ResourceOrderSettings": [
     {"name":"spr_test_gui","order":2,"path":"sprites/spr_test_gui/spr_test_gui.yy",},
+    {"name":"font_silkscreen","order":1,"path":"fonts/font_silkscreen/font_silkscreen.yy",},
+    {"name":"spr_healthbar11","order":1,"path":"sprites/spr_healthbar11/spr_healthbar11.yy",},
     {"name":"obj_controller","order":2,"path":"objects/obj_controller/obj_controller.yy",},
     {"name":"obj_arena","order":1,"path":"objects/obj_arena/obj_arena.yy",},
     {"name":"obj_gui","order":4,"path":"objects/obj_gui/obj_gui.yy",},

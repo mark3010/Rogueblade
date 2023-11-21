@@ -1,7 +1,10 @@
 /// @description Insert description here
 // You can write your code in this editor
-
 if cooldownInstanceExists(other.instanceId) == undefined {
+	//damage calculation
+	currentLife--
+	other.currentLife--
+
 	//collision calculation
 	reflectionVector = -point_direction(x,y,other.x,other.y)
 	var collisionTimer = 5
@@ -21,11 +24,5 @@ if cooldownInstanceExists(other.instanceId) == undefined {
 	other.vel[Y] *= velDump
 	other.vel[X] += lengthdir_x(reflectStrength,reflectionVector)
 	other.vel[Y] -= lengthdir_y(reflectStrength,reflectionVector)
-	
-	if global.debugMode {
-		show_debug_message("--COLLISION--")
-		show_debug_message("between: "+string(other.instanceId) + " and: "+string(instanceId) )
-		show_debug_message("----")
-	}
 }
 

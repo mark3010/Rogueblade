@@ -5,7 +5,7 @@
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "blade scripts",
-    "path": "folders/Scripts/blade scripts.yy",
+    "name": "kinetics",
+    "path": "folders/Scripts/blade/kinetics.yy",
   },
 }

@@ -25,18 +25,9 @@ if (move_up || move_down) {
 dir = point_direction(0,0,dirX,dirY);
 
 if (move_right || move_left) {
-	//if (moveVel[@ X] < spd) && (moveVel[@ X] > -spd) {
 		vel[@ X] += lengthdir_x(acc,dir);
-	//}
-
-} else {
-	//moveVel[@ X] = lerp(moveVel[@ X],0,fric);
 }
 
 if (move_up || move_down) {
-	//if (moveVel[@ Y] < spd) && (moveVel[@ Y] > -spd) {
 		vel[@ Y] += lengthdir_y(acc,dir);
-	//}
-} else {
-	//moveVel[@ Y] = lerp(moveVel[@ Y],0,fric);
 }

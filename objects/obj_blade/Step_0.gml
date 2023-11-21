@@ -1,11 +1,11 @@
 // PRECALC
 scr_bladeArenaSync()
-
-cooldownsCalculate()
 // variables provided:
-	// inits objArena
+	// inits objArena sync
 	// inits "arenaBaseX", "arenaFlatBorderX", "arenaSlopedBorderX" vars. Same for Y
 	// inits onSlope, onBorder vars
+
+cooldownsCalculate()
 
 //FORCES APPLIED
 if onSlope {

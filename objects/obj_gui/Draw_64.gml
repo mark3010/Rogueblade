@@ -5,6 +5,54 @@ var lineDist = 15
 var xpos = 10
 var ypos = -10
 
+if !surface_exists(healthSurf) {
+	healthSurf = surface_create(healthWidth,healthHeight)
+}
+
+//DRAW HEALTHBAR
+if instance_exists(obj_player) {
+	if obj_player.currentLife > healthAnim {
+		healingAnim = 1
+	} else {
+		healingAnim = lerp(0,healingAnim,.9)
+	}
+	
+	if obj_player.currentLife >= healthAnim {
+		healthAnim = obj_player.currentLife;
+	} else {
+		healthAnim -= healthAnimSpeed
+	}
+
+	var playerLifeScale = (obj_player.currentLife / obj_player.maxLife)
+	var playerLifeScaleAnim = (healthAnim / obj_player.maxLife)
+	
+	surface_set_target(healthSurf)
+	
+	draw_sprite_stretched(spr_healthbar,2,0,0,healthWidth,healthHeight)
+
+	draw_sprite_ext(spr_healthbar,0,healthWidth,0,-1,1,0,c_white,healthAlpha)
+
+	draw_set_alpha(1)
+
+	gpu_set_colorwriteenable(1,1,1,0)
+
+	draw_sprite_stretched(spr_healthbar,4,0,0,(healthWidth+8)*playerLifeScaleAnim,healthHeight)
+	draw_sprite_stretched(spr_healthbar,3,0,0,(healthWidth+8)*playerLifeScale,healthHeight)
+	draw_sprite_stretched_ext(spr_healthbar,5,0,0,(healthWidth+8)*playerLifeScale,healthHeight,c_white,healingAnim)
+	
+	gpu_set_colorwriteenable(1,1,1,1)
+
+	draw_sprite_ext(spr_healthbar,1,healthWidth,0,-1,1,0,c_white,healthAlpha)
+
+	surface_reset_target();
+
+	
+	draw_surface(healthSurf,healthPosX,healthPosY)
+	draw_surface_ext(healthSurf,healthPosX,healthPosY,-1,1,0,c_white,1)
+
+	//scr_text(healthPosX,healthPosY+healthNumberYOffset,string(obj_player.currentLife)+"/"+string(obj_player.maxLife),font_silkscreen,fa_center)
+	scr_textStyle1(healthPosX,healthPosY+healthNumberYOffset,string(obj_player.currentLife)+"/"+string(obj_player.maxLife),font_silkscreen,fa_center)
+}
 
 //DEBUG GUI
 if global.debugMode {
@@ -19,30 +67,12 @@ if global.debugMode {
 		}
 	
 		draw_set_halign(fa_left);
-
 		draw_text(xpos,ypos+lineDist+shadowDist,string_hash_to_newline("fps: "+ string(fps)))
 		draw_text(xpos,ypos+lineDist*2+shadowDist,string_hash_to_newline("real fps: "+ string(fps_real)))
-		//draw_text(xpos,ypos+lineDist*4+shadowDist,string_hash_to_newline("gamespeed: "+ string(global.gamespeed*100) + "%"))
-	
-		//var gw = global.camwidth, gh = global.camheight;
+
 		var gw = view_wport[0], gh = view_hport[0]
 		
 		draw_set_halign(fa_right);
 		draw_text(-xpos+gw,ypos+lineDist+shadowDist,"debugMode")
-	
-		// BLADE VARIABLES
-		/*
-		if instance_exists(obj_blade) {
-			var blade = obj_blade
-			draw_set_halign(fa_left)
-			draw_set_color(c_black)
-			draw_text(blade.x+20,blade.y-50,"-blade variables-")
-			//draw_text(blade.x+20,blade.y-40,"vel vec:" + string(blade.vel))
-			draw_text(blade.x+20,blade.y-30,"onSlope:" + string(blade.onSlope))
-			draw_text(blade.x+20,blade.y-20,"onBorder:" + string(blade.onBorder))
-		}*/
-	
-		//draw_text(device_mouse_x_to_gui( 0 )+15,device_mouse_y_to_gui( 0 ),"mouseX to gui: " + string(device_mouse_x_to_gui( 0 )))
-		//draw_text(device_mouse_x_to_gui( 0 )+15,device_mouse_y_to_gui( 0 )+10,"mouseY to gui: " + string(device_mouse_y_to_gui( 0 )))
 	}
 }

@@ -1,5 +1,3 @@
-// Script assets have changed for v2.3.0 see
-// https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
 function scr_arenaPointVariables(argument0){
 //GLOBAL BOTTOM POINT CALC FOR ARENA
 	arenaBaseX = clamp(x,argument0.x-argument0.baseWidth,argument0.x+argument0.baseWidth) // point of shortest dist to blade

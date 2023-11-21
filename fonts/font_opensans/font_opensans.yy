@@ -1,7 +1,7 @@
 {
   "resourceType": "GMFont",
   "resourceVersion": "1.0",
-  "name": "OpenSans",
+  "name": "font_opensans",
   "AntiAlias": 1,
   "applyKerning": 0,
   "ascender": 11,

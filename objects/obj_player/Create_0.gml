@@ -3,5 +3,8 @@
 
 event_inherited()
 
+//OVERRIDE
+maxLife = 12
+currentLife = maxLife
 //MOVEMENT
 acc = .5

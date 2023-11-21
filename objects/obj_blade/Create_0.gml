@@ -10,8 +10,17 @@ global.key_left = ord("A")
 
 //VARIABLES
 //STATS
+maxLife = 3
 velMax = 6				//max speed before drag is applied
 dragStrength = 0.1		// [1..0] where 1 is maximum drag effect, 0.1 allows ~50% speed increase
+
+//STATS CALCULATIONS
+currentLife = maxLife
+vel = [0,0]
+velVector = 0
+dragVector = 0
+velXSurplus = 0
+velYSurplus = 0
 
 //ANIMATION
 slantH = 0
@@ -20,11 +29,6 @@ slantV = 0
 //OTHER
 #macro X 0
 #macro Y 1
-vel = [0,0]
-velVector = 0
-dragVector = 0
-velXSurplus = 0
-velYSurplus = 0
 
 //COOLDOWN CALCULATIONS
 cooldownMap = ds_map_create()
