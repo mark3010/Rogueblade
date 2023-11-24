@@ -5,6 +5,26 @@ var lineDist = 15
 var xpos = 10
 var ypos = -10
 
+#region Timer
+
+//format time
+var timeFormatted = ""
+if obj_timer.gameTimeH > 0 {
+	timeFormatted += string(obj_timer.gameTimeM) + " h. " 
+}
+if obj_timer.gameTimeM > 0 {
+	timeFormatted += string(obj_timer.gameTimeM) + " m. " 
+}
+if obj_timer.gameTimeS >= 0 {
+	timeFormatted += string(obj_timer.gameTimeS) + " s. " 
+}
+
+scr_textStyle1(timerPosX,timerPosY,timeFormatted,font_silkscreen,fa_center)
+
+
+#endregion
+
+#region LIFE
 if !surface_exists(healthSurf) {
 	healthSurf = surface_create(healthWidth,healthHeight)
 }
@@ -53,6 +73,9 @@ if instance_exists(obj_player) {
 	//scr_text(healthPosX,healthPosY+healthNumberYOffset,string(obj_player.currentLife)+"/"+string(obj_player.maxLife),font_silkscreen,fa_center)
 	scr_textStyle1(healthPosX,healthPosY+healthNumberYOffset,string(obj_player.currentLife)+"/"+string(obj_player.maxLife),font_silkscreen,fa_center)
 }
+#endregion
+
+
 
 //DEBUG GUI
 if global.debugMode {

@@ -4,6 +4,7 @@
     {"name":"stats","order":4,"path":"folders/Scripts/blade/stats.yy",},
     {"name":"text","order":5,"path":"folders/Scripts/text.yy",},
     {"name":"ui","order":1,"path":"folders/Sprites/ui.yy",},
+    {"name":"tools","order":5,"path":"folders/Objects/tools.yy",},
   ],
   "ResourceOrderSettings": [
     {"name":"spr_test_gui","order":2,"path":"sprites/spr_test_gui/spr_test_gui.yy",},

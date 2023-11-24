@@ -6,6 +6,7 @@ scr_bladeArenaSync()
 	// inits onSlope, onBorder vars
 
 cooldownsCalculate()
+depth = -y
 
 //FORCES APPLIED
 if onSlope {
