@@ -10,7 +10,7 @@ global.key_left = ord("A")
 
 //VARIABLES
 //STATS
-maxLife = 3
+maxLife = 8
 velMax = 6				//max speed before drag is applied
 dragStrength = 0.1		// [1..0] where 1 is maximum drag effect, 0.1 allows ~50% speed increase
 
@@ -25,6 +25,9 @@ velYSurplus = 0
 //ANIMATION
 slantH = 0
 slantV = 0
+hitFlash = 0
+
+shd_texel_handle = shader_get_uniform(shd_outline,"in_Texel")
 
 //OTHER
 #macro X 0

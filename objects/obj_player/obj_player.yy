@@ -34,8 +34,8 @@
   "properties": [],
   "solid": false,
   "spriteId": {
-    "name": "spr_blade_test",
-    "path": "sprites/spr_blade_test/spr_blade_test.yy",
+    "name": "spr_blade_player",
+    "path": "sprites/spr_blade_player/spr_blade_player.yy",
   },
   "spriteMaskId": null,
   "visible": true,

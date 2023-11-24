@@ -32,8 +32,8 @@
   "properties": [],
   "solid": false,
   "spriteId": {
-    "name": "spr_blade_test2",
-    "path": "sprites/spr_blade_test2/spr_blade_test2.yy",
+    "name": "spr_blade_base",
+    "path": "sprites/spr_blade_base/spr_blade_base.yy",
   },
   "spriteMaskId": null,
   "visible": true,

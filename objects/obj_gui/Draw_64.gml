@@ -59,7 +59,7 @@ if global.debugMode {
 	var i
 	for (i=0;i<1;i++) {
 		if i = 0 {
-			draw_set_font(OpenSans)
+			draw_set_font(font_opensans)
 			draw_set_color(merge_colour(c_white,c_black,1))
 		} else {
 			draw_set_color(merge_colour(c_white,c_black,1))

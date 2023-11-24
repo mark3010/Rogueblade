@@ -17,6 +17,7 @@ if cooldownInstanceExists(other.instanceId) == undefined {
 	vel[Y] *= velDump
 	vel[X] -= lengthdir_x(reflectStrength,reflectionVector)
 	vel[Y] += lengthdir_y(reflectStrength,reflectionVector)
+	hitFlash = 1
 	
 	//other
 	cooldownInstanceAdd(other.cooldownMap,instanceId,collisionTimer)
@@ -24,5 +25,6 @@ if cooldownInstanceExists(other.instanceId) == undefined {
 	other.vel[Y] *= velDump
 	other.vel[X] += lengthdir_x(reflectStrength,reflectionVector)
 	other.vel[Y] -= lengthdir_y(reflectStrength,reflectionVector)
+	other.hitFlash = 1
 }
 

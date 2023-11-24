@@ -21,8 +21,8 @@ if onSlope {
 	var dist = point_distance(arenaFlatBorderX,arenaFlatBorderY,arenaSlopedBorderX,arenaSlopedBorderY)
 	var dir = point_direction(arenaFlatBorderX,arenaFlatBorderY,arenaSlopedBorderX,arenaSlopedBorderY)
 	
-	vel[@ X] -= lengthdir_x(dist,dir)/150 * slantH
-	vel[@ Y] -= lengthdir_y(dist,dir)/150 * slantV
+	vel[@ X] -= sign(lengthdir_x(dist,dir)) * slantH
+	vel[@ Y] -= sign(lengthdir_y(dist,dir)) * slantV
 }
 
 //CORRECT POSITION TO INSIDE ARENA
@@ -49,3 +49,6 @@ if velVector > velMax {
 //CALCULATE BLADE KINETIC ATTRIBUTES
 velVector = point_distance(0,0,vel[X],vel[Y])
 dragVector = point_distance(0,0,-velXSurplus*dragStrength,-velYSurplus*dragStrength)
+
+//ANIMATION VARIABLE
+hitFlash = lerp(hitFlash,0,.1)
