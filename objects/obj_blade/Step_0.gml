@@ -4,8 +4,8 @@ scr_bladeArenaSync()
 	// inits objArena sync
 	// inits "arenaBaseX", "arenaFlatBorderX", "arenaSlopedBorderX" vars. Same for Y
 	// inits onSlope, onBorder vars
-
 cooldownsCalculate()
+
 depth = -y
 
 //FORCES APPLIED
@@ -53,3 +53,4 @@ dragVector = point_distance(0,0,-velXSurplus*dragStrength,-velYSurplus*dragStren
 
 //ANIMATION VARIABLE
 hitFlash = lerp(hitFlash,0,.1)
+lifetime ++

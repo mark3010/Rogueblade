@@ -1,12 +1,12 @@
 //STATES
-enum cam_state
+enum camState
 {
-follow,
-pan,
-stick
+	FOLLOW,
+	PAN,
+	STICK
 }
 
-state = cam_state.pan //default
+state = camState.PAN //default
 
 panPoint = 5 // 1/panPoint distance between arena and target // PAN STATE ONLY
 

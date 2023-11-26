@@ -1,23 +1,25 @@
+if !instance_exists(follow) {
+	follow = noone
+}
+
 switch (state) {
-case cam_state.follow:
+case camState.FOLLOW:
 	if (follow != noone) {
 		xTo = follow.x
 		yTo = follow.y
 	}
 	break;
-case cam_state.pan:
+case camState.PAN:
 	if (follow != noone) {
 		xTo = obj_arena.x - (obj_arena.x - follow.x) / panPoint
 		yTo = obj_arena.y - (obj_arena.y - follow.y) / panPoint
 	}
 	break;
-case cam_state.stick:
+case camState.STICK:
 	xTo = x
 	yTo = y
 	break;
 }
-
-
 
 x += (xTo - x) / smoothStrength
 y += (yTo - y) / smoothStrength

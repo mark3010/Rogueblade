@@ -1,9 +1,12 @@
 /// @description Insert description here
 // You can write your code in this editor
 if cooldownInstanceExists(other.instanceId) == undefined {
+
 	//damage calculation
-	currentLife--
-	other.currentLife--
+	if team != other.team {
+		currentLife--
+		other.currentLife--
+	}
 
 	//collision calculation
 	reflectionVector = -point_direction(x,y,other.x,other.y)

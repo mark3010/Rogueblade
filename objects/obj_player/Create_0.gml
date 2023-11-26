@@ -4,7 +4,9 @@
 event_inherited()
 
 //OVERRIDE
-maxLife = 12
+maxLife = 5
 currentLife = maxLife
+team = TEAM.ALLY
+
 //MOVEMENT
 acc = .5

@@ -1,3 +1,5 @@
+scr_bladeArenaSync()
+
 //ID
 instanceId = global.instanceIDCounter++
 
@@ -10,7 +12,7 @@ global.key_left = ord("A")
 
 //VARIABLES
 //STATS
-maxLife = 8
+maxLife = 2
 velMax = 6				//max speed before drag is applied
 dragStrength = 0.1		// [1..0] where 1 is maximum drag effect, 0.1 allows ~50% speed increase
 
@@ -26,12 +28,21 @@ velYSurplus = 0
 slantH = 0
 slantV = 0
 hitFlash = 0
+lifetime = 0
 
 shd_texel_handle = shader_get_uniform(shd_outline,"in_Texel")
 
 //OTHER
 #macro X 0
 #macro Y 1
+
+//TEAM
+enum TEAM {
+	ALLY,
+	ENEMY
+}
+
+team = TEAM.ENEMY
 
 //COOLDOWN CALCULATIONS
 cooldownMap = ds_map_create()
@@ -52,3 +63,6 @@ function cooldownsCalculate() {
 		}
 	}
 }
+
+//DEBUG
+instance_create_depth(x,y,depth,obj_spawn_point_debug)

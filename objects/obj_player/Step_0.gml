@@ -31,3 +31,10 @@ if (move_right || move_left) {
 if (move_up || move_down) {
 		vel[@ Y] += lengthdir_y(acc,dir);
 }
+
+
+currentLife +=.02
+
+if currentLife > maxLife {
+	currentLife = maxLife
+}

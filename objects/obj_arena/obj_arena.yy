@@ -29,8 +29,8 @@
   "properties": [],
   "solid": false,
   "spriteId": {
-    "name": "spr_test_gui6",
-    "path": "sprites/spr_test_gui6/spr_test_gui6.yy",
+    "name": "spr_test_arena",
+    "path": "sprites/spr_test_arena/spr_test_arena.yy",
   },
   "spriteMaskId": null,
   "visible": true,
