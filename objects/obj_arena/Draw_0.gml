@@ -1,7 +1,6 @@
+event_inherited()
 
 draw_set_alpha(.1)
-	
-	
 draw_point(x,y)
 var flip = 1;
 	
@@ -33,11 +32,7 @@ repeat(2) { // draws right side, flips to draw left
 	flip *= -1;
 		
 }
+
 draw_set_alpha(1)
-	
 draw_point(x,y)
 draw_circle(x,y,20,true)
-
-if global.debugMode {
-draw_self()
-}

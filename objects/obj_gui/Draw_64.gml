@@ -79,10 +79,10 @@ if instance_exists(obj_wave_director) {
 	for (var i = 0; i < array_length(obj_wave_director.waveList); ++i;) {
 		
 		var yWaveListOffset = i*6*4
-		
 		var waveTypeNames = ["ALL","HORIZONTAL","VERTICAL","TOP","BOT","LEFT","RIGHT"]
+		var waveDisplay = obj_wave_director.waveList[i].waveName + "-" + string(waveTypeNames[obj_wave_director.waveList[i].waveDirection])
 		
-		scr_textStyle1(waveListPosX,waveListPosY-yWaveListOffset,string(obj_wave_director.waveList[i])+"-"+string(waveTypeNames[obj_wave_director.waveList[i][5]]),font_silkscreen,fa_right)
+		scr_textStyle1(waveListPosX,waveListPosY-yWaveListOffset,waveDisplay,font_silkscreen,fa_right)
 			
 	}
 }

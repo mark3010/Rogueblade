@@ -14,18 +14,31 @@ enum waveSpawnerType {
 	VERTICAL
 }
 
-//[timer,totalTimer,waves,enemies,name]
-var arena = obj_arena
+//WAVES
+waveList = []
+waveNumber = 1
 
-//flatWidth	= 60;
-//flatRadius	= 60;
+function Wave(
+_waveName = "none",
+_cyclesLeft =	2 + irandom(2),
+_enemies =	1 + irandom(1),
+_maxTimer = 90 + irandom(200),
+_timer = _maxTimer,
+_waveDirection = irandom(waveType.total-1)
+) constructor {
+	waveName = _waveName
+	timer = _timer
+	maxTimer = _maxTimer
+	cyclesLeft = _cyclesLeft
+	enemies = _enemies
+	waveDirection = _waveDirection
+}
 
-//baseWidth	= flatWidth  + 160;
-//baseRadius	= flatRadius + 160;
 
-spawnerList = []
 
 //SPAWNERS
+var arena = obj_arena
+spawnerList = []
 //top
 var arenaTopX = arena.x
 var arenaTopY = arena.y - arena.baseWidth
@@ -58,15 +71,3 @@ left.image_xscale = 1
 left.image_yscale = arena.baseWidth / 16 * 2
 array_insert(spawnerList,3,left)
 
-
-//instance_create_layer(x,y,layer,obj_wave_spawner)
-
-//for (var i = 0; i < instance_number(obj_wave_spawne); ++i;)
-//{
-//    spawnerList[i] = instance_find(ObjMobSpawner,i);
-//}
-
-waveList = []
-
-
-waveNumber = 1

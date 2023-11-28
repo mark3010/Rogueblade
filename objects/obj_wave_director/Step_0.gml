@@ -5,12 +5,12 @@
 
 for (var i = 0; i < array_length(waveList); ++i;) {
 	//reduce wave timer
-	waveList[i][0] -= 1
+	waveList[i].timer -= 1
 	
 	//remove wave
-	if waveList[i][0] <= 0 {
-		waveList[i][2] -= 1
-		waveList[i][0] = waveList[i][1]
+	if waveList[i].timer <= 0 {
+		waveList[i].cyclesLeft -= 1
+		waveList[i].timer = waveList[i].maxTimer
 		
 		//handle wave distribution
 		//determine which spawners to spawn from
@@ -21,8 +21,7 @@ for (var i = 0; i < array_length(waveList); ++i;) {
 		//	array_delete(_pickSpawnerList,irandom(array_length(_pickSpawnerList)),1)
 		//}
 		
-		switch (waveList[i][5]) {
-		
+		switch (waveList[i].waveDirection) {
 			case waveType.ALL:
 			//change list to have random amount of random spawners left
 				var _pickSpawnerNumberInverted = irandom(3)
@@ -52,7 +51,7 @@ for (var i = 0; i < array_length(waveList); ++i;) {
 		
 
 		//determine where to spawn random amount of enemies
-		var _numberOfEnemies = waveList[i][3]
+		var _numberOfEnemies = waveList[i].enemies
 		
 		//spawn enemies
 		
@@ -78,7 +77,8 @@ for (var i = 0; i < array_length(waveList); ++i;) {
 
 //check if no more waves are left, delete
 for (var o = array_length(waveList)-1; o >= 0; --o;) {
-	if waveList[o][2] <= 0 {
+	if waveList[o].cyclesLeft <= 0 {
+		delete waveList[o]
 		array_delete(waveList,o,1)
 	}
 }
@@ -87,7 +87,12 @@ for (var o = array_length(waveList)-1; o >= 0; --o;) {
 if array_length(waveList) == 0 {
 		//wave definition
 		//[timer,totalTimer,waves,enemies,name,waveType]
-		array_push(waveList,[60,60,4,2,"Wave: "+string(waveNumber),irandom(waveType.total-1)])
+		var waveName = "Wave #" + string(waveNumber)
+		var waveCyclesTotal =	2 + irandom(2 + floor(waveNumber/4))
+		var waveEnemiesPerWave =	1 + irandom(1 + floor(waveNumber/4)) + floor(waveNumber/4)
+		
+		array_push(waveList,new Wave(waveName,waveCyclesTotal,waveEnemiesPerWave))
+		
 		waveNumber++
 }
 

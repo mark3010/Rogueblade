@@ -5,9 +5,9 @@
     {"name":"kinetics","order":3,"path":"folders/Scripts/blade/kinetics.yy",},
     {"name":"stats","order":4,"path":"folders/Scripts/blade/stats.yy",},
     {"name":"text","order":5,"path":"folders/Scripts/text.yy",},
+    {"name":"debug","order":3,"path":"folders/Sprites/debug.yy",},
     {"name":"test","order":1,"path":"folders/Sprites/test.yy",},
     {"name":"ui","order":2,"path":"folders/Sprites/ui.yy",},
-    {"name":"debug","order":3,"path":"folders/Sprites/debug.yy",},
   ],
   "ResourceOrderSettings": [
     {"name":"spr_blade_enemy1","order":4,"path":"sprites/spr_blade_enemy1/spr_blade_enemy1.yy",},
@@ -32,6 +32,7 @@
     {"name":"spr_test_control","order":1,"path":"sprites/spr_test_control/spr_test_control.yy",},
     {"name":"spr_blade_player","order":2,"path":"sprites/spr_blade_player/spr_blade_player.yy",},
     {"name":"scr_camFocus","order":4,"path":"scripts/scr_camFocus/scr_camFocus.yy",},
+    {"name":"obj_tool","order":8,"path":"objects/obj_tool/obj_tool.yy",},
     {"name":"spr_test2","order":4,"path":"sprites/spr_test2/spr_test2.yy",},
     {"name":"spr_spawner_horisontal","order":1,"path":"sprites/spr_spawner_horisontal/spr_spawner_horisontal.yy",},
     {"name":"scr_bladePositionCheck","order":2,"path":"scripts/scr_bladePositionCheck/scr_bladePositionCheck.yy",},
