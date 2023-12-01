@@ -25,3 +25,4 @@ if array_length(queue) > 0 {
 	instance_create_depth(xSpawn,ySpawn,depth,queue[array_length(queue) - 1])
 	array_pop(queue)
 }
+

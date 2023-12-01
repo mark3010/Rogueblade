@@ -10,8 +10,8 @@
   "managed": true,
   "overriddenProperties": [],
   "parent": {
-    "name": "blades",
-    "path": "folders/Objects/blades.yy",
+    "name": "entities",
+    "path": "folders/Objects/entities.yy",
   },
   "parentObjectId": {
     "name": "obj_blade",

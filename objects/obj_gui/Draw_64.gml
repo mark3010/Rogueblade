@@ -5,28 +5,34 @@ var lineDist = 15
 var xpos = 10
 var ypos = -10
 
+#region VIGNETTE
+if !global.debugMode {
+	draw_sprite_ext(spr_vignette,0,0,0,0.5,0.5,0,c_white,.2)
+}
+#endregion
+
 #region TIMER
+if instance_exists(obj_timer) {
+	//format time
+	var timeFormatted = ""
+	if obj_timer.gameTimeH > 0 {
+		timeFormatted += string(obj_timer.gameTimeM) + " h. " 
+	}
+	if obj_timer.gameTimeM > 0 {
+		timeFormatted += string(obj_timer.gameTimeM) + " m. " 
+	}
+	if obj_timer.gameTimeS >= 0 {
+		timeFormatted += string(obj_timer.gameTimeS) + " s. " 
+	}
 
-//format time
-var timeFormatted = ""
-if obj_timer.gameTimeH > 0 {
-	timeFormatted += string(obj_timer.gameTimeM) + " h. " 
+	scr_textStyle1(timerPosX,timerPosY,timeFormatted,font_silkscreen,fa_left,c_white)
 }
-if obj_timer.gameTimeM > 0 {
-	timeFormatted += string(obj_timer.gameTimeM) + " m. " 
-}
-if obj_timer.gameTimeS >= 0 {
-	timeFormatted += string(obj_timer.gameTimeS) + " s. " 
-}
-
-scr_textStyle1(timerPosX,timerPosY,timeFormatted,font_silkscreen,fa_left)
-
 
 #endregion
 
 #region LIFE
 if !surface_exists(healthSurf) {
-	healthSurf = surface_create(healthWidth,healthHeight)
+	healthSurf = surface_create(healthWidth * 2 + sprite_get_width(spr_healthbar) * 4,healthHeight)
 }
 
 //DRAW HEALTHBAR
@@ -46,32 +52,35 @@ if instance_exists(obj_player) {
 	playerLifeScaleAnim = 0
 	playerCurrentLife = 0
 }
-surface_set_target(healthSurf)
+
+if room == room_arena {
+	surface_set_target(healthSurf)
 	
-draw_sprite_stretched(spr_healthbar,2,0,0,healthWidth,healthHeight)
+	draw_sprite_stretched(spr_healthbar,2,0,0,healthWidth,healthHeight)
 
-draw_sprite_ext(spr_healthbar,0,healthWidth,0,-1,1,0,c_white,healthAlpha)
+	draw_sprite_ext(spr_healthbar,0,healthWidth,0,-1,1,0,c_white,healthAlpha)
 
-draw_set_alpha(1)
+	draw_set_alpha(1)
 
-gpu_set_colorwriteenable(1,1,1,0)
+	gpu_set_colorwriteenable(1,1,1,0)
 
-draw_sprite_stretched(spr_healthbar,4,0,0,(healthWidth+8)*playerLifeScaleAnim,healthHeight)
-draw_sprite_stretched(spr_healthbar,3,0,0,(healthWidth+8)*playerLifeScale,healthHeight)
+	draw_sprite_stretched(spr_healthbar,4,0,0,(healthWidth+8)*playerLifeScaleAnim,healthHeight)
+	draw_sprite_stretched(spr_healthbar,3,0,0,(healthWidth+8)*playerLifeScale,healthHeight)
 	
-gpu_set_colorwriteenable(1,1,1,1)
+	gpu_set_colorwriteenable(1,1,1,1)
 
-draw_sprite_ext(spr_healthbar,1,healthWidth,0,-1,1,0,c_white,healthAlpha)
+	draw_sprite_ext(spr_healthbar,1,healthWidth,0,-1,1,0,c_white,healthAlpha)
 
-surface_reset_target();
+	surface_reset_target();
 
 	
-draw_surface(healthSurf,healthPosX,healthPosY)
-draw_surface_ext(healthSurf,healthPosX,healthPosY,-1,1,0,c_white,1)
+	draw_surface(healthSurf,healthPosX,healthPosY)
+	draw_surface_ext(healthSurf,healthPosX,healthPosY,-1,1,0,c_white,1)
 
-//scr_text(healthPosX,healthPosY+healthNumberYOffset,string(obj_player.currentLife)+"/"+string(obj_player.maxLife),font_silkscreen,fa_center)
-scr_textStyle1(healthPosX,healthPosY+healthNumberYOffset,string(playerCurrentLife)+"/"+string(playerMaxLife),font_silkscreen,fa_center)
+	//scr_text(healthPosX,healthPosY+healthNumberYOffset,string(obj_player.currentLife)+"/"+string(obj_player.maxLife),font_silkscreen,fa_center)
 
+	scr_textStyle1(healthPosX,healthPosY+healthNumberYOffset,string(playerCurrentLife)+"/"+string(playerMaxLife),font_silkscreen,fa_center,c_white)
+}
 #endregion
 
 #region WAVES
@@ -80,9 +89,9 @@ if instance_exists(obj_wave_director) {
 		
 		var yWaveListOffset = i*6*4
 		var waveTypeNames = ["ALL","HORIZONTAL","VERTICAL","TOP","BOT","LEFT","RIGHT"]
-		var waveDisplay = obj_wave_director.waveList[i].waveName + "-" + string(waveTypeNames[obj_wave_director.waveList[i].waveDirection])
+		var waveDisplay = obj_wave_director.waveList[i].waveName + "-" + string(waveTypeNames[obj_wave_director.waveList[i].waveDirection]) + "-" + string(obj_wave_director.waveList[i].timer) 
 		
-		scr_textStyle1(waveListPosX,waveListPosY-yWaveListOffset,waveDisplay,font_silkscreen,fa_right)
+		scr_textStyle1(waveListPosX,waveListPosY-yWaveListOffset,waveDisplay,font_silkscreen,fa_right,c_white)
 			
 	}
 }
