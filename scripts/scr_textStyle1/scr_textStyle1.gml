@@ -4,6 +4,7 @@
 /// @param {string}  text		text to display
 /// @param {font}  font			font
 /// @param {halign}  alignment  horizontal alignment for font
+/// @param {color}  color		font main color
 /// @description				write stylized text
 
 function scr_textStyle1(argument0,argument1,argument2,argument3,argument4,argument5){
