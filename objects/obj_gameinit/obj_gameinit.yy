@@ -8,13 +8,10 @@
   "managed": true,
   "overriddenProperties": [],
   "parent": {
-    "name": "util",
-    "path": "folders/Objects/util.yy",
+    "name": "game systems",
+    "path": "folders/Objects/util/game systems.yy",
   },
-  "parentObjectId": {
-    "name": "obj_tool",
-    "path": "objects/obj_tool/obj_tool.yy",
-  },
+  "parentObjectId": null,
   "persistent": false,
   "physicsAngularDamping": 0.1,
   "physicsDensity": 0.5,
@@ -30,10 +27,7 @@
   "physicsStartAwake": true,
   "properties": [],
   "solid": false,
-  "spriteId": {
-    "name": "spr_test_gameinit",
-    "path": "sprites/spr_test_gameinit/spr_test_gameinit.yy",
-  },
+  "spriteId": null,
   "spriteMaskId": null,
   "visible": true,
 }

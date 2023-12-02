@@ -4,12 +4,14 @@ if newGameFlag {
 	show_debug_message("new game made")
 	instance_create_depth(x,y,depth,obj_gameinit)
 	newGameFlag = false
+	global.gameActive = true
 }
 #endregion
 #region END GAME
 if endGameFlag {
 	instance_create_depth(x,y,depth,obj_game_end_sequence)
 	endGameFlag = false
+	global.gameActive = false
 }
 #endregion
 
@@ -52,7 +54,7 @@ if room == room_arena {
 		room_goto(room_menu)
 	}
 	
-	if keyboard_check_pressed(vk_backspace) {
+	if keyboard_check_pressed(vk_backspace) && instance_exists(obj_player) {
 		endGameFlag = true
 	}
 }

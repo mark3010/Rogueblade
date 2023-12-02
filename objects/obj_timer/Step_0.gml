@@ -1,5 +1,8 @@
 /// @description Insert description here
 // You can write your code in this editor
+
+if !global.gameActive exit
+
 gameTime++
 
 gameTime10MS =	floor(gameTime * 1.666 mod 100)

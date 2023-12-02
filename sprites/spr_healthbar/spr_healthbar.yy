@@ -2,7 +2,7 @@
   "resourceType": "GMSprite",
   "resourceVersion": "1.0",
   "name": "spr_healthbar",
-  "bbox_bottom": 16,
+  "bbox_bottom": 15,
   "bbox_left": 0,
   "bbox_right": 25,
   "bbox_top": 0,

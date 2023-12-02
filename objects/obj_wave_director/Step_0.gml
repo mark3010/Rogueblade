@@ -3,6 +3,8 @@
 //wave definition
 //[timer,totalTimer,waves,enemies,name,waveType]
 
+if !global.gameActive exit
+
 #region WAVELIST CALCULATION
 for (var i = 0; i < array_length(waveList); ++i;) {
 	//reduce wave timer

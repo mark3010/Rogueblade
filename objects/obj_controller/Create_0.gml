@@ -1,6 +1,7 @@
 // DEBUG MODE
 global.debugMode = -1
 global.instanceIDCounter = 0
+global.gameActive = false
 
 //CREATE GAME
 newGameFlag = false

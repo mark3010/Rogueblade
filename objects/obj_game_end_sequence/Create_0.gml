@@ -23,4 +23,17 @@ saveFile.data = dataImprint
 
 //END GAME SEQUENCE
 instance_destroy(obj_player)
-alarm_set(0,240) // alarm 0 is go to highscore room
+alarm_set(0,360) // alarm 0 is go to highscore room
+alarm_set(1,60) // alarm 1 is to show overlay
+alarm_set(2,90) // alarm 2 is to show overlay1 text
+alarm_set(3,120) // alarm 3 is to show overlay2 text
+
+//ANIMATION
+overlayAlpha = 0
+overlayFlag = false
+
+overlayText1Alpha = 0
+overlayText1Flag = false
+
+overlayText2Alpha = 0
+overlayText2Flag = false

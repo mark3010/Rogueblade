@@ -12,10 +12,7 @@
     "name": "entities",
     "path": "folders/Objects/entities.yy",
   },
-  "parentObjectId": {
-    "name": "obj_tool",
-    "path": "objects/obj_tool/obj_tool.yy",
-  },
+  "parentObjectId": null,
   "persistent": false,
   "physicsAngularDamping": 0.1,
   "physicsDensity": 0.5,
@@ -31,10 +28,7 @@
   "physicsStartAwake": true,
   "properties": [],
   "solid": false,
-  "spriteId": {
-    "name": "spr_test_arena",
-    "path": "sprites/spr_test_arena/spr_test_arena.yy",
-  },
+  "spriteId": null,
   "spriteMaskId": null,
   "visible": true,
 }

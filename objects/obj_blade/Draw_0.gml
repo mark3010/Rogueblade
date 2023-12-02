@@ -8,6 +8,12 @@ if lifetime < 1 {exit}
 
 #endregion
 
+#region DRAW SHADOW
+var shadowX = x -(obj_arena.x - x) * 0.03
+var shadowY = y -(obj_arena.y - y) * 0.03
+draw_sprite_ext(spr_blade_base_shadow,0,shadowX,shadowY,1,1+slantVAnim,0-slantHAnim,c_white,.1) // draw self
+#endregion
+
 #region DRAW SELF
 
 shader_set(shd_outline)
@@ -24,3 +30,4 @@ draw_sprite_ext(sprite_index,1,x,y,1,1+slantVAnim,0-slantHAnim,c_white,hitFlash)
 shader_reset()
 
 #endregion
+

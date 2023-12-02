@@ -5,11 +5,7 @@ var lineDist = 15
 var xpos = 10
 var ypos = -10
 
-#region VIGNETTE
-if !global.debugMode {
-	draw_sprite_ext(spr_vignette,0,0,0,0.5,0.5,0,c_white,.2)
-}
-#endregion
+
 
 #region TIMER
 if instance_exists(obj_timer) {
@@ -25,7 +21,8 @@ if instance_exists(obj_timer) {
 		timeFormatted += string(obj_timer.gameTimeS) + " s. " 
 	}
 
-	scr_textStyle1(timerPosX,timerPosY,timeFormatted,font_silkscreen,fa_left,c_white)
+	scr_textStyle1(timerPosX,timerPosY-30,timeFormatted,font_silkscreen,fa_left,c_white,1,2)
+	scr_textStyle1(timerPosX,timerPosY,"Time Elapsed",font_silkscreen,fa_left,c_white,1,1)
 }
 
 #endregion
@@ -79,7 +76,7 @@ if room == room_arena {
 
 	//scr_text(healthPosX,healthPosY+healthNumberYOffset,string(obj_player.currentLife)+"/"+string(obj_player.maxLife),font_silkscreen,fa_center)
 
-	scr_textStyle1(healthPosX,healthPosY+healthNumberYOffset,string(playerCurrentLife)+"/"+string(playerMaxLife),font_silkscreen,fa_center,c_white)
+	scr_textStyle1(healthPosX,healthPosY+healthNumberYOffset,string(playerCurrentLife)+"/"+string(playerMaxLife),font_silkscreen,fa_center,c_white,1,1)
 }
 #endregion
 
@@ -89,9 +86,16 @@ if instance_exists(obj_wave_director) {
 		
 		var yWaveListOffset = i*6*4
 		var waveTypeNames = ["ALL","HORIZONTAL","VERTICAL","TOP","BOT","LEFT","RIGHT"]
-		var waveDisplay = obj_wave_director.waveList[i].waveName + "-" + string(waveTypeNames[obj_wave_director.waveList[i].waveDirection]) + "-" + string(obj_wave_director.waveList[i].timer) 
+		var waveDisplayName = obj_wave_director.waveList[i].waveName
+		var waveDisplayElapsed = string(obj_wave_director.waveList[i].timer)
+		var waveDisplayDirection = "Direction: "+string(waveTypeNames[obj_wave_director.waveList[i].waveDirection])
 		
-		scr_textStyle1(waveListPosX,waveListPosY-yWaveListOffset,waveDisplay,font_silkscreen,fa_right,c_white)
+		//top part
+		scr_textStyle1(waveListPosX,waveListPosY-yWaveListOffset-30,waveDisplayName,font_silkscreen,fa_right,c_white,1,2)
+		//bottom part
+		scr_textStyle1(waveListPosX,waveListPosY-yWaveListOffset,waveDisplayDirection,font_silkscreen,fa_right,c_white,1,1)
+		//scr_textStyle1(waveListPosX-130,waveListPosY-yWaveListOffset,"|",font_silkscreen,fa_right,c_white,1,1)
+		//scr_textStyle1(waveListPosX-140,waveListPosY-yWaveListOffset,waveDisplayElapsed,font_silkscreen,fa_right,c_white,1,1)
 			
 	}
 }
@@ -100,12 +104,12 @@ if instance_exists(obj_wave_director) {
 #region DEBUG GUI
 if global.debugMode {
 	var i
-	for (i=0;i<1;i++) {
+	for (i=0;i<2;i++) {
 		if i = 0 {
 			draw_set_font(font_opensans)
 			draw_set_color(merge_colour(c_white,c_black,1))
 		} else {
-			draw_set_color(merge_colour(c_white,c_black,1))
+			draw_set_color(merge_colour(c_white,c_white,1))
 			shadowDist = 0
 		}
 	
