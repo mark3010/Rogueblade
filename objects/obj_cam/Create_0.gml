@@ -7,7 +7,6 @@ enum camState
 }
 
 state = camState.PAN //default
-
 panPoint = 5 // 1/panPoint distance between arena and target // PAN STATE ONLY
 
 //VARIABLES
@@ -20,3 +19,7 @@ xTo = x
 yTo = y
 
 smoothStrength = 25 // higher is more smooth
+
+function focus(objectId){
+	follow = objectId
+}

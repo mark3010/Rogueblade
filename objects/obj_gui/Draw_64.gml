@@ -11,14 +11,14 @@ var ypos = -10
 if instance_exists(obj_timer) {
 	//format time
 	var timeFormatted = ""
-	if obj_timer.gameTimeH > 0 {
-		timeFormatted += string(obj_timer.gameTimeM) + " h. " 
+	if obj_timer.gameTimeH() > 0 {
+		timeFormatted += string(obj_timer.gameTimeM()) + " h. " 
 	}
-	if obj_timer.gameTimeM > 0 {
-		timeFormatted += string(obj_timer.gameTimeM) + " m. " 
+	if obj_timer.gameTimeM() > 0 {
+		timeFormatted += string(obj_timer.gameTimeM()) + " m. " 
 	}
-	if obj_timer.gameTimeS >= 0 {
-		timeFormatted += string(obj_timer.gameTimeS) + " s. " 
+	if obj_timer.gameTimeS() >= 0 {
+		timeFormatted += string(obj_timer.gameTimeS()) + " s. " 
 	}
 
 	scr_textStyle1(timerPosX,timerPosY-30,timeFormatted,font_silkscreen,fa_left,c_white,1,2)

@@ -34,6 +34,17 @@ _waveDirection = irandom(waveType.total-1)
 	spawnTrigger = maxTimer / cycles
 }
 
+function generateWave() {
+	//wave definition
+	var waveName = "Wave #" + string(waveNumber)
+	var waveCyclesTotal =	2 + irandom(1 + floor(waveNumber/4))
+	var waveEnemiesPerWave =	1 + irandom(1 + floor(waveNumber/4) + floor(waveNumber/4))
+	var waveMaxTimer =	(waveCyclesTotal + irandom(floor(waveNumber/4))) * 200
+	waveNumber++
+	
+	return new Wave(waveName,waveMaxTimer,waveCyclesTotal,waveEnemiesPerWave)	
+}
+
 //SPAWNERS
 var arena = obj_arena
 spawnerList = []

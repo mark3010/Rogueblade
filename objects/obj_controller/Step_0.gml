@@ -1,18 +1,9 @@
 //TRIGGERS
 #region NEW GAME
-if newGameFlag {
-	show_debug_message("new game made")
-	instance_create_depth(x,y,depth,obj_gameinit)
-	newGameFlag = false
-	global.gameActive = true
-}
+if newGameFlag { startGame() }
 #endregion
 #region END GAME
-if endGameFlag {
-	instance_create_depth(x,y,depth,obj_game_end_sequence)
-	endGameFlag = false
-	global.gameActive = false
-}
+if endGameFlag { endGame() }
 #endregion
 
 //GLOBAL ROOM INPUT

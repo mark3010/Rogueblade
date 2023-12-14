@@ -1,13 +1,29 @@
 /// @description Insert description here
 // You can write your code in this editor
+
+//style
+var listColor = c_ltgray
+var highlightColor = c_green
+
+//displacement
 var i = 0
 var displaceMentY = 16
 var displaceMentX = 80
 
-repeat (min(array_length(text.scores),10)) {
+//list adjustments
+var listLengthMax = 10
+var recentScoreId = array_length(text.scores)
 
-	if text.recentPos == i {color = c_green} else {color = c_ltgray}
-
+//repeat for each list element
+repeat (min(array_length(text.scores),listLengthMax)) {
+	
+	//score color
+	if text.scores[i].scoreId == array_length(text.scores) {
+		color = highlightColor
+	} else {
+		color = listColor
+	}
+	
 	//format time
 	var timeFormatted = ""
 	if text.scores[i].timer.gameTimeH > 0 {

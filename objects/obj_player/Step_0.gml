@@ -1,8 +1,7 @@
 //run parent code
 event_inherited()
 
-//set cam focus
-scr_camFocus()
+
 
 //MOVEMENT
 move_up    = keyboard_check(global.key_up)

@@ -52,10 +52,8 @@ for (var i = 0; i < array_length(waveList); ++i;) {
 		
 		//add atleast one to each spawner
 		for (var j = 0; j < array_length(pickSpawnerList); ++j;) {
-			//if (numberOfEnemies > 0) {
-				array_push(spawnerList[pickSpawnerList[j]-1].queue,obj_blade)
-				numberOfEnemies--
-			//}
+			array_push(spawnerList[pickSpawnerList[j]-1].queue,obj_blade)
+			numberOfEnemies--
 		}
 		
 		//add the remaining enemies to random spawners, until no more are left
@@ -86,15 +84,7 @@ for (var o = array_length(waveList)-1; o >= 0; --o;) {
 #region NEW WAVE GENERATOR
 //if no wave is active, append new wave
 if array_length(waveList) == 0 {
-		//wave definition
-		var waveName = "Wave #" + string(waveNumber)
-		var waveCyclesTotal =	2 + irandom(1 + floor(waveNumber/4))
-		var waveEnemiesPerWave =	1 + irandom(1 + floor(waveNumber/4) + floor(waveNumber/4))
-		var waveMaxTimer =	(waveCyclesTotal + irandom(floor(waveNumber/4))) * 200
-		
-		array_push(waveList,new Wave(waveName,waveMaxTimer,waveCyclesTotal,waveEnemiesPerWave))
-		
-		waveNumber++
+	array_push(waveList,generateWave())
 }
 #endregion
 

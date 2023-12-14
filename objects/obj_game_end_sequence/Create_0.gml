@@ -6,10 +6,10 @@
 var dataImprint = {
 	timer : {
 		gameTime : obj_timer.gameTime,
-		gameTime10MS : obj_timer.gameTime10MS,
-		gameTimeS : obj_timer.gameTimeS,
-		gameTimeM : obj_timer.gameTimeM,
-		gameTimeH : obj_timer.gameTimeH
+		gameTime10MS : obj_timer.gameTime10MS(),
+		gameTimeS : obj_timer.gameTimeS(),
+		gameTimeM : obj_timer.gameTimeM(),
+		gameTimeH : obj_timer.gameTimeH()
 		},
 	player : {
 		life : obj_player.maxLife
@@ -18,7 +18,7 @@ var dataImprint = {
 }
 
 //data file object
-saveFile = instance_create_depth(x,y,depth,obj_save_file)
+saveFile = instance_create_depth(x,y,depth,obj_save_score_snapshot)
 saveFile.data = dataImprint
 
 //END GAME SEQUENCE

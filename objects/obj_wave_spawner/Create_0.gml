@@ -1,6 +1,2 @@
 queue = []
-
-
-
-spawnerType = -1
-
+//spawnerType = -1

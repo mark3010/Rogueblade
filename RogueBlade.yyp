@@ -82,7 +82,7 @@
     {"id":{"name":"obj_wave_spawner","path":"objects/obj_wave_spawner/obj_wave_spawner.yy",},},
     {"id":{"name":"spr_test_control","path":"sprites/spr_test_control/spr_test_control.yy",},},
     {"id":{"name":"spr_blade_base_shadow","path":"sprites/spr_blade_base_shadow/spr_blade_base_shadow.yy",},},
-    {"id":{"name":"obj_save_file","path":"objects/obj_save_file/obj_save_file.yy",},},
+    {"id":{"name":"obj_save_score_snapshot","path":"objects/obj_save_score_snapshot/obj_save_score_snapshot.yy",},},
     {"id":{"name":"spr_blade_player","path":"sprites/spr_blade_player/spr_blade_player.yy",},},
     {"id":{"name":"scr_camFocus","path":"scripts/scr_camFocus/scr_camFocus.yy",},},
     {"id":{"name":"obj_tool","path":"objects/obj_tool/obj_tool.yy",},},

@@ -1,8 +1,4 @@
-/// @description Insert description here
-// You can write your code in this editor
-
-//COMPONENTS
-//timer = instance_create_depth(x,y,depth,obj_timer)
+event_inherited()
 
 //ANIMATION VARIABLES
 //TIMER
