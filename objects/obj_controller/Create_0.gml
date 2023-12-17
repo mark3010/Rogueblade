@@ -13,10 +13,12 @@ function startGame() {
 	gameInitializer = instance_create_depth(x,y,depth,obj_gameinit)
 	newGameFlag = false
 	global.gameActive = true
+	audio_play_sound(snd_music, 1, true)
 }
 
 function endGame() {
 	gameEnder = instance_create_depth(x,y,depth,obj_game_end_sequence)
 	endGameFlag = false
 	global.gameActive = false
+	audio_stop_sound(snd_music)
 }

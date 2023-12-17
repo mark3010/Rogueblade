@@ -3,7 +3,10 @@
 if newGameFlag { startGame() }
 #endregion
 #region END GAME
-if endGameFlag { endGame() }
+if endGameFlag { 
+	endGame() 
+	audio_play_sound(snd_player_death, 1, false)
+	}
 #endregion
 
 //GLOBAL ROOM INPUT
@@ -25,6 +28,7 @@ if room == room_menu {
 	if keyboard_check_pressed(vk_space) {
 		show_debug_message("space activate")
 		newGameFlag = true
+		audio_play_sound(snd_ui_select, 10, false)
 		room_goto(room_arena)
 	}
 	
@@ -42,6 +46,7 @@ if room == room_arena {
 	}
 
 	if keyboard_check_pressed(vk_escape) {
+		audio_play_sound(snd_ui_select, 10, false)
 		room_goto(room_menu)
 	}
 	
@@ -54,6 +59,7 @@ if room == room_arena {
 if room == room_highscore {
 
 	if keyboard_check_pressed(vk_space) or keyboard_check_pressed(vk_escape) {
+		audio_play_sound(snd_ui_select, 10, false)
 		room_goto(room_menu)
 	}
 

@@ -71,4 +71,7 @@ if currentTriggers < maxTriggers {
 if currentTriggersCooldown >= maxTriggersCooldown {
 	currentTriggers = maxTriggers
 	currentTriggersCooldown = 0
+	audio_play_sound(snd_shield_full, 5, false)
+	var shieldRegainedAnim = instance_create_depth(x,y,depth+100,obj_shield_regained) 
+	shieldRegainedAnim.target = id
 }

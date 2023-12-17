@@ -52,6 +52,16 @@ enum TEAM {
 
 team = TEAM.ENEMY
 
+//LIFE AND DEATH
+function die() {
+	audio_play_sound(snd_death, 11, false)
+	if team = TEAM.ENEMY && instance_exists(obj_player) {
+		obj_player.EXP++
+	}
+	ds_map_destroy(cooldownMap)
+	instance_destroy()
+}
+
 //DAMAGE CALCULATIONS
 enum DAMAGE_TYPE {
 	HEALTH,

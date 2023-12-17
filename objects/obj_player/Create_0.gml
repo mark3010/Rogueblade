@@ -36,7 +36,6 @@ function initPlayerStats() {
 		EXPCapList[i] = round(EXPBaseCap * power(EXPBaseExponential,i))
 	}
 	
-	show_debug_message("BADE LEVEL CAP"+string(EXPCapList[0]))
 	//other
 	team = TEAM.ALLY
 }

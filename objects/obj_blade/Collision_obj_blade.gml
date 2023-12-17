@@ -1,7 +1,13 @@
 /// @description Insert description here
 // You can write your code in this editor
 if cooldownInstanceExists(other.instanceId) == undefined {
-
+	//sound
+	if (currentTriggers + other.currentTriggers) > 0 {
+		audio_play_sound(snd_collision_trigger, 10, false)
+	} else {
+		audio_play_sound(snd_collision_health, 10, false)
+	}
+	
 	//damage calculation
 	if team != other.team {
 		takeDamage(1)
@@ -29,5 +35,8 @@ if cooldownInstanceExists(other.instanceId) == undefined {
 	other.vel[X] += lengthdir_x(reflectStrength,reflectionVector)
 	other.vel[Y] -= lengthdir_y(reflectStrength,reflectionVector)
 	other.hitFlash = 1
+	
+	//sound
+	
 }
 

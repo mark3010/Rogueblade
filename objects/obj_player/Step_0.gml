@@ -36,4 +36,5 @@ if EXP >= EXPCapList[level-1] {
 	EXP -= EXPCapList[level-1]
 	level++
 	currentLife = maxLife
+	audio_play_sound(snd_level_up, 2, false);
 }
