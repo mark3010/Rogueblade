@@ -20,6 +20,7 @@ repeat (min(array_length(text.scores),listLengthMax)) {
 	//score color
 	if text.scores[i].scoreId == array_length(text.scores) {
 		color = highlightColor
+		newHighScoreFlag = true
 	} else {
 		color = listColor
 	}
@@ -41,3 +42,6 @@ repeat (min(array_length(text.scores),listLengthMax)) {
 	scr_textStyle1(x-displaceMentX,y+displaceMentY*i,string(i+1)+"# place",font,fa_center,color,alpha,size)
 	i++
 }
+
+
+if newHighScoreFlag {scr_textStyle1(x,y-displaceMentY*2,"*NEW HIGHSCORE*",font,fa_center,highlightColor,alpha,size)}

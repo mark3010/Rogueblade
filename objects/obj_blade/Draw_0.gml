@@ -25,7 +25,7 @@ var t_height = texture_get_texel_height(texture)
 shader_set_uniform_f(shd_texel_handle,t_width,t_height)
 
 draw_sprite_ext(sprite_index,0,x,y,1,1+slantVAnim,0-slantHAnim,c_white,1) // draw self
-draw_sprite_ext(sprite_index,1,x,y,1,1+slantVAnim,0-slantHAnim,c_white,hitFlash) // draw hitflash
+draw_sprite_ext(sprite_index,hitFlashType+1,x,y,1,1+slantVAnim,0-slantHAnim,c_white,hitFlash) // draw hitflash
 
 shader_reset()
 

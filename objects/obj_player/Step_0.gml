@@ -31,8 +31,9 @@ if (move_up || move_down) {
 		vel[@ Y] += lengthdir_y(acc,dir)
 }
 
-currentLife +=.005
-
-if currentLife > maxLife {
+//EXP
+if EXP >= EXPCapList[level-1] {
+	EXP -= EXPCapList[level-1]
+	level++
 	currentLife = maxLife
 }

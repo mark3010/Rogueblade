@@ -4,8 +4,8 @@ if cooldownInstanceExists(other.instanceId) == undefined {
 
 	//damage calculation
 	if team != other.team {
-		currentLife--
-		other.currentLife--
+		takeDamage(1)
+		other.takeDamage(1)
 	}
 
 	//collision calculation

@@ -1,11 +1,26 @@
 
-//GUI variables
-var shadowDist = 1
-var lineDist = 15
-var xpos = 10
-var ypos = -10
+#region LEVEL
+if room == room_arena {
+	if instance_exists(obj_player) {
+		playerXPScale = (obj_player.EXP / obj_player.EXPCapList[obj_player.level-1])
+		playerLevel = "LEVEL: " + string(obj_player.level)
+	}
+	
+	if !surface_exists(expSurf) {
+		expSurf = surface_create(expWidth,expHeight);
+	}	
+	
+	surface_set_target(expSurf)
+	draw_clear(c_black)
+	draw_sprite_stretched(spr_exp_bar,1,0,0,expWidth*playerXPScale,expHeight)
+	surface_reset_target();
+	
+	scr_textStyle1(960/2,25,playerLevel,font_silkscreen,fa_center,c_white,1,1)
+	draw_surface(expSurf,960/2-expWidth/2,45)
+}
 
 
+#endregion
 
 #region TIMER
 if instance_exists(obj_timer) {
@@ -28,22 +43,37 @@ if instance_exists(obj_timer) {
 #endregion
 
 #region LIFE
-if !surface_exists(healthSurf) {
-	healthSurf = surface_create(healthWidth * 2 + sprite_get_width(spr_healthbar) * 4,healthHeight)
-}
 
-//DRAW HEALTHBAR
+
+//DRAW RESOURCES
 if instance_exists(obj_player) {
+	//life
 	if obj_player.currentLife >= healthAnim {
 		healthAnim = obj_player.currentLife;
 	} else {
 		healthAnim -= healthAnimSpeed
 	}
 
+	if !surface_exists(healthSurf) {
+		healthSurf = surface_create(healthWidth * 2 + sprite_get_width(spr_health_bar) * 4,healthHeight)
+	}
+	
 	playerLifeScale = (obj_player.currentLife / obj_player.maxLife)
 	playerLifeScaleAnim = (healthAnim / obj_player.maxLife)
 	playerCurrentLife = obj_player.currentLife
 	playerMaxLife = obj_player.maxLife
+	
+	//triggers
+	playerTriggersCooldownScale = (obj_player.currentTriggersCooldown / obj_player.maxTriggersCooldown)
+	playerMaxTriggers = obj_player.maxTriggers
+	playerCurrentTriggers = obj_player.currentTriggers
+	playerMaxTriggersCooldown = obj_player.maxTriggersCooldown
+	playerCurrentTriggersCooldown = obj_player.currentTriggersCooldown
+	
+	if !surface_exists(triggersCooldownSurf) {
+		triggersCooldownSurf = surface_create(triggersCooldownWidth,triggersCooldownHeight)
+	}
+	
 } else {
 	playerLifeScale = 0
 	playerLifeScaleAnim = 0
@@ -51,32 +81,44 @@ if instance_exists(obj_player) {
 }
 
 if room == room_arena {
-	surface_set_target(healthSurf)
+	//life
+		surface_set_target(healthSurf)
 	
-	draw_sprite_stretched(spr_healthbar,2,0,0,healthWidth,healthHeight)
+		//healthcontainer
+		draw_sprite_stretched(spr_health_bar,2,0,0,healthWidth,healthHeight)
+		draw_sprite_ext(spr_health_bar,0,healthWidth,0,-1,1,0,c_white,healthAlpha)
 
-	draw_sprite_ext(spr_healthbar,0,healthWidth,0,-1,1,0,c_white,healthAlpha)
+		//red part
+		draw_set_alpha(1)
+		gpu_set_colorwriteenable(1,1,1,0)
+		draw_sprite_stretched(spr_health_bar,4,0,0,(healthWidth+8)*playerLifeScaleAnim,healthHeight)
+		draw_sprite_stretched(spr_health_bar,3,0,0,(healthWidth+8)*playerLifeScale,healthHeight)
+		gpu_set_colorwriteenable(1,1,1,1)
 
-	draw_set_alpha(1)
+		//side detail
+		draw_sprite_ext(spr_health_bar,1,healthWidth,0,-1,1,0,c_white,healthAlpha)
 
-	gpu_set_colorwriteenable(1,1,1,0)
+		surface_reset_target();
 
-	draw_sprite_stretched(spr_healthbar,4,0,0,(healthWidth+8)*playerLifeScaleAnim,healthHeight)
-	draw_sprite_stretched(spr_healthbar,3,0,0,(healthWidth+8)*playerLifeScale,healthHeight)
+		//draw on screen
+		draw_surface(healthSurf,healthPosX,healthPosY)
+		draw_surface_ext(healthSurf,healthPosX,healthPosY,-1,1,0,c_white,1)
+		scr_textStyle1(healthPosX,healthPosY+healthNumberYOffset,string(playerCurrentLife)+"/"+string(playerMaxLife),font_silkscreen,fa_center,c_white,1,1)
 	
-	gpu_set_colorwriteenable(1,1,1,1)
-
-	draw_sprite_ext(spr_healthbar,1,healthWidth,0,-1,1,0,c_white,healthAlpha)
-
-	surface_reset_target();
-
+	//trigger
+		surface_set_target(triggersCooldownSurf)
 	
-	draw_surface(healthSurf,healthPosX,healthPosY)
-	draw_surface_ext(healthSurf,healthPosX,healthPosY,-1,1,0,c_white,1)
+		//cooldown container
+		draw_clear(c_black)
+		//blue cooldown part
+		draw_sprite_stretched(spr_triggers_cooldown_bar,3,0,0,triggersCooldownWidth*playerTriggersCooldownScale,triggersCooldownHeight)
 
-	//scr_text(healthPosX,healthPosY+healthNumberYOffset,string(obj_player.currentLife)+"/"+string(obj_player.maxLife),font_silkscreen,fa_center)
+		surface_reset_target();
 
-	scr_textStyle1(healthPosX,healthPosY+healthNumberYOffset,string(playerCurrentLife)+"/"+string(playerMaxLife),font_silkscreen,fa_center,c_white,1,1)
+		//draw on screen
+		draw_surface(triggersCooldownSurf,triggersCooldownPosX-triggersCooldownWidth/2,triggersCooldownPosY)
+		scr_textStyle1(triggersCooldownPosX,triggersCooldownPosY-15,string(playerCurrentTriggers)+"/"+string(playerMaxTriggers),font_silkscreen,fa_center,c_white,1,1)
+	
 }
 #endregion
 
@@ -105,6 +147,12 @@ if instance_exists(obj_wave_director) {
 if global.debugMode {
 	var i
 	for (i=0;i<2;i++) {
+		//GUI variables
+		var shadowDist = 1
+		var lineDist = 15
+		var xpos = 10
+		var ypos = -10
+		
 		if i = 0 {
 			draw_set_font(font_opensans)
 			draw_set_color(merge_colour(c_white,c_black,1))

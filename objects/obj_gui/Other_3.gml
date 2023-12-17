@@ -1,0 +1,3 @@
+surface_free(healthSurf)
+surface_free(expSurf)
+surface_free(triggersCooldownSurf)

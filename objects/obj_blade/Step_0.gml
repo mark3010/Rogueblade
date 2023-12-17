@@ -54,3 +54,21 @@ dragVector = point_distance(0,0,-velXSurplus*dragStrength,-velYSurplus*dragStren
 //ANIMATION VARIABLE
 hitFlash = lerp(hitFlash,0,.1)
 lifetime ++
+
+//RESOURCES
+//life
+currentLife += lifeRegen
+
+if currentLife > maxLife {
+	currentLife = maxLife
+}
+
+//triggers
+if currentTriggers < maxTriggers {
+	currentTriggersCooldown += triggersCooldownRegen
+}
+
+if currentTriggersCooldown >= maxTriggersCooldown {
+	currentTriggers = maxTriggers
+	currentTriggersCooldown = 0
+}
