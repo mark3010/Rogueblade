@@ -1,2 +1,2 @@
 text = "OTHER CONTROLS"
-align = fa_left
+align = fa_right

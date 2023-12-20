@@ -1,7 +1,8 @@
 //TRIGGERS
 #region NEW GAME
-if newGameFlag { startGame() }
+if newGameFlag { startGame(gameMode) }
 #endregion
+
 #region END GAME
 if endGameFlag { 
 	endGame() 
@@ -16,6 +17,7 @@ if keyboard_check_pressed(vk_f5) {
 	window_set_fullscreen(!stateFullscreen)
 }
 #endregion
+
 #region OTHER
 if keyboard_check_pressed(vk_f4) {
     global.debugMode *= -1 
@@ -27,6 +29,7 @@ if keyboard_check_pressed(vk_f4) {
 if room == room_menu {
 	if keyboard_check_pressed(vk_space) {
 		newGameFlag = true
+		gameMode = gameModeType.NORMAL
 		audio_play_sound(snd_ui_select, 10, false)
 		room_goto(room_arena)
 	}
@@ -57,6 +60,8 @@ if room == room_arena {
 #region HIGHSCORE
 if room == room_highscore {
 	if keyboard_check_pressed(vk_space) or keyboard_check_pressed(vk_escape) {
+		gameMode = gameModeType.PRACTICE
+		newGameFlag = true
 		audio_play_sound(snd_ui_select, 10, false)
 		room_goto(room_menu)
 	}

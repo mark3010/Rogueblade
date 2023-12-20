@@ -55,6 +55,7 @@
     {"id":{"name":"spr_test_gui","path":"sprites/spr_test_gui/spr_test_gui.yy",},},
     {"id":{"name":"spr_text_element","path":"sprites/spr_text_element/spr_text_element.yy",},},
     {"id":{"name":"snd_ui_select","path":"sounds/snd_ui_select/snd_ui_select.yy",},},
+    {"id":{"name":"obj_room_transition","path":"objects/obj_room_transition/obj_room_transition.yy",},},
     {"id":{"name":"font_silkscreen","path":"fonts/font_silkscreen/font_silkscreen.yy",},},
     {"id":{"name":"snd_level_up","path":"sounds/snd_level_up/snd_level_up.yy",},},
     {"id":{"name":"font_opensans","path":"fonts/font_opensans/font_opensans.yy",},},
