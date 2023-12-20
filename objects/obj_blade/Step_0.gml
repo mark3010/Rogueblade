@@ -1,12 +1,12 @@
 // PRECALC
+cooldownsCalculate()
+lifeCalculate()
+triggersCalculate()
 scr_bladeArenaSync()
 // variables provided:
 	// inits objArena sync
 	// inits "arenaBaseX", "arenaFlatBorderX", "arenaSlopedBorderX" vars. Same for Y
 	// inits onSlope, onBorder vars
-cooldownsCalculate()
-
-depth = -y
 
 //FORCES APPLIED
 if onSlope {
@@ -37,8 +37,8 @@ if (y > arenaSlopedBorderY || y < arenaSlopedBorderY) {
 
 //DRAG
 //drag only applies to the speed of the blade above the velMax threshold
-if velVector > velMax {
-	surplusVector = velVector / velMax
+if velVector > stats.velMax {
+	surplusVector = velVector / stats.velMax
 	
 	velXSurplus = vel[X] * (surplusVector - 1)
 	velYSurplus = vel[Y] * (surplusVector - 1)
@@ -55,23 +55,4 @@ dragVector = point_distance(0,0,-velXSurplus*dragStrength,-velYSurplus*dragStren
 hitFlash = lerp(hitFlash,0,.1)
 lifetime ++
 
-//RESOURCES
-//life
-currentLife += lifeRegen
-
-if currentLife > maxLife {
-	currentLife = maxLife
-}
-
-//triggers
-if currentTriggers < maxTriggers {
-	currentTriggersCooldown += triggersCooldownRegen
-}
-
-if currentTriggersCooldown >= maxTriggersCooldown {
-	currentTriggers = maxTriggers
-	currentTriggersCooldown = 0
-	audio_play_sound(snd_shield_full, 5, false)
-	var shieldRegainedAnim = instance_create_depth(x,y,depth+100,obj_shield_regained) 
-	shieldRegainedAnim.target = id
-}
+depth = -y

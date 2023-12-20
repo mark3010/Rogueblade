@@ -4,43 +4,32 @@
 event_inherited()
 
 //BASE PLAYER STATS
-function initPlayerStats() {
-	//resources
-	maxLife = 5
-	currentLife = maxLife
-	lifeRegen = 0.005
-	
-	maxTriggers = 3
-	currentTriggers = maxTriggers
-	maxTriggersCooldown = 60*3 //seconds 
-	currentTriggersCooldown = 0 //seconds 
-	triggersCooldownRegen = 1
-	
+	//override
+	stats.maxLife = 5
+	stats.lifeRegen = 0.3 //per second
+	stats.maxTriggers = 3
+	stats.maxTriggersCooldown = 60*3 //seconds 
+	stats.triggersCooldownRegen = 1
 	//combat
-	collisionDamage = 10
-	
+	stats.collisionDamage = 10
 	//kinetics
-	acc = .5
-	deflectPower = 100
-	deflectResist = 0
+	stats.acc = .5
+	stats.deflectPower = 100
+	stats.deflectResist = 0
+
+refreshCurrents()
+
+//EXP variables
+level = 1
+EXP = 0
 	
-	//EXP variables
-	level = 1
-	EXP = 0
+var EXPBaseCap = 4
+var EXPBaseExponential = 1.15
+var maxLevel = 50
 	
-	var EXPBaseCap = 4
-	var EXPBaseExponential = 1.15
-	var maxLevel = 50
-	
-	for (var i = 0; i < maxLevel-1; i++) {
-		EXPCapList[i] = round(EXPBaseCap * power(EXPBaseExponential,i))
-	}
-	
-	//other
-	team = TEAM.ALLY
+for (var i = 0; i < maxLevel-1; i++) {
+	EXPCapList[i] = round(EXPBaseCap * power(EXPBaseExponential,i))
 }
-
-//OVERRIDE
-initPlayerStats()
-
-
+	
+//other
+team = TEAM.ALLY

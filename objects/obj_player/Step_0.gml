@@ -24,17 +24,26 @@ if (move_up || move_down) {
 dir = point_direction(0,0,dirX,dirY)
 
 if (move_right || move_left) {
-		vel[@ X] += lengthdir_x(acc,dir)
+		vel[@ X] += lengthdir_x(stats.acc,dir)
 }
 
 if (move_up || move_down) {
-		vel[@ Y] += lengthdir_y(acc,dir)
+		vel[@ Y] += lengthdir_y(stats.acc,dir)
 }
 
-//EXP
+//LEVEL UP
 if EXP >= EXPCapList[level-1] {
+	obj_upgrade_handler.getUpgrade(self)
+	
+	//refresh player
 	EXP -= EXPCapList[level-1]
 	level++
-	currentLife = maxLife
+	currentLife = stats.maxLife
+	
+	//effects
+	var levelUpEffect = instance_create_depth(x,y,depth,obj_level_up)
+	levelUpEffect.target = id
+	
 	audio_play_sound(snd_level_up, 2, false);
 }
+

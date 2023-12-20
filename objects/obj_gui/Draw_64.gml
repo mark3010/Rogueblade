@@ -22,19 +22,19 @@ if room == room_arena {
 
 #endregion
 
+#region UPGRADE DISPLAY
+if room == room_arena {
+	if currentUpgradeTimer < currentUpgradeTimerMax {
+		scr_textStyle1(960/2,65,currentUpgradeText,font_silkscreen,fa_center,c_yellow,1,1)
+	}
+}
+
+#endregion
+
 #region TIMER
 if instance_exists(obj_timer) {
 	//format time
-	var timeFormatted = ""
-	if obj_timer.gameTimeH() > 0 {
-		timeFormatted += string(obj_timer.gameTimeM()) + " h. " 
-	}
-	if obj_timer.gameTimeM() > 0 {
-		timeFormatted += string(obj_timer.gameTimeM()) + " m. " 
-	}
-	if obj_timer.gameTimeS() >= 0 {
-		timeFormatted += string(obj_timer.gameTimeS()) + " s. " 
-	}
+	var timeFormatted = obj_text_formatter.gameTimeFormatted(obj_timer.gameTime)
 
 	scr_textStyle1(timerPosX,timerPosY-30,timeFormatted,font_silkscreen,fa_left,c_white,1,2)
 	scr_textStyle1(timerPosX,timerPosY,"Time Elapsed",font_silkscreen,fa_left,c_white,1,1)
@@ -42,9 +42,7 @@ if instance_exists(obj_timer) {
 
 #endregion
 
-#region LIFE
-
-
+#region RESOURCES
 //DRAW RESOURCES
 if instance_exists(obj_player) {
 	//life
@@ -58,16 +56,16 @@ if instance_exists(obj_player) {
 		healthSurf = surface_create(healthWidth * 2 + sprite_get_width(spr_health_bar) * 4,healthHeight)
 	}
 	
-	playerLifeScale = (obj_player.currentLife / obj_player.maxLife)
-	playerLifeScaleAnim = (healthAnim / obj_player.maxLife)
+	playerLifeScale = (obj_player.currentLife / obj_player.stats.maxLife)
+	playerLifeScaleAnim = (healthAnim / obj_player.stats.maxLife)
 	playerCurrentLife = obj_player.currentLife
-	playerMaxLife = obj_player.maxLife
+	playerMaxLife = obj_player.stats.maxLife
 	
 	//triggers
-	playerTriggersCooldownScale = (obj_player.currentTriggersCooldown / obj_player.maxTriggersCooldown)
-	playerMaxTriggers = obj_player.maxTriggers
+	playerTriggersCooldownScale = (obj_player.currentTriggersCooldown / obj_player.stats.maxTriggersCooldown)
+	playerMaxTriggers = obj_player.stats.maxTriggers
 	playerCurrentTriggers = obj_player.currentTriggers
-	playerMaxTriggersCooldown = obj_player.maxTriggersCooldown
+	playerMaxTriggersCooldown = obj_player.stats.maxTriggersCooldown
 	playerCurrentTriggersCooldown = obj_player.currentTriggersCooldown
 	
 	if !surface_exists(triggersCooldownSurf) {

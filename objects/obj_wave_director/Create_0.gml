@@ -1,3 +1,4 @@
+#region ENUMS
 enum waveType {
 	ALL,
 	HORIZONTAL,
@@ -13,8 +14,9 @@ enum waveSpawnerType {
 	HORIZONTAL,
 	VERTICAL
 }
+#endregion
 
-//WAVES
+#region WAVES
 waveList = []
 waveNumber = 1
 
@@ -45,7 +47,10 @@ function generateWave() {
 	return new Wave(waveName,waveMaxTimer,waveCyclesTotal,waveEnemiesPerWave)	
 }
 
-//SPAWNERS
+#endregion
+
+#region SPAWNERS
+
 var arena = obj_arena
 spawnerList = []
 //top
@@ -54,6 +59,7 @@ var arenaTopY = arena.y - arena.baseWidth
 top = instance_create_depth(arenaTopX,arenaTopY,depth,obj_wave_spawner_horisontal)
 top.image_xscale = (arena.baseWidth + arena.baseRadius)  / 16 * 2
 top.image_yscale = 1
+top.updateSpawner()
 array_insert(spawnerList,0,top)
 
 
@@ -63,6 +69,7 @@ var arenaBottomY = arena.y + arena.baseWidth
 bottom = instance_create_depth(arenaBottomX,arenaBottomY,depth,obj_wave_spawner_horisontal)
 bottom.image_xscale = (arena.baseWidth + arena.baseRadius)  / 16 * 2
 bottom.image_yscale = 1
+bottom.updateSpawner()
 array_insert(spawnerList,1,bottom)
 
 //right
@@ -71,6 +78,7 @@ var arenaRightY = arena.y
 right = instance_create_depth(arenaRightX,arenaRightY,depth,obj_wave_spawner_vertical)
 right.image_xscale = 1
 right.image_yscale = arena.baseWidth / 16 * 2
+right.updateSpawner()
 array_insert(spawnerList,2,right)
 
 //left
@@ -79,5 +87,7 @@ var arenaLeftY = arena.y
 left = instance_create_depth(arenaLeftX,arenaLeftY,depth,obj_wave_spawner_vertical)
 left.image_xscale = 1
 left.image_yscale = arena.baseWidth / 16 * 2
+left.updateSpawner()
 array_insert(spawnerList,3,left)
 
+#endregion

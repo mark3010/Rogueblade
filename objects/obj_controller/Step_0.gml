@@ -26,7 +26,6 @@ if keyboard_check_pressed(vk_f4) {
 #region MENU
 if room == room_menu {
 	if keyboard_check_pressed(vk_space) {
-		show_debug_message("space activate")
 		newGameFlag = true
 		audio_play_sound(snd_ui_select, 10, false)
 		room_goto(room_arena)
@@ -57,11 +56,9 @@ if room == room_arena {
 #endregion
 #region HIGHSCORE
 if room == room_highscore {
-
 	if keyboard_check_pressed(vk_space) or keyboard_check_pressed(vk_escape) {
 		audio_play_sound(snd_ui_select, 10, false)
 		room_goto(room_menu)
 	}
-
 }
 #endregion

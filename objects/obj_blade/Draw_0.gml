@@ -15,7 +15,6 @@ draw_sprite_ext(spr_blade_base_shadow,0,shadowX,shadowY,1,1+slantVAnim,0-slantHA
 #endregion
 
 #region DRAW SELF
-
 shader_set(shd_outline)
 
 var texture = sprite_get_texture(sprite_index, image_index)

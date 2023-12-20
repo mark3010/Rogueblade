@@ -8,12 +8,6 @@ if cooldownInstanceExists(other.instanceId) == undefined {
 		audio_play_sound(snd_collision_health, 10, false)
 	}
 	
-	//damage calculation
-	if team != other.team {
-		takeDamage(1)
-		other.takeDamage(1)
-	}
-
 	//collision calculation
 	reflectionVector = -point_direction(x,y,other.x,other.y)
 	var collisionTimer = 5
@@ -36,7 +30,11 @@ if cooldownInstanceExists(other.instanceId) == undefined {
 	other.vel[Y] -= lengthdir_y(reflectStrength,reflectionVector)
 	other.hitFlash = 1
 	
-	//sound
+	//damage calculation
+	if team != other.team {
+		takeDamage(1)
+		other.takeDamage(1)
+	}
 	
 }
 

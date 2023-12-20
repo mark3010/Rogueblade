@@ -26,16 +26,7 @@ repeat (min(array_length(text.scores),listLengthMax)) {
 	}
 	
 	//format time
-	var timeFormatted = ""
-	if text.scores[i].timer.gameTimeH > 0 {
-		timeFormatted += string(text.scores[i].timer.gameTimeH) + " h. " 
-	}
-	if text.scores[i].timer.gameTimeM > 0 {
-		timeFormatted += string(text.scores[i].timer.gameTimeM) + " m. " 
-	}
-	if text.scores[i].timer.gameTimeS >= 0 {
-		timeFormatted += string(text.scores[i].timer.gameTimeS) + " s. " 
-	}
+	var timeFormatted = obj_text_formatter.gameTimeFormatted(text.scores[i].timer.gameTime)
 	
 	scr_textStyle1(x+displaceMentX,y+displaceMentY*i,timeFormatted,font,fa_center,color,alpha,size)
 	scr_textStyle1(x,y+displaceMentY*i,"-",font,fa_center,color,alpha,size)

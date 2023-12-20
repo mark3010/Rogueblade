@@ -10,7 +10,7 @@
   "bitRate": 128,
   "compression": 0,
   "conversionMode": 0,
-  "duration": 0.051791,
+  "duration": 0.030113,
   "parent": {
     "name": "Sounds",
     "path": "folders/Sounds.yy",
@@ -19,5 +19,5 @@
   "sampleRate": 44100,
   "soundFile": "snd_ui_select.wav",
   "type": 0,
-  "volume": 0.15,
+  "volume": 0.14,
 }

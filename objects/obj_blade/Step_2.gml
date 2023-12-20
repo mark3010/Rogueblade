@@ -1,6 +1,6 @@
-//DEATH
-if currentLife <= 0 {
-	die()
+if deathFlag {
+	ds_map_destroy(cooldownMap)
+	instance_destroy()
 }
 
 //APPLY MOVEMENT VECTOR

@@ -2,12 +2,13 @@
 var arenaX = view_wport[0] / 2
 var arenaY = view_hport[0] / 2
 
-randomize() //set the seed to randomize gameplay
+randomize() //set random seed to randomize gameplay
 
 arena = instance_create_depth(arenaX,arenaY,depth,obj_arena)
 camera = instance_create_depth(arena.x,arena.y,depth,obj_cam)
 player = instance_create_depth(arena.x,arena.y,depth,obj_player)
 waveDirector = instance_create_depth(x,y,depth,obj_wave_director)
 timer = instance_create_depth(x,y,depth,obj_timer)
+upgradeHandler = instance_create_depth(x,y,depth,obj_upgrade_handler)
 
 camera.focus(player.id)
