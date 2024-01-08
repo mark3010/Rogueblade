@@ -1,0 +1,1 @@
+createGame(gameModeType.NORMAL)

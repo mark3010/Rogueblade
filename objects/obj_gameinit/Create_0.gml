@@ -1,5 +1,13 @@
 randomize() //set random seed to randomize gameplay
 
+
+function endGame() {
+	gameEnder = instance_create_depth(x,y,depth,obj_game_end_sequence)
+	global.gameActive = false
+	audio_play_sound(snd_player_death, 1, false)
+	audio_stop_sound(snd_music)
+}
+
 function createGame(gameModeType) {
 
 	var arenaX = view_wport[0] / 2
@@ -24,6 +32,6 @@ function createGame(gameModeType) {
 		break
 	}
 	
-	
+	global.gameActive = true
 	camera.focus(player.id)
 }

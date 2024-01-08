@@ -15,6 +15,7 @@ newGameFlag = false
 endGameFlag = false
 gameMode = gameModeType.PRACTICE
 
+/*
 function startGame(gameMode) {
 	gameInitializer = instance_create_depth(x,y,depth,obj_gameinit)
 	gameInitializer.createGame(gameMode)
@@ -29,6 +30,6 @@ function endGame() {
 	endGameFlag = false
 	global.gameActive = false
 	audio_stop_sound(snd_music)
-}
+}*/
 
-startGame(gameModeType.PRACTICE)
+//startGame(gameModeType.PRACTICE)
