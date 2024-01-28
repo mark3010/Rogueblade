@@ -1,6 +1,5 @@
 /// @description Insert description here
 // You can write your code in this editor
-
 event_inherited()
 
 //DEBUG STUFF
@@ -31,6 +30,7 @@ if global.debugMode {
 	draw_text(x+40,y+70,"slantH: "+string(slantH))
 	draw_text(x+40,y+80,"slantV: "+string(slantV))
 	draw_text(x+40,y+90,"hitFlash: "+string(hitFlash))
+	
 
 
 	draw_set_halign(fa_right)

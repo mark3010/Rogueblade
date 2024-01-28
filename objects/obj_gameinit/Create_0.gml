@@ -1,8 +1,7 @@
 randomize() //set random seed to randomize gameplay
 
-
 function endGame() {
-	gameEnder = instance_create_depth(x,y,depth,obj_game_end_sequence)
+	gameEnder = instance_create_layer(x,y,layer,obj_game_end_sequence)
 	global.gameActive = false
 	audio_play_sound(snd_player_death, 1, false)
 	audio_stop_sound(snd_music)
@@ -13,22 +12,27 @@ function createGame(gameModeType) {
 	var arenaX = view_wport[0] / 2
 	var arenaY = view_hport[0] / 2
 	
-	arena = instance_create_depth(arenaX,arenaY,depth,obj_arena)
+	var layerEntities = layer_create(0,"layerEntities")
+	var layerGround = layer_create(1,"layerGround")
+	var layerBackground = layer_create(2,"layerBackground")
+
+	arena = instance_create_layer(arenaX,arenaY,layerBackground,obj_arena)
 	arena.init(gameModeType)
 	
 	switch (gameModeType) {
 		case gameModeType.NORMAL:
-			camera = instance_create_depth(arena.x,arena.y,depth,obj_cam)
-			player = instance_create_depth(arena.x,arena.y,depth,obj_player)
-			waveDirector = instance_create_depth(x,y,depth,obj_wave_director)
-			timer = instance_create_depth(x,y,depth,obj_timer)
-			upgradeHandler = instance_create_depth(x,y,depth,obj_upgrade_handler)
+			gui = instance_create_layer(x,y,layerEntities,obj_gui)
+			camera = instance_create_layer(arena.x,arena.y,layerEntities,obj_cam)
+			player = instance_create_layer(arena.x,arena.y,layerEntities,obj_player)
+			waveDirector = instance_create_layer(x,y,layerEntities,obj_wave_director)
+			timer = instance_create_layer(x,y,layerEntities,obj_timer)
+			upgradeHandler = instance_create_layer(x,y,layerEntities,obj_upgrade_handler)
 			
 			audio_play_sound(snd_music, 1, true)
 		break
 		case gameModeType.PRACTICE:
-			camera = instance_create_depth(arena.x,arena.y,depth,obj_cam)
-			player = instance_create_depth(arena.x,arena.y,depth,obj_player)
+			camera = instance_create_layer(arena.x,arena.y,layerEntities,obj_cam)
+			player = instance_create_layer(arena.x,arena.y,layerEntities,obj_player)
 		break
 	}
 	

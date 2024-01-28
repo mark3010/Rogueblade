@@ -55,4 +55,4 @@ dragVector = point_distance(0,0,-velXSurplus*dragStrength,-velYSurplus*dragStren
 hitFlash = lerp(hitFlash,0,.1)
 lifetime ++
 
-depth = -y
+//depth = -y

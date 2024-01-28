@@ -1,4 +1,8 @@
 event_inherited()
+global.font=font_silver
+global.fontDebug=font_silkscreen
+global.version="RogueBlade - v0.01"
+gameMode = gameModeType.PRACTICE
 
 // DEBUG MODE
 global.debugMode = -1
@@ -10,26 +14,4 @@ enum gameModeType {
 	PRACTICE
 }
 
-//CREATE GAME
-newGameFlag = false
-endGameFlag = false
-gameMode = gameModeType.PRACTICE
 
-/*
-function startGame(gameMode) {
-	gameInitializer = instance_create_depth(x,y,depth,obj_gameinit)
-	gameInitializer.createGame(gameMode)
-	
-	newGameFlag = false
-	global.gameActive = true
-	
-}
-
-function endGame() {
-	gameEnder = instance_create_depth(x,y,depth,obj_game_end_sequence)
-	endGameFlag = false
-	global.gameActive = false
-	audio_stop_sound(snd_music)
-}*/
-
-//startGame(gameModeType.PRACTICE)

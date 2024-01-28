@@ -5,4 +5,4 @@ align = fa_center
 color = c_white
 alpha = 1
 size = 1
-font = font_silkscreen
+font = global.font

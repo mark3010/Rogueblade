@@ -41,9 +41,8 @@ if EXP >= EXPCapList[level-1] {
 	currentLife = stats.maxLife
 	
 	//effects
-	var levelUpEffect = instance_create_depth(x,y,depth,obj_level_up)
+	var levelUpEffect = instance_create_layer(x,y,layer,obj_level_up)
 	levelUpEffect.target = id
 	
 	audio_play_sound(snd_level_up, 2, false);
 }
-

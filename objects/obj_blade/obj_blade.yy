@@ -15,7 +15,10 @@
     "name": "entities",
     "path": "folders/Objects/entities.yy",
   },
-  "parentObjectId": null,
+  "parentObjectId": {
+    "name": "obj_entity_depth",
+    "path": "objects/obj_entity_depth/obj_entity_depth.yy",
+  },
   "persistent": false,
   "physicsAngularDamping": 0.1,
   "physicsDensity": 0.5,

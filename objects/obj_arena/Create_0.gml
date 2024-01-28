@@ -37,6 +37,3 @@ function init(gameMode) {
 	}
 
 }
-
-
-depth = 9

@@ -15,7 +15,7 @@ if room == room_arena {
 	draw_sprite_stretched(spr_exp_bar,1,0,0,expWidth*playerXPScale,expHeight)
 	surface_reset_target();
 	
-	scr_textStyle1(960/2,25,playerLevel,font_silkscreen,fa_center,c_white,1,1)
+	scr_textStyle1(960/2,25,playerLevel,global.font,fa_center,c_white,1,1)
 	draw_surface(expSurf,960/2-expWidth/2,45)
 }
 
@@ -25,7 +25,7 @@ if room == room_arena {
 #region UPGRADE DISPLAY
 if room == room_arena {
 	if currentUpgradeTimer < currentUpgradeTimerMax {
-		scr_textStyle1(960/2,65,currentUpgradeText,font_silkscreen,fa_center,c_yellow,1,1)
+		scr_textStyle1(960/2,65,currentUpgradeText,global.font,fa_center,c_yellow,1,1)
 	}
 }
 
@@ -36,8 +36,8 @@ if instance_exists(obj_timer) {
 	//format time
 	var timeFormatted = obj_text_formatter.gameTimeFormatted(obj_timer.gameTime)
 
-	scr_textStyle1(timerPosX,timerPosY-30,timeFormatted,font_silkscreen,fa_left,c_white,1,2)
-	scr_textStyle1(timerPosX,timerPosY,"Time Elapsed",font_silkscreen,fa_left,c_white,1,1)
+	scr_textStyle1(timerPosX,timerPosY-30,timeFormatted,global.font,fa_left,c_white,1,2)
+	scr_textStyle1(timerPosX,timerPosY,"Time Elapsed",global.font,fa_left,c_white,1,1)
 }
 
 #endregion
@@ -52,9 +52,7 @@ if instance_exists(obj_player) {
 		healthAnim -= healthAnimSpeed
 	}
 
-	if !surface_exists(healthSurf) {
-		healthSurf = surface_create(healthWidth * 2 + sprite_get_width(spr_health_bar) * 4,healthHeight)
-	}
+
 	
 	playerLifeScale = (obj_player.currentLife / obj_player.stats.maxLife)
 	playerLifeScaleAnim = (healthAnim / obj_player.stats.maxLife)
@@ -68,9 +66,7 @@ if instance_exists(obj_player) {
 	playerMaxTriggersCooldown = obj_player.stats.maxTriggersCooldown
 	playerCurrentTriggersCooldown = obj_player.currentTriggersCooldown
 	
-	if !surface_exists(triggersCooldownSurf) {
-		triggersCooldownSurf = surface_create(triggersCooldownWidth,triggersCooldownHeight)
-	}
+
 	
 } else {
 	playerLifeScale = 0
@@ -79,6 +75,12 @@ if instance_exists(obj_player) {
 }
 
 if room == room_arena {
+	if !surface_exists(healthSurf) {
+		healthSurf = surface_create(healthWidth * 2 + sprite_get_width(spr_health_bar) * 4,healthHeight)
+	}
+	if !surface_exists(triggersCooldownSurf) {
+		triggersCooldownSurf = surface_create(triggersCooldownWidth,triggersCooldownHeight)
+	}
 	//life
 		surface_set_target(healthSurf)
 	
@@ -101,7 +103,7 @@ if room == room_arena {
 		//draw on screen
 		draw_surface(healthSurf,healthPosX,healthPosY)
 		draw_surface_ext(healthSurf,healthPosX,healthPosY,-1,1,0,c_white,1)
-		scr_textStyle1(healthPosX,healthPosY+healthNumberYOffset,string(playerCurrentLife)+"/"+string(playerMaxLife),font_silkscreen,fa_center,c_white,1,1)
+		scr_textStyle1(healthPosX,healthPosY+healthNumberYOffset,string(playerCurrentLife)+"/"+string(playerMaxLife),global.font,fa_center,c_white,1,1)
 	
 	//trigger
 		surface_set_target(triggersCooldownSurf)
@@ -115,7 +117,7 @@ if room == room_arena {
 
 		//draw on screen
 		draw_surface(triggersCooldownSurf,triggersCooldownPosX-triggersCooldownWidth/2,triggersCooldownPosY)
-		scr_textStyle1(triggersCooldownPosX,triggersCooldownPosY-15,string(playerCurrentTriggers)+"/"+string(playerMaxTriggers),font_silkscreen,fa_center,c_white,1,1)
+		scr_textStyle1(triggersCooldownPosX,triggersCooldownPosY-15,string(playerCurrentTriggers)+"/"+string(playerMaxTriggers),global.font,fa_center,c_white,1,1)
 	
 }
 #endregion
@@ -131,42 +133,12 @@ if instance_exists(obj_wave_director) {
 		var waveDisplayDirection = "Direction: "+string(waveTypeNames[obj_wave_director.waveList[i].waveDirection])
 		
 		//top part
-		scr_textStyle1(waveListPosX,waveListPosY-yWaveListOffset-30,waveDisplayName,font_silkscreen,fa_right,c_white,1,2)
+		scr_textStyle1(waveListPosX,waveListPosY-yWaveListOffset-30,waveDisplayName,global.font,fa_right,c_white,1,2)
 		//bottom part
-		scr_textStyle1(waveListPosX,waveListPosY-yWaveListOffset,waveDisplayDirection,font_silkscreen,fa_right,c_white,1,1)
-		//scr_textStyle1(waveListPosX-130,waveListPosY-yWaveListOffset,"|",font_silkscreen,fa_right,c_white,1,1)
-		//scr_textStyle1(waveListPosX-140,waveListPosY-yWaveListOffset,waveDisplayElapsed,font_silkscreen,fa_right,c_white,1,1)
+		scr_textStyle1(waveListPosX,waveListPosY-yWaveListOffset,waveDisplayDirection,global.font,fa_right,c_white,1,1)
+		//scr_textStyle1(waveListPosX-130,waveListPosY-yWaveListOffset,"|",global.font,fa_right,c_white,1,1)
+		//scr_textStyle1(waveListPosX-140,waveListPosY-yWaveListOffset,waveDisplayElapsed,global.font,fa_right,c_white,1,1)
 			
-	}
-}
-#endregion
-
-#region DEBUG GUI
-if global.debugMode {
-	var i
-	for (i=0;i<2;i++) {
-		//GUI variables
-		var shadowDist = 1
-		var lineDist = 15
-		var xpos = 10
-		var ypos = -10
-		
-		if i = 0 {
-			draw_set_font(font_opensans)
-			draw_set_color(merge_colour(c_white,c_black,1))
-		} else {
-			draw_set_color(merge_colour(c_white,c_white,1))
-			shadowDist = 0
-		}
-	
-		draw_set_halign(fa_left);
-		draw_text(xpos,ypos+lineDist+shadowDist,string_hash_to_newline("fps: "+ string(fps)))
-		draw_text(xpos,ypos+lineDist*2+shadowDist,string_hash_to_newline("real fps: "+ string(fps_real)))
-
-		var gw = view_wport[0], gh = view_hport[0]
-		
-		draw_set_halign(fa_right);
-		draw_text(-xpos+gw,ypos+lineDist+shadowDist,"debugMode")
 	}
 }
 #endregion

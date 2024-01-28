@@ -1,5 +1,6 @@
 /// @description Insert description here
 // You can write your code in this editor
+
 function gameTime10MS(gameTime) {
 	return floor(gameTime * 1.666 mod 100)
 }

@@ -3,6 +3,6 @@
 text = obj_file_handler.getScores()
 alpha = 1
 size = 1
-font = font_silkscreen
+font = global.font
 
 newHighScoreFlag = false

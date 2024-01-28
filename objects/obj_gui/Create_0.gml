@@ -1,4 +1,3 @@
-event_inherited()
 
 #region TIMER
 timerPosX = 30

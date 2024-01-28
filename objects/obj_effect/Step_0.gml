@@ -4,7 +4,7 @@ lifetime++
 
 if lifetime == deathTrigger {
 	if payload != noone {
-		instance_create_depth(x,y,depth,payload)
+		instance_create_layer(x,y,layer,payload)
 	}
 	instance_destroy()	
 }

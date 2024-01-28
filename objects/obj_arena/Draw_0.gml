@@ -6,7 +6,6 @@ var colSlant2 = merge_color($66564D,c_white,.17)
 var colSlant3 = merge_color($66564D,c_white,.11)
 var colSlant4 = merge_color($66564D,c_white,.05)
 
-
 // sloped area of arena
 /**
 

@@ -51,7 +51,7 @@ function triggersCalculate() {
 		currentTriggers = stats.maxTriggers
 		currentTriggersCooldown = 0
 		audio_play_sound(snd_shield_full, 5, false)
-		var shieldRegainedAnim = instance_create_depth(x,y,depth+100,obj_shield_regained) 
+		var shieldRegainedAnim = instance_create_layer(x,y,layer_get_id("layerGround"),obj_shield_regained) 
 		shieldRegainedAnim.target = id
 	}
 }
@@ -85,6 +85,41 @@ hitFlash = 0
 lifetime = 0
 shd_texel_handle = shader_get_uniform(shd_outline,"in_Texel")
 hitFlashType = DAMAGE_TYPE.HEALTH
+
+function draw_me() {
+	#region ANIMATION
+
+	var slopeAngleStrength = 0.5 // 0 is flat arena border, 1 is vertical arena border, 0.5 is 45 degree arena border
+	var slantHAnim = slantH * sign(obj_arena.x-x) * slopeAngleStrength * 90 // 90 is rotation at max slope slant
+	var slantVAnim = slantV * sign(obj_arena.y-y) * slopeAngleStrength * .3 // .1 is stretch at max slope slant
+
+	if lifetime < 1 {exit}
+
+	#endregion
+
+
+	#region DRAW SHADOW
+	var shadowX = x -(obj_arena.x - x) * 0.03
+	var shadowY = y -(obj_arena.y - y) * 0.03
+	draw_sprite_ext(spr_blade_base_shadow,0,shadowX,shadowY,1,1+slantVAnim,0-slantHAnim,c_white,.1) // draw self
+	#endregion
+
+	#region DRAW SELF
+	shader_set(shd_outline)
+
+	var texture = sprite_get_texture(sprite_index, image_index)
+	var t_width = texture_get_texel_width(texture)
+	var t_height = texture_get_texel_height(texture)
+
+	shader_set_uniform_f(shd_texel_handle,t_width,t_height)
+
+	draw_sprite_ext(sprite_index,0,x,y,1,1+slantVAnim,0-slantHAnim,c_white,1) // draw self
+	draw_sprite_ext(sprite_index,hitFlashType+1,x,y,1,1+slantVAnim,0-slantHAnim,c_white,hitFlash) // draw hitflash
+
+	shader_reset()
+
+	#endregion
+}
 
 #endregion
 
@@ -150,4 +185,4 @@ function cooldownsCalculate() {
 #endregion
 
 //DEBUG
-if global.debugMode {instance_create_depth(x,y,depth,obj_spawn_point_debug)}
+if global.debugMode {instance_create_layer(x,y,layer,obj_spawn_point_debug)}
