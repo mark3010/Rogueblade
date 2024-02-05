@@ -5,17 +5,15 @@ var colSlant1 = merge_color($66564D,c_white,.22)
 var colSlant2 = merge_color($66564D,c_white,.17)
 var colSlant3 = merge_color($66564D,c_white,.11)
 var colSlant4 = merge_color($66564D,c_white,.05)
+var colSides = #3A4351
+var colSidesBot = c_black
 
-// sloped area of arena
-/**
+// z-depth of arena
 
-var flip = 1
-repeat(2) { // draws right side, flips to draw left
-	draw_set_color(colSlant1)
-	draw_rectangle(x,y-baseRadius,x+baseWidth*flip,y+baseRadius,false)
-	draw_circle(x+baseWidth*flip,y,baseRadius,false)
-	flip *= -1
-}*/
+draw_rectangle_color(x-baseWidth-baseRadius,y,x+baseWidth+baseRadius,y+baseRadius*5,colSides,colSides,colSidesBot,colSidesBot,false)
+
+// top sloped area of arena
+
 var scalar = 1
 var flip = 1
 repeat(2) { // draws right side, flips to draw left

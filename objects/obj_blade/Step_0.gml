@@ -2,6 +2,7 @@
 cooldownsCalculate()
 lifeCalculate()
 triggersCalculate()
+animationsCalculate()
 scr_bladeArenaSync()
 // variables provided:
 	// inits objArena sync

@@ -11,6 +11,9 @@ if keyboard_check_pressed(vk_f5) {
 if keyboard_check_pressed(vk_f4) {
     global.debugMode *= -1 
 }
+if keyboard_check_pressed(vk_f1) {
+    global.renderMode *= -1 
+}
 #endregion
 
 //LOCAL ROOM INPUT

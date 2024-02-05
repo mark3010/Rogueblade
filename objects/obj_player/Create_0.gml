@@ -3,6 +3,10 @@
 
 event_inherited()
 
+anchor =	new Model(spr_anchor1_pattern,spr_anchor1_material)
+hull =		new Model(spr_hull1_pattern,spr_hull1_material)
+core =		new Model(spr_core1_pattern,spr_core1_material)
+
 //BASE PLAYER STATS
 	//override
 	stats.maxLife = 5

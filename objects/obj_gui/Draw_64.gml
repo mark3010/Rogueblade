@@ -78,21 +78,38 @@ if room == room_arena {
 	if !surface_exists(healthSurf) {
 		healthSurf = surface_create(healthWidth * 2 + sprite_get_width(spr_health_bar) * 4,healthHeight)
 	}
+	if !surface_exists(healthFillSurf) {
+		healthFillSurf = surface_create(healthWidth * 2 + sprite_get_width(spr_health_bar) * 4,healthHeight)
+	}
 	if !surface_exists(triggersCooldownSurf) {
 		triggersCooldownSurf = surface_create(triggersCooldownWidth,triggersCooldownHeight)
 	}
 	//life
-		surface_set_target(healthSurf)
-	
+		//life fill
+		surface_set_target(healthFillSurf)
+		
+		draw_clear_alpha(c_red,0)
+		
+		draw_sprite_stretched(spr_health_bar,3,0,0,(healthWidth+8)*playerLifeScale,healthHeight)
+		gpu_set_colorwriteenable(1,1,1,0)
+		draw_sprite(spr_health_bar_fill,0,0,0)
+		gpu_set_colorwriteenable(1,1,1,1)
+		
+		surface_reset_target()
+		
 		//healthcontainer
+		surface_set_target(healthSurf)
 		draw_sprite_stretched(spr_health_bar,2,0,0,healthWidth,healthHeight)
 		draw_sprite_ext(spr_health_bar,0,healthWidth,0,-1,1,0,c_white,healthAlpha)
 
 		//red part
 		draw_set_alpha(1)
 		gpu_set_colorwriteenable(1,1,1,0)
+		
 		draw_sprite_stretched(spr_health_bar,4,0,0,(healthWidth+8)*playerLifeScaleAnim,healthHeight)
-		draw_sprite_stretched(spr_health_bar,3,0,0,(healthWidth+8)*playerLifeScale,healthHeight)
+		draw_surface(healthFillSurf,0,0)
+		//draw_sprite_stretched(spr_health_bar,4,0,0,(healthWidth+8)*playerLifeScaleAnim,healthHeight)
+		//draw_sprite_stretched(spr_health_bar,3,0,0,(healthWidth+8)*playerLifeScale,healthHeight)
 		gpu_set_colorwriteenable(1,1,1,1)
 
 		//side detail

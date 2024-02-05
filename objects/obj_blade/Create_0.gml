@@ -81,29 +81,52 @@ velYSurplus = 0
 
 slantH = 0
 slantV = 0
+baseTiltY = 72 //0% shows no blade, 200% doubles size, 100% no change
+
 hitFlash = 0
 lifetime = 0
 shd_texel_handle = shader_get_uniform(shd_outline,"in_Texel")
 hitFlashType = DAMAGE_TYPE.HEALTH
 
+renderTarget = -1
+renderLayer = -1
+
+//3d PARTS
+function Model(
+_pattern = spr_model_pattern,
+_material = spr_model_material
+) constructor {
+	pattern = _pattern
+	material = _material
+}
+
+anchor =	new Model(spr_anchor1_pattern,spr_anchor1_material2)
+hull =		new Model(spr_hull1_pattern,spr_hull1_material2)
+core =		new Model(spr_core1_pattern,spr_core1_material2)
+
+rotationAnim = 0
+function animationsCalculate() {
+	rotationAnim += 4*2
+}
+
 function draw_me() {
 	#region ANIMATION
-
 	var slopeAngleStrength = 0.5 // 0 is flat arena border, 1 is vertical arena border, 0.5 is 45 degree arena border
 	var slantHAnim = slantH * sign(obj_arena.x-x) * slopeAngleStrength * 90 // 90 is rotation at max slope slant
 	var slantVAnim = slantV * sign(obj_arena.y-y) * slopeAngleStrength * .3 // .1 is stretch at max slope slant
+	#endregion
+	
+	if global.renderMode {
+	// DRAW_ME V1
 
 	if lifetime < 1 {exit}
-
-	#endregion
-
-
+	
 	#region DRAW SHADOW
 	var shadowX = x -(obj_arena.x - x) * 0.03
 	var shadowY = y -(obj_arena.y - y) * 0.03
 	draw_sprite_ext(spr_blade_base_shadow,0,shadowX,shadowY,1,1+slantVAnim,0-slantHAnim,c_white,.1) // draw self
 	#endregion
-
+	
 	#region DRAW SELF
 	shader_set(shd_outline)
 
@@ -119,6 +142,78 @@ function draw_me() {
 	shader_reset()
 
 	#endregion
+	} else {
+	//DRAW_ME V2
+	#region ANIMATION
+	
+	layerNumber = 0
+	
+	if (!surface_exists(renderTarget)) { 
+	    renderTarget = surface_create(32*3,32*3)
+	}
+	
+	if (!surface_exists(renderLayer)) { 
+		renderLayer = surface_create(32,32)
+	}
+	
+	#region DRAW SHADOW
+	var shadowX = x -(obj_arena.x - x) * 0.03
+	var shadowY = y -(obj_arena.y - y) * 0.03
+	
+	var yTiltSkew = 1 - (1 - baseTiltY/100) + slantVAnim
+	var xTiltSkew = 1
+	
+	draw_sprite_ext(spr_blade_base_shadow,0,shadowX,shadowY,xTiltSkew,yTiltSkew,0,c_white,.1) // draw self
+	//scr_render3d_shadow(spr_blade_base_shadow)
+	
+	#endregion
+	
+	//generate model to target surface
+	if anchor != -1		{scr_render3d(anchor,renderTarget,renderLayer)}
+	if hull != -1		{scr_render3d(hull,renderTarget,renderLayer)}
+	if core != -1		{scr_render3d(core,renderTarget,renderLayer)}
+	
+	//render settings for blade
+	shader_set(shd_outline)
+	
+	var texture = surface_get_texture(renderTarget)
+	var t_width = texture_get_texel_width(texture)
+	var t_height = texture_get_texel_height(texture)
+
+	shader_set_uniform_f(shd_texel_handle,t_width,t_height)
+	
+	//var targetXOffset = surface_get_width(renderTarget)/2 +1
+	//var targetYOffset = surface_get_height(renderTarget)/2 -3
+	
+	//render anchor point settings for surface
+	var wm = matrix_get(matrix_world);          // Store this here, restore it later
+	matrix_set(matrix_world, matrix_build(
+	    x, y, 0,
+	    0, 0, -slantHAnim,
+	    1, 1, 1
+	))
+	
+	//render blade
+	//draw_surface_ext(renderTarget,x-targetXOffset,y-targetYOffset,1,1,-slantHAnim,c_white,1)
+	draw_surface_ext(renderTarget,-surface_get_width(renderTarget)/2,-surface_get_height(renderTarget)/2,1,1,0,c_white,1)
+	
+	//draw_circle(xstart, ystart, 20, true);
+	matrix_set(matrix_world, wm)
+	shader_reset()
+	
+	//wipe surfaces
+	
+	surface_set_target(renderTarget)
+	draw_clear_alpha(c_white,0)
+	if global.debugMode draw_clear_alpha(c_red,.2)
+	surface_reset_target()
+
+	surface_set_target(renderLayer)
+	draw_clear_alpha(c_white,0)
+	surface_reset_target()
+	
+	#endregion
+	}
 }
 
 #endregion

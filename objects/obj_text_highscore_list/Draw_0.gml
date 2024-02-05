@@ -23,7 +23,7 @@ var newestScorePos = array_find_index(text.scores, _f);
 
 var design = 0
 var displaceList = 0
-if 10 < newestScorePos + 1 {
+if 10 < newestScorePos {
 	design = 1
 }
 
