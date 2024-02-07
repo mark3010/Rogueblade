@@ -6,7 +6,7 @@
 /// @param {integer}	layer number	local layer number
 /// @description						render sprite stack
 
-function scr_render3d(argument0,argument1,argument2) {
+function scr_render3d(argument0,argument1,argument2,argument3) {
 	
 	//setup
 	var model = argument0.pattern
@@ -20,12 +20,14 @@ function scr_render3d(argument0,argument1,argument2) {
 	var sliceCenterX = surface_get_width(slice)/2
 	var sliceCenterY = surface_get_height(slice)/2
 	
+	var color = argument3
+	
 	var localLayerNumber = 0 
 	
 	//animation
 	var slopeAngleStrength = 0.5 // 0 is flat arena border, 1 is vertical arena border, 0.5 is 45 degree arena border
-	var slantHAnim = -slantH * sign(obj_arena.x-x) * slopeAngleStrength * 90 // 90 is rotation at max slope slant
-	var slantVAnim = slantV * sign(obj_arena.y-y) * slopeAngleStrength * .4 // .1 is stretch at max slope slant
+	var slantHAnim = -slantH * sign(obj_arena.x-x) * slopeAngleStrength * 20 // 90 is rotation at max slope slant
+	var slantVAnim = slantV * sign(obj_arena.y-y) * slopeAngleStrength * .3 // .1 is stretch at max slope slant
 	
 	//variables to stretch surface
 	var yTiltSkew = 1 - (1 - baseTiltY/100) + slantVAnim
@@ -38,10 +40,9 @@ function scr_render3d(argument0,argument1,argument2) {
 	var viewCenterX = (camera_get_view_x(view_camera[0]) + camera_get_view_width(view_camera[0]) / 2)
 	var viewCenterY = (camera_get_view_y(view_camera[0]) + camera_get_view_height(view_camera[0]) / 2)
 	
-	
 	//show_debug_message(stackCameraDispersionX)
-	//var vx = camera_get_view_x(view_camera[0]);
-//var vy = camera_get_view_y(view_camera[0]);
+	//var vx = camera_get_view_x(view_camera[0])
+	//var vy = camera_get_view_y(view_camera[0])
 	//render sprite stack model
 	//description: models consists of circle mask and cutout pattern mask, because of this each step iterates i by +2!
 	repeat(sprite_get_number(model)/2) {
@@ -74,10 +75,10 @@ function scr_render3d(argument0,argument1,argument2) {
 		//draw layer to beyblade body
 		surface_set_target(target)
 		
-		var stackCameraDispersionX =  (x - viewCenterX) / camera_get_view_width(view_camera[0]) * layerNumber / 2 //makes the stack lean relative to camera
-		var stackCameraDispersionY =  (y - viewCenterY) / camera_get_view_height(view_camera[0]) * layerNumber / 2  //makes the stack lean relative to camera
+		var stackCameraDispersionX =  0//(x - viewCenterX) / camera_get_view_width(view_camera[0]) * layerNumber / 2 //makes the stack lean relative to camera
+		var stackCameraDispersionY =  0//(y - viewCenterY) / camera_get_view_height(view_camera[0]) * layerNumber   //makes the stack lean relative to camera
 		
-		var stackArenaDispersionX =  slantH * sign(obj_arena.x-x) * layerNumber / 3  //makes the stack lean relative to the arena
+		var stackArenaDispersionX =  slantH * sign(obj_arena.x-x) * layerNumber / 2  //makes the stack lean relative to the arena
 		var stackArenaDispersionY =  slantV * sign(obj_arena.y-y) * layerNumber / 10//makes the stack lean relative to the arena
 		
 		var stackTotalDispersionX = stackCameraDispersionX + stackArenaDispersionX
@@ -88,12 +89,12 @@ function scr_render3d(argument0,argument1,argument2) {
 		
 		var layerStackLengthInterval = (iterationNumber/2) * yTiltLengthMod
 		
-		var targetLayerCenterX = layerToSurfaceCenterX + stackTotalDispersionX							+ 1 //center fix
+		var targetLayerCenterX = layerToSurfaceCenterX + stackTotalDispersionX									+ 1 //center fix
 		var targetLayerCenterY = layerToSurfaceCenterY + stackTotalDispersionY - 1 * layerStackLengthInterval	+ 1 //center fix
 		
 		if global.debugMode draw_circle(targetCenterX,targetCenterY,targetCenterX,true)
 		
-		draw_surface_ext(slice,targetLayerCenterX,targetLayerCenterY,xTiltSkew,yTiltSkew,0,c_white,1)
+		draw_surface_ext(slice,targetLayerCenterX,targetLayerCenterY,xTiltSkew,yTiltSkew,0,color,1)
 	
 		if global.debugMode draw_circle(targetCenterX,targetCenterY,5,true)
 		

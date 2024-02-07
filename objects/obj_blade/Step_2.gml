@@ -6,3 +6,7 @@ if deathFlag {
 //APPLY MOVEMENT VECTOR
 x += vel[@ X]
 y += vel[@ Y]
+zPosition += vel[@ Z]
+if zPosition < 0 {
+	zPosition = 0
+}

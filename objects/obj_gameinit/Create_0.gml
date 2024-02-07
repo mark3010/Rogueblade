@@ -19,11 +19,18 @@ function createGame(gameModeType) {
 	arena = instance_create_layer(arenaX,arenaY,layerBackground,obj_arena)
 	arena.init(gameModeType)
 	
+	var directionRandom = irandom(359)
+	var directionDistance = 2
+	var playerXOffset = lengthdir_x(directionDistance, directionRandom)
+	var playerYOffset = lengthdir_y(directionDistance, directionRandom)
+	var playerXSpawn = arena.x+playerXOffset
+	var playerYSpawn = arena.y+playerYOffset
+
 	switch (gameModeType) {
 		case gameModeType.NORMAL:
 			gui = instance_create_layer(x,y,layerEntities,obj_gui)
 			camera = instance_create_layer(arena.x,arena.y,layerEntities,obj_cam)
-			player = instance_create_layer(arena.x,arena.y,layerEntities,obj_player)
+			player = instance_create_layer(playerXSpawn,playerYSpawn,layerEntities,obj_player)
 			waveDirector = instance_create_layer(x,y,layerEntities,obj_wave_director)
 			timer = instance_create_layer(x,y,layerEntities,obj_timer)
 			upgradeHandler = instance_create_layer(x,y,layerEntities,obj_upgrade_handler)
@@ -32,7 +39,7 @@ function createGame(gameModeType) {
 		break
 		case gameModeType.PRACTICE:
 			camera = instance_create_layer(arena.x,arena.y,layerEntities,obj_cam)
-			player = instance_create_layer(arena.x,arena.y,layerEntities,obj_player)
+			player = instance_create_layer(playerXSpawn,playerYSpawn,layerEntities,obj_player)
 		break
 	}
 	

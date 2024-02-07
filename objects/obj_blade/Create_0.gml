@@ -29,9 +29,11 @@ stats = {
 	maxLife : 2,
 	lifeRegen : 0,
 	maxTriggers : 0,
-	velMax : 6,		//max speed before drag is applied
-	maxTriggersCooldown : 60*4, //seconds 
-	triggersCooldownRegen : 1
+	velMax : 3,					//VELOCITY - max speed before drag is applied
+	maxTriggersCooldown : 240,	//SECONDS 
+	triggersCooldownRegen : 1,
+	zGravity : 30,				//PIXELS/SECOND
+	zBounciness : 60			//PERCENTAGE - 100% means bounce with no loss, 0% means no bouncy at all
 }
 
 function lifeCalculate() {
@@ -69,11 +71,31 @@ refreshCurrents()
 #region KINETICS
 
 dragStrength = 0.1		// [1..0] where 1 is maximum drag effect, 0.1 allows ~50% speed increase
-vel = [0,0]
+vel = [0,0,0]
+zPosition = 110 + irandom(20)
+
 velVector = 0
 dragVector = 0
 velXSurplus = 0
 velYSurplus = 0
+onGround = false
+
+//natural spawn velocity
+var arenaFind = instance_nearest(x,y,obj_arena)
+var dir = point_direction(x,y,arenaFind.x,arenaFind.y)
+var spawnVelocity = min( point_distance(x,y,arenaFind.x,arenaFind.y), 10 ) / 5
+
+function addVelocity(velocity,velDirection) {
+	vel[@ X] = lengthdir_x(velocity, velDirection)
+	vel[@ Y] = lengthdir_y(velocity, velDirection)
+}
+
+addVelocity(spawnVelocity,dir)
+//show_debug_message("BLADE X and Y: "+string(x)+"-"+string(y))
+//show_debug_message("BLADE VEL: "+string(spawnVelocity))
+//show_debug_message("BLADE ANGLE FROM ARENA: "+string(dir))
+//show_debug_message("BLADE X SPEED: "+string(lengthdir_x(spawnVelocity,dir)))
+//show_debug_message("BLADE Y SPEED: "+string(lengthdir_y(spawnVelocity,dir)))
 
 #endregion
 
@@ -94,8 +116,8 @@ renderLayer = -1
 //3d PARTS
 function Model(
 _pattern = spr_model_pattern,
-_material = spr_model_material
-) constructor {
+_material = spr_model_material) 
+constructor {
 	pattern = _pattern
 	material = _material
 }
@@ -103,6 +125,14 @@ _material = spr_model_material
 anchor =	new Model(spr_anchor1_pattern,spr_anchor1_material2)
 hull =		new Model(spr_hull1_pattern,spr_hull1_material2)
 core =		new Model(spr_core1_pattern,spr_core1_material2)
+
+function physicsCalculate() {
+	dimensions = {
+		zLength : sprite_get_number(anchor.material) + sprite_get_number(hull.material) + sprite_get_number(core.material)
+	}
+}
+
+physicsCalculate()
 
 rotationAnim = 0
 function animationsCalculate() {
@@ -143,6 +173,7 @@ function draw_me() {
 
 	#endregion
 	} else {
+	
 	//DRAW_ME V2
 	#region ANIMATION
 	
@@ -160,18 +191,24 @@ function draw_me() {
 	var shadowX = x -(obj_arena.x - x) * 0.03
 	var shadowY = y -(obj_arena.y - y) * 0.03
 	
-	var yTiltSkew = 1 - (1 - baseTiltY/100) + slantVAnim
-	var xTiltSkew = 1
+	var yTiltSkew = ( 1 - (1 - baseTiltY/100) + slantVAnim ) / ( 1 + zPosition / 50 )
+	var xTiltSkew = 1 / ( 1 + zPosition / 30 )
 	
 	draw_sprite_ext(spr_blade_base_shadow,0,shadowX,shadowY,xTiltSkew,yTiltSkew,0,c_white,.1) // draw self
 	//scr_render3d_shadow(spr_blade_base_shadow)
 	
 	#endregion
 	
+	if hitFlashType == 0 {
+		var hitCol = merge_color(c_white,c_red,hitFlash/2)
+	} else {
+		var hitCol = merge_color(c_white,c_aqua,hitFlash)
+	}
+
 	//generate model to target surface
-	if anchor != -1		{scr_render3d(anchor,renderTarget,renderLayer)}
-	if hull != -1		{scr_render3d(hull,renderTarget,renderLayer)}
-	if core != -1		{scr_render3d(core,renderTarget,renderLayer)}
+	if anchor != -1		{scr_render3d(anchor,renderTarget,renderLayer,c_white)}
+	if hull != -1		{scr_render3d(hull,renderTarget,renderLayer,hitCol)}
+	if core != -1		{scr_render3d(core,renderTarget,renderLayer,c_white)}
 	
 	//render settings for blade
 	shader_set(shd_outline)
@@ -188,8 +225,8 @@ function draw_me() {
 	//render anchor point settings for surface
 	var wm = matrix_get(matrix_world);          // Store this here, restore it later
 	matrix_set(matrix_world, matrix_build(
-	    x, y, 0,
-	    0, 0, -slantHAnim,
+	    x, y - zPosition, 0,
+	    0, 0, -slantHAnim/1.5,
 	    1, 1, 1
 	))
 	
@@ -223,8 +260,10 @@ function draw_me() {
 team = TEAM.ENEMY
 
 deathFlag = false
+
 #macro X 0
 #macro Y 1
+#macro Z 2
 
 #endregion
 

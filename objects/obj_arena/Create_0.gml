@@ -8,8 +8,8 @@ arenas = {
 	normal : {
 		flatWidth	: 80,
 		flatRadius	: 80,
-		baseWidth	: 80 + 160,
-		baseRadius	: 80 + 160
+		baseWidth	: 80 +130,//+ 160,
+		baseRadius	: 80 +130//+ 160
 	},
 	practice : {
 		flatWidth	: 30,

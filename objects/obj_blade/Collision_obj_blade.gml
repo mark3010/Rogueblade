@@ -1,6 +1,8 @@
 /// @description Insert description here
 // You can write your code in this editor
-if cooldownInstanceExists(other.instanceId) == undefined {
+var collision = scr_is_between_including(zPosition,other.zPosition,other.zPosition+other.dimensions.zLength)
+
+if cooldownInstanceExists(other.instanceId) == undefined && collision {
 	//sound
 	if (currentTriggers + other.currentTriggers) > 0 {
 		audio_play_sound(snd_collision_trigger, 10, false)

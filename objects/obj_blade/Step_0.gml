@@ -10,6 +10,26 @@ scr_bladeArenaSync()
 	// inits onSlope, onBorder vars
 
 //FORCES APPLIED
+//z axis
+if zPosition <= 0 && vel[Z] < -1 {	//bounce on ground
+	vel[Z] = -vel[Z] * stats.zBounciness / 100
+}
+
+if zPosition <= 0 && vel[Z] > -1 && vel[Z] < 0 {	//cut bounce
+	vel[Z] = 0
+	zPosition = 0
+}
+
+if zPosition > 0 {					//apply gravity
+	vel[Z] -= (stats.zGravity / 60)
+}
+
+if zPosition == 0 {
+	onGround = true
+} else {
+	onGround = false
+}
+//x and y axis
 if onSlope {
 	//ANIMATION SLANT
 	//these functions create number between 0 and 1 based on how close the blade is to the border of the arena
@@ -23,8 +43,8 @@ if onSlope {
 	var dist = point_distance(arenaFlatBorderX,arenaFlatBorderY,arenaSlopedBorderX,arenaSlopedBorderY)
 	var dir = point_direction(arenaFlatBorderX,arenaFlatBorderY,arenaSlopedBorderX,arenaSlopedBorderY)
 	
-	vel[@ X] -= sign(lengthdir_x(dist,dir)) * slantH
-	vel[@ Y] -= sign(lengthdir_y(dist,dir)) * slantV
+	vel[@ X] -= sign(lengthdir_x(dist,dir)) * slantH * onGround
+	vel[@ Y] -= sign(lengthdir_y(dist,dir)) * slantV * onGround
 }
 
 //CORRECT POSITION TO INSIDE ARENA
