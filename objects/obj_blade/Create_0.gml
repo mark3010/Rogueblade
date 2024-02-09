@@ -17,13 +17,6 @@ enum DAMAGE_TYPE {
 
 #endregion
 
-//CONTROLS
-//keybindings
-global.key_up = ord("W")
-global.key_down = ord("S")
-global.key_right = ord("D")
-global.key_left = ord("A")
-
 #region STATS
 stats = {
 	maxLife : 2,
@@ -83,7 +76,7 @@ onGround = false
 //natural spawn velocity
 var arenaFind = instance_nearest(x,y,obj_arena)
 var dir = point_direction(x,y,arenaFind.x,arenaFind.y)
-var spawnVelocity = min( point_distance(x,y,arenaFind.x,arenaFind.y), 10 ) / 5
+var spawnVelocity = min( point_distance(x,y,arenaFind.x,arenaFind.y), 5 ) / 5
 
 function addVelocity(velocity,velDirection) {
 	vel[@ X] = lengthdir_x(velocity, velDirection)
@@ -91,11 +84,6 @@ function addVelocity(velocity,velDirection) {
 }
 
 addVelocity(spawnVelocity,dir)
-//show_debug_message("BLADE X and Y: "+string(x)+"-"+string(y))
-//show_debug_message("BLADE VEL: "+string(spawnVelocity))
-//show_debug_message("BLADE ANGLE FROM ARENA: "+string(dir))
-//show_debug_message("BLADE X SPEED: "+string(lengthdir_x(spawnVelocity,dir)))
-//show_debug_message("BLADE Y SPEED: "+string(lengthdir_y(spawnVelocity,dir)))
 
 #endregion
 
@@ -136,7 +124,7 @@ physicsCalculate()
 
 rotationAnim = 0
 function animationsCalculate() {
-	rotationAnim += 4*2
+	rotationAnim += 8
 }
 
 function draw_me() {
@@ -208,7 +196,7 @@ function draw_me() {
 	//generate model to target surface
 	if anchor != -1		{scr_render3d(anchor,renderTarget,renderLayer,c_white)}
 	if hull != -1		{scr_render3d(hull,renderTarget,renderLayer,hitCol)}
-	if core != -1		{scr_render3d(core,renderTarget,renderLayer,c_white)}
+	if core != -1		{scr_render3d(core,renderTarget,renderLayer,c_white,spr_core_lid)}
 	
 	//render settings for blade
 	shader_set(shd_outline)

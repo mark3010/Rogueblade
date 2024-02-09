@@ -4,9 +4,10 @@
 /// @param {surface}	target 			surface to render final model output
 /// @param {surface}	slice			surface to render final model output
 /// @param {integer}	layer number	local layer number
+/// @param {sprite}		sprite			overlay sprite on top
 /// @description						render sprite stack
 
-function scr_render3d(argument0,argument1,argument2,argument3) {
+function scr_render3d(argument0,argument1,argument2,argument3,argument4=false) {
 	
 	//setup
 	var model = argument0.pattern
@@ -21,6 +22,8 @@ function scr_render3d(argument0,argument1,argument2,argument3) {
 	var sliceCenterY = surface_get_height(slice)/2
 	
 	var color = argument3
+	
+	var overlayFlag = argument4
 	
 	var localLayerNumber = 0 
 	
@@ -49,32 +52,6 @@ function scr_render3d(argument0,argument1,argument2,argument3) {
 		
 		var iterationNumber = layerNumber*2
 		
-		//draw beyblade layer START----------------------
-		surface_set_target(slice)
-	
-		//wipe
-		draw_clear_alpha(c_blue,0)
-		if global.debugMode draw_clear_alpha(c_blue,.4)
-
-		//circle mask
-		draw_sprite_ext(model,localLayerNumber,sliceCenterX,sliceCenterY,1,1,0,c_white,1)
-			
-		//material
-		gpu_set_colorwriteenable(1,1,1,0)
-		draw_sprite_ext(material,localLayerNumber/2,sliceCenterX,sliceCenterY,1,1,rotationAnim,c_white,1)
-		gpu_set_colorwriteenable(1,1,1,1)
-
-		//cutout pattern mask
-		gpu_set_blendmode(bm_subtract)
-		draw_sprite_ext(model,localLayerNumber+1,sliceCenterX,sliceCenterY,1,1,rotationAnim,c_white,1)
-		gpu_set_blendmode(bm_normal)
-
-		surface_reset_target()
-		//draw beyblade layer END----------------------
-	
-		//draw layer to beyblade body
-		surface_set_target(target)
-		
 		var stackCameraDispersionX =  0//(x - viewCenterX) / camera_get_view_width(view_camera[0]) * layerNumber / 2 //makes the stack lean relative to camera
 		var stackCameraDispersionY =  0//(y - viewCenterY) / camera_get_view_height(view_camera[0]) * layerNumber   //makes the stack lean relative to camera
 		
@@ -91,6 +68,59 @@ function scr_render3d(argument0,argument1,argument2,argument3) {
 		
 		var targetLayerCenterX = layerToSurfaceCenterX + stackTotalDispersionX									+ 1 //center fix
 		var targetLayerCenterY = layerToSurfaceCenterY + stackTotalDispersionY - 1 * layerStackLengthInterval	+ 1 //center fix
+		
+		var rotationSpeed = rotationAnim
+		//draw beyblade layer START----------------------
+
+	
+		// if script has overlay arg
+		if overlayFlag && localLayerNumber==sprite_get_number(model)/2{
+			
+			rotationSpeed = - rotationSpeed * 0.3
+			
+			surface_set_target(slice)
+			
+			draw_clear_alpha(c_blue,0)
+			
+			//circle mask
+			draw_sprite_ext(model,0,sliceCenterX,sliceCenterY,1,1,0,c_white,1)
+			
+			//material
+			gpu_set_colorwriteenable(1,1,1,0)
+			draw_sprite_ext(spr_core_lid,localLayerNumber/2,sliceCenterX,sliceCenterY,1,1,0,c_white,1)
+			gpu_set_colorwriteenable(1,1,1,1)
+			
+			surface_reset_target()
+			
+			//draw lid
+			surface_set_target(target)
+			draw_surface_ext(slice,targetLayerCenterX,targetLayerCenterY,xTiltSkew,yTiltSkew,0,color,1)
+			surface_reset_target()
+		} 
+		
+		surface_set_target(slice)
+	
+		//wipe
+		draw_clear_alpha(c_blue,0)
+		if global.debugMode draw_clear_alpha(c_blue,.4)
+		//circle mask
+		draw_sprite_ext(model,localLayerNumber,sliceCenterX,sliceCenterY,1,1,0,c_white,1)
+			
+		//material
+		gpu_set_colorwriteenable(1,1,1,0)
+		draw_sprite_ext(material,localLayerNumber/2,sliceCenterX,sliceCenterY,1,1,rotationSpeed,c_white,1)
+		gpu_set_colorwriteenable(1,1,1,1)
+
+		//cutout pattern mask
+		gpu_set_blendmode(bm_subtract)
+		draw_sprite_ext(model,localLayerNumber+1,sliceCenterX,sliceCenterY,1,1,rotationSpeed,c_white,1)
+		gpu_set_blendmode(bm_normal)
+
+		surface_reset_target()
+		//draw beyblade layer END----------------------
+	
+		//draw layer to beyblade body
+		surface_set_target(target)
 		
 		if global.debugMode draw_circle(targetCenterX,targetCenterY,targetCenterX,true)
 		

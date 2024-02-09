@@ -30,6 +30,7 @@ if global.debugMode {
 	draw_text(x+40,y+70,"slantH: "+string(slantH))
 	draw_text(x+40,y+80,"slantV: "+string(slantV))
 	draw_text(x+40,y+90,"hitFlash: "+string(hitFlash))
+	draw_text(x+40,y+100,"on border: "+string(onBorder))
 	
 
 

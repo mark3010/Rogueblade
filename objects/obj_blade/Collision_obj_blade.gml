@@ -1,6 +1,6 @@
 /// @description Insert description here
 // You can write your code in this editor
-var collision = scr_is_between_including(zPosition,other.zPosition,other.zPosition+other.dimensions.zLength)
+var collision = scr_isBetweenIncluding(zPosition,other.zPosition,other.zPosition+other.dimensions.zLength)
 
 if cooldownInstanceExists(other.instanceId) == undefined && collision {
 	//sound

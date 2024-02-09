@@ -1,7 +1,7 @@
 {
   "resourceType": "GMScript",
   "resourceVersion": "1.0",
-  "name": "scr_is_between_including",
+  "name": "scr_isBetweenIncluding",
   "isCompatibility": false,
   "isDnD": false,
   "parent": {

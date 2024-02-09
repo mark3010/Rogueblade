@@ -12,7 +12,7 @@ function scr_arenaPointVariables(argument0){
 	arenaFlatBorderY = arenaBaseY - lengthdir_y(distance, dir);
 
 //SLOPED ARENA BORDER CALCULATION
-	//clamp position to flatArea
+	//clamp position to slopedArea
 	var distance = clamp(point_distance(arenaBaseX, arenaBaseY, x, y), 0, argument0.baseRadius);
 	arenaSlopedBorderX = arenaBaseX - lengthdir_x(distance, dir);
 	arenaSlopedBorderY = arenaBaseY - lengthdir_y(distance, dir);

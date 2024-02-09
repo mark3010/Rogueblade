@@ -1,6 +1,6 @@
 // Script assets have changed for v2.3.0 see
 // https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
-function scr_is_between_including(argument0,argument1,argument2){
+function scr_isBetweenIncluding(argument0,argument1,argument2){
 	/// scr_is_between(x, a, b)
 	var i = argument0;
 	var a = argument1;

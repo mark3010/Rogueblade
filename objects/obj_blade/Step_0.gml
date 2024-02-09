@@ -10,9 +10,25 @@ scr_bladeArenaSync()
 	// inits onSlope, onBorder vars
 
 //FORCES APPLIED
+	//ANIMATION SLANT
+	//these functions create number between 0 and 1 based on how close the blade is to the border of the arena
+	//power makes the linear function exponential instead
+	
+	//var slopeAngleStrength = 0.5 // 0 is flat arena border, 1 is vertical arena border, 0.5 is 45 degree arena border
+	
+	slantH = power(( arenaSlopedBorderX - arenaFlatBorderX ) / ( objArena.baseWidth - objArena.flatWidth ), 2)// * slopeAngleStrength
+	slantV = power(( arenaSlopedBorderY - arenaFlatBorderY ) / ( objArena.baseRadius - objArena.flatRadius ), 2)// * slopeAngleStrength
+		
+	var dist = point_distance(arenaFlatBorderX,arenaFlatBorderY,arenaSlopedBorderX,arenaSlopedBorderY)
+	var dir = point_direction(arenaFlatBorderX,arenaFlatBorderY,arenaSlopedBorderX,arenaSlopedBorderY)
+	
 //z axis
 if zPosition <= 0 && vel[Z] < -1 {	//bounce on ground
 	vel[Z] = -vel[Z] * stats.zBounciness / 100
+	
+	//apply underlying force
+	vel[@ X] -= sign(lengthdir_x(dist,dir)) * slantH * 3
+	vel[@ Y] -= sign(lengthdir_y(dist,dir)) * slantV * 3
 }
 
 if zPosition <= 0 && vel[Z] > -1 && vel[Z] < 0 {	//cut bounce
@@ -31,18 +47,6 @@ if zPosition == 0 {
 }
 //x and y axis
 if onSlope {
-	//ANIMATION SLANT
-	//these functions create number between 0 and 1 based on how close the blade is to the border of the arena
-	//power makes the linear function exponential instead
-	
-	//var slopeAngleStrength = 0.5 // 0 is flat arena border, 1 is vertical arena border, 0.5 is 45 degree arena border
-	
-	slantH = power(( arenaSlopedBorderX - arenaFlatBorderX ) / ( objArena.baseWidth - objArena.flatWidth ), 2)// * slopeAngleStrength
-	slantV = power(( arenaSlopedBorderY - arenaFlatBorderY ) / ( objArena.baseRadius - objArena.flatRadius ), 2)// * slopeAngleStrength
-		
-	var dist = point_distance(arenaFlatBorderX,arenaFlatBorderY,arenaSlopedBorderX,arenaSlopedBorderY)
-	var dir = point_direction(arenaFlatBorderX,arenaFlatBorderY,arenaSlopedBorderX,arenaSlopedBorderY)
-	
 	vel[@ X] -= sign(lengthdir_x(dist,dir)) * slantH * onGround
 	vel[@ Y] -= sign(lengthdir_y(dist,dir)) * slantV * onGround
 }

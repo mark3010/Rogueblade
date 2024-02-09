@@ -3,7 +3,7 @@
 /// @param {sprite}		sprite			sprite stacking 3d model
 /// @description						render shadow for 3d object
 
-function scr_render3d_shadow(argument0) {
+function scrRender3dShadow(argument0) {
 	//setup
 	var shadow = argument0
 	

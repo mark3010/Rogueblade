@@ -3,6 +3,19 @@
 
 event_inherited()
 
+//CONTROLS
+//keybindings
+global.key_up = ord("W")
+global.key_down = ord("S")
+global.key_right = ord("D")
+global.key_left = ord("A")
+
+global.key_dash_up = vk_up
+global.key_dash_down = vk_down
+global.key_dash_right = vk_right
+global.key_dash_left = vk_left
+
+//COMPONENTS
 anchor =	new Model(spr_anchor1_pattern,spr_anchor1_material)
 hull =		new Model(spr_hull1_pattern,spr_hull1_material)
 core =		new Model(spr_core1_pattern,spr_core1_material)
