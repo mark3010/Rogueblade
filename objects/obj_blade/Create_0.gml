@@ -24,9 +24,10 @@ stats = {
 	maxTriggers : 0,
 	velMax : 3,					//VELOCITY - max speed before drag is applied
 	maxTriggersCooldown : 240,	//SECONDS 
-	triggersCooldownRegen : 1,
+	triggersCooldownRegen : 1,	
 	zGravity : 30,				//PIXELS/SECOND
-	zBounciness : 60			//PERCENTAGE - 100% means bounce with no loss, 0% means no bouncy at all
+	zBounciness : 60,			//PERCENTAGE - 100% means bounce with no loss, 0% means no bouncy at all
+	acc : 0.5					//PIXEL/TICK - acceleration
 }
 
 function lifeCalculate() {
@@ -64,7 +65,8 @@ refreshCurrents()
 #region KINETICS
 
 dragStrength = 0.1		// [1..0] where 1 is maximum drag effect, 0.1 allows ~50% speed increase
-vel = [0,0,0]
+vel = [0,0,0]			// holds current velocity
+velAdd = [0,0,0]		// holds temporary vector to add to velocity 
 zPosition = 110 + irandom(20)
 
 velVector = 0
@@ -89,17 +91,33 @@ addVelocity(spawnVelocity,dir)
 
 #region ANIMATION VARIABLES
 
+//tweakable
+slopeAngleStrengthY = 0.30		//tilt effect, higher => more tilt
+slopeAngleStrengthX = 0.1		//tilt effect, higher => more tilt
+baseTiltY = 75	//75, 83, 86	//0% shows no blade, 200% doubles size, 100% no change
+rotationBaseSpeed = 8			//base animation speed for rotating blade
+// other
 slantH = 0
 slantV = 0
-baseTiltY = 72 //0% shows no blade, 200% doubles size, 100% no change
+animationTilt = [0,0] // variable that controls blade animation tilt axis 
+rotationAnim = 0
+
+
+function animationsCalculate() {
+	rotationAnim += rotationBaseSpeed
+	
+	animationTilt[@ X] = lerp(animationTilt[@ X],sign(velAdd[@ X]), stats.acc / stats.velMax)	// tilt for self acceleration
+	animationTilt[@ X] += slantH * sign(obj_arena.x-x) * slopeAngleStrengthX					// tilt for arena slopes
+	
+	animationTilt[@ Y] = lerp(animationTilt[@ Y],sign(velAdd[@ Y]), stats.acc / stats.velMax)	// tilt for self acceleration
+	animationTilt[@ Y] += slantV * sign(obj_arena.y-y) * slopeAngleStrengthY					// tilt for arena slopes
+	animationTilt[@ Y] += - (1 - baseTiltY/100)													// adding some base tilt to spritestack
+}
 
 hitFlash = 0
 lifetime = 0
 shd_texel_handle = shader_get_uniform(shd_outline,"in_Texel")
 hitFlashType = DAMAGE_TYPE.HEALTH
-
-renderTarget = -1
-renderLayer = -1
 
 //3d PARTS
 function Model(
@@ -122,12 +140,8 @@ function physicsCalculate() {
 
 physicsCalculate()
 
-rotationAnim = 0
-function animationsCalculate() {
-	rotationAnim += 8
-}
 
-function draw_me() {
+function draw_me(sliceSurf, effectSurf, targetSurf) {
 	#region ANIMATION
 	var slopeAngleStrength = 0.5 // 0 is flat arena border, 1 is vertical arena border, 0.5 is 45 degree arena border
 	var slantHAnim = slantH * sign(obj_arena.x-x) * slopeAngleStrength * 90 // 90 is rotation at max slope slant
@@ -167,14 +181,6 @@ function draw_me() {
 	
 	layerNumber = 0
 	
-	if (!surface_exists(renderTarget)) { 
-	    renderTarget = surface_create(32*3,32*3)
-	}
-	
-	if (!surface_exists(renderLayer)) { 
-		renderLayer = surface_create(32,32)
-	}
-	
 	#region DRAW SHADOW
 	var shadowX = x -(obj_arena.x - x) * 0.03
 	var shadowY = y -(obj_arena.y - y) * 0.03
@@ -187,53 +193,45 @@ function draw_me() {
 	
 	#endregion
 	
-	if hitFlashType == 0 {
-		var hitCol = merge_color(c_white,c_red,hitFlash/2)
-	} else {
-		var hitCol = merge_color(c_white,c_aqua,hitFlash)
-	}
+	var hitCol = merge_color(c_white,c_aqua,hitFlash)
+	if hitFlashType == 0 {hitCol = merge_color(c_white,c_red,hitFlash/2)}
 
 	//generate model to target surface
-	if anchor != -1		{scr_render3d(anchor,renderTarget,renderLayer,c_white)}
-	if hull != -1		{scr_render3d(hull,renderTarget,renderLayer,hitCol)}
-	if core != -1		{scr_render3d(core,renderTarget,renderLayer,c_white,spr_core_lid)}
+	if anchor	!= -1	{scr_render3d_v2(anchor,targetSurf,sliceSurf,effectSurf,c_white,animationTilt)}
+	if hull		!= -1	{scr_render3d_v2(hull,targetSurf,sliceSurf,effectSurf,hitCol,animationTilt)}
+	if core		!= -1	{scr_render3d_v2(core,targetSurf,sliceSurf,effectSurf,c_white,animationTilt,true)}
 	
 	//render settings for blade
 	shader_set(shd_outline)
 	
-	var texture = surface_get_texture(renderTarget)
+	var texture = surface_get_texture(targetSurf)
 	var t_width = texture_get_texel_width(texture)
 	var t_height = texture_get_texel_height(texture)
 
 	shader_set_uniform_f(shd_texel_handle,t_width,t_height)
 	
-	//var targetXOffset = surface_get_width(renderTarget)/2 +1
-	//var targetYOffset = surface_get_height(renderTarget)/2 -3
-	
 	//render anchor point settings for surface
 	var wm = matrix_get(matrix_world);          // Store this here, restore it later
 	matrix_set(matrix_world, matrix_build(
 	    x, y - zPosition, 0,
-	    0, 0, -slantHAnim/1.5,
+	    0, 0, -slantHAnim/1.5-animationTilt[X]*20,
 	    1, 1, 1
 	))
 	
 	//render blade
-	//draw_surface_ext(renderTarget,x-targetXOffset,y-targetYOffset,1,1,-slantHAnim,c_white,1)
-	draw_surface_ext(renderTarget,-surface_get_width(renderTarget)/2,-surface_get_height(renderTarget)/2,1,1,0,c_white,1)
+	draw_surface_ext(targetSurf,-surface_get_width(targetSurf)/2,-surface_get_height(targetSurf)/2,1,1,0,c_white,1)
 	
-	//draw_circle(xstart, ystart, 20, true);
+	//reset matrix and shader
 	matrix_set(matrix_world, wm)
 	shader_reset()
 	
 	//wipe surfaces
-	
-	surface_set_target(renderTarget)
+	surface_set_target(targetSurf)
 	draw_clear_alpha(c_white,0)
 	if global.debugMode draw_clear_alpha(c_red,.2)
 	surface_reset_target()
 
-	surface_set_target(renderLayer)
+	surface_set_target(sliceSurf)
 	draw_clear_alpha(c_white,0)
 	surface_reset_target()
 	

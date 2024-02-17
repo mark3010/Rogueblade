@@ -12,7 +12,7 @@ if(ds_exists(ds_depthgrid, ds_type_grid)){
 		var instanceID = ds_depthgrid[# 0, yy]
 		
 		with(instanceID){
-			draw_me()
+			draw_me(obj_draw_handler.renderSlice,obj_draw_handler.renderEffect,obj_draw_handler.renderTarget)
 		}
 	
 	}

@@ -51,6 +51,13 @@ if onSlope {
 	vel[@ Y] -= sign(lengthdir_y(dist,dir)) * slantV * onGround
 }
 
+//add velAdd to velocity and wipe
+vel[@ X] += velAdd[@ X]
+vel[@ Y] += velAdd[@ Y]
+vel[@ Z] += velAdd[@ Z]
+
+velAdd = [0,0,0]
+
 //CORRECT POSITION TO INSIDE ARENA
 if (x > arenaSlopedBorderX || x < arenaSlopedBorderX) {
 	x = arenaSlopedBorderX
@@ -79,5 +86,3 @@ dragVector = point_distance(0,0,-velXSurplus*dragStrength,-velYSurplus*dragStren
 //ANIMATION VARIABLE
 hitFlash = lerp(hitFlash,0,.1)
 lifetime ++
-
-//depth = -y

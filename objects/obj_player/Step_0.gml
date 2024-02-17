@@ -1,5 +1,5 @@
 //run parent code
-event_inherited()
+
 
 
 
@@ -30,11 +30,11 @@ if (move_up || move_down) {
 dir = point_direction(0,0,dirX,dirY)
 
 if (move_right || move_left) {
-		vel[@ X] += lengthdir_x(stats.acc,dir)
+		velAdd[@ X] += lengthdir_x(stats.acc,dir)
 }
 
 if (move_up || move_down) {
-		vel[@ Y] += lengthdir_y(stats.acc,dir)
+		velAdd[@ Y] += lengthdir_y(stats.acc,dir)
 }
 
 //DASH
@@ -51,22 +51,24 @@ if (dash_right || dash_left) {
 		
 		//carry momentum
 		if sign(vel[@ X]) != sign(lengthdir_x(15,dir)) {
-			vel[@ X] = 0//-vel[@ X]
+			velAdd[@ X] = 0//-vel[@ X]
 		}
 		
 		//add dash
-		vel[@ X] += lengthdir_x(15,dir)
+		velAdd[@ X] += lengthdir_x(15,dir)
 }
 
 if (dash_up || dash_down) {
 		//carry momentum
-		if sign(vel[@ Y]) != sign(lengthdir_x(15,dir)) {
-			vel[@ Y] = 0//-vel[@ Y]
+		if sign(velAdd[@ Y]) != sign(lengthdir_x(15,dir)) {
+			velAdd[@ Y] = 0//-vel[@ Y]
 		}
 		
 		//add dash
-		vel[@ Y] += lengthdir_y(15,dir)
+		velAdd[@ Y] += lengthdir_y(15,dir)
 }
+
+event_inherited()
 
 //LEVEL UP
 if EXP >= EXPCapList[level-1] {

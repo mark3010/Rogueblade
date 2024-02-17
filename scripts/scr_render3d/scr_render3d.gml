@@ -4,10 +4,11 @@
 /// @param {surface}	target 			surface to render final model output
 /// @param {surface}	slice			surface to render final model output
 /// @param {integer}	layer number	local layer number
+/// @param {array}		tilt 			array containing animation tilt
 /// @param {sprite}		sprite			overlay sprite on top
 /// @description						render sprite stack
 
-function scr_render3d(argument0,argument1,argument2,argument3,argument4=false) {
+function scr_render3d(argument0,argument1,argument2,argument3,argument4=[0,0],argument5=false) {
 	
 	//setup
 	var model = argument0.pattern
@@ -23,7 +24,9 @@ function scr_render3d(argument0,argument1,argument2,argument3,argument4=false) {
 	
 	var color = argument3
 	
-	var overlayFlag = argument4
+	var tilt = argument4
+	
+	var overlayFlag = argument5
 	
 	var localLayerNumber = 0 
 	

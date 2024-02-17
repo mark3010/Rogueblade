@@ -17,7 +17,7 @@ if global.debugMode {
 	
 	draw_set_halign(fa_left)
 	//blade info
-	draw_set_color(c_black)
+	draw_set_color(c_white)
 	draw_set_halign(fa_left)
 	draw_text(x+40,y,"--INSTANCE ID: "+string(instanceId) +"--")
 	draw_text(x+40,y+10,"velocity: "+string(velVector))
@@ -31,6 +31,9 @@ if global.debugMode {
 	draw_text(x+40,y+80,"slantV: "+string(slantV))
 	draw_text(x+40,y+90,"hitFlash: "+string(hitFlash))
 	draw_text(x+40,y+100,"on border: "+string(onBorder))
+	
+	draw_text(x+40,y+120,"anitilt X: "+string(animationTilt[@ X]))
+	draw_text(x+40,y+130,"anitilt Y: "+string(animationTilt[@ Y]))
 	
 
 

@@ -21,7 +21,8 @@ if keyboard_check_pressed(vk_f1) {
 if room == room_menu {
 	if keyboard_check_pressed(vk_space) {
 		audio_play_sound(snd_ui_select, 10, false)
-		room_goto(room_arena)
+		var transition = instance_create_layer(x,y,layer,obj_room_transition)
+		transition.targetRoom = room_arena
 	}
 	
 	if keyboard_check_pressed(vk_escape) {
@@ -35,7 +36,8 @@ if room == room_arena {
 	if keyboard_check_pressed(vk_escape) {
 		audio_play_sound(snd_ui_select, 10, false)
 		audio_stop_sound(snd_music)
-		room_goto(room_menu)
+		var transition = instance_create_layer(x,y,layer,obj_room_transition)
+		transition.targetRoom = room_menu
 	}
 	
 	if keyboard_check_pressed(ord("R")) && global.debugMode {
@@ -66,7 +68,8 @@ if room == room_arena {
 if room == room_highscore {
 	if keyboard_check_pressed(vk_space) or keyboard_check_pressed(vk_escape) {
 		audio_play_sound(snd_ui_select, 10, false)
-		room_goto(room_menu)
+		var transition = instance_create_layer(x,y,layer,obj_room_transition)
+		transition.targetRoom = room_menu
 	}
 }
 #endregion
