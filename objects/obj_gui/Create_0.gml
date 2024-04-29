@@ -1,13 +1,15 @@
 
+bottomMargin = 25
+sideMargin = 25
 #region TIMER
-timerPosX = 30
-timerPosY = 540-30
+timerPosX = sideMargin
+timerPosY = 540-bottomMargin
 #endregion
 
 #region PLAYER RESOURCES
 //life
 	healthPosX = 960/2
-	healthPosY = 540-30
+	healthPosY = 540-bottomMargin
 
 	healthWidth = 100
 	healthHeight = sprite_get_height(spr_health_bar)
@@ -17,7 +19,7 @@ timerPosY = 540-30
 	healthAnim = 0
 //triggers
 	triggersCooldownPosX = healthPosX
-	triggersCooldownPosY = healthPosY-10
+	triggersCooldownPosY = healthPosY-8
 
 	triggersCooldownWidth = 100
 	triggersCooldownHeight = sprite_get_height(spr_triggers_cooldown_bar)
@@ -25,12 +27,12 @@ timerPosY = 540-30
 #endregion
 
 #region WAVELIST
-waveListPosX = 960-30
-waveListPosY = 540-30
+waveListPosX = 960-sideMargin
+waveListPosY = 540-bottomMargin
 #endregion
 
 #region EXP
-expWidth = 120
+expWidth = 60
 expHeight = sprite_get_height(spr_exp_bar)
 
 currentUpgradeTimerMax = 4*60

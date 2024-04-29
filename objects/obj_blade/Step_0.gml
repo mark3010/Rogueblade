@@ -79,6 +79,9 @@ if velVector > stats.velMax {
 	vel[Y] -= velYSurplus*dragStrength
 }
 
+//ATTACK
+attackCooldown++
+
 //CALCULATE BLADE KINETIC ATTRIBUTES
 velVector = point_distance(0,0,vel[X],vel[Y])
 dragVector = point_distance(0,0,-velXSurplus*dragStrength,-velYSurplus*dragStrength)

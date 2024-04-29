@@ -85,3 +85,19 @@ if EXP >= EXPCapList[level-1] {
 	
 	audio_play_sound(snd_level_up, 2, false);
 }
+
+//ATTACKS
+if currentTriggers != stats.maxTriggers {		//condition
+	if attackCooldown >= stats.attacksPerSecond / 60 {	//attack pattern
+		attackCooldown = 0
+		
+		var target = scr_instance_nearest_other(obj_blade)
+		
+		if instance_exists(target) {
+			var bullet = instance_create_layer(x,y-20,layer,obj_bullet)
+			bullet.ownerId = id
+			bullet.direction = point_direction(x,y,target.x,target.y)
+			bullet.image_angle = bullet.direction
+		}
+	}
+}

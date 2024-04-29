@@ -19,16 +19,24 @@ enum DAMAGE_TYPE {
 
 #region STATS
 stats = {
+	//resources
 	maxLife : 2,
 	lifeRegen : 0,
 	maxTriggers : 0,
-	velMax : 3,					//VELOCITY - max speed before drag is applied
+	//movement
+	deflectionPower : 100,
+	deflectionResistance : 100,
+	velMax : 4,					//VELOCITY - max speed before drag is applied
 	maxTriggersCooldown : 240,	//SECONDS 
 	triggersCooldownRegen : 1,	
 	zGravity : 30,				//PIXELS/SECOND
 	zBounciness : 60,			//PERCENTAGE - 100% means bounce with no loss, 0% means no bouncy at all
-	acc : 0.5					//PIXEL/TICK - acceleration
+	acc : 0.2,					//PIXEL/TICK - acceleration
+	//weapon
+	attacksPerSecond : 60
 }
+
+attackCooldown = 0
 
 function lifeCalculate() {
 	currentLife += stats.lifeRegen/60
@@ -92,32 +100,39 @@ addVelocity(spawnVelocity,dir)
 #region ANIMATION VARIABLES
 
 //tweakable
-slopeAngleStrengthY = 0.30		//tilt effect, higher => more tilt
-slopeAngleStrengthX = 0.1		//tilt effect, higher => more tilt
-baseTiltY = 75	//75, 83, 86	//0% shows no blade, 200% doubles size, 100% no change
+slopeAngleStrengthY = 1.3		//tilt effect, higher => more tilt
+slopeAngleStrengthX = 1.3		//tilt effect, higher => more tilt
+baseTiltY = 1.5					//higher than 0 means more tilted towards north, 
 rotationBaseSpeed = 8			//base animation speed for rotating blade
 // other
 slantH = 0
 slantV = 0
 animationTilt = [0,0] // variable that controls blade animation tilt axis 
+animationTiltMovement = [0,0]
+animationTiltArena = [0,0]
 rotationAnim = 0
-
 
 function animationsCalculate() {
 	rotationAnim += rotationBaseSpeed
 	
-	animationTilt[@ X] = lerp(animationTilt[@ X],sign(velAdd[@ X]), stats.acc / stats.velMax)	// tilt for self acceleration
-	animationTilt[@ X] += slantH * sign(obj_arena.x-x) * slopeAngleStrengthX					// tilt for arena slopes
+	//HORISONTAL
+	animationTiltMovement[@ X] = lerp(animationTiltMovement[@ X],sign(velAdd[@ X]), stats.acc / stats.velMax)	// tilt for self acceleration
+	animationTiltArena[@ X] = sqrt(slantH) * sign(obj_arena.x-x) * slopeAngleStrengthX					// tilt for arena slopes
 	
-	animationTilt[@ Y] = lerp(animationTilt[@ Y],sign(velAdd[@ Y]), stats.acc / stats.velMax)	// tilt for self acceleration
-	animationTilt[@ Y] += slantV * sign(obj_arena.y-y) * slopeAngleStrengthY					// tilt for arena slopes
-	animationTilt[@ Y] += - (1 - baseTiltY/100)													// adding some base tilt to spritestack
+	animationTilt[@ X] = animationTiltArena[@ X] + animationTiltMovement[@ X]
+	
+	//VERTICAL
+	animationTiltMovement[@ Y] = lerp(animationTiltMovement[@ Y],sign(velAdd[@ Y]),  stats.acc / stats.velMax)		// tilt for self acceleration
+	animationTiltArena[@ Y] = sqrt(slantV) * sign(obj_arena.y-y) * slopeAngleStrengthY - baseTiltY	// tilt for arena slopes									// adding some base tilt to spritestack
+	
+	animationTilt[@ Y] = animationTiltArena[@ Y] + animationTiltMovement[@ Y]
 }
 
 hitFlash = 0
 lifetime = 0
 shd_texel_handle = shader_get_uniform(shd_outline,"in_Texel")
 hitFlashType = DAMAGE_TYPE.HEALTH
+hitFlashColorMerge = 1
 
 //3d PARTS
 function Model(
@@ -133,6 +148,7 @@ hull =		new Model(spr_hull1_pattern,spr_hull1_material2)
 core =		new Model(spr_core1_pattern,spr_core1_material2)
 
 function physicsCalculate() {
+	velocity = point_distance(x,y,x+vel[X],y+vel[Y])
 	dimensions = {
 		zLength : sprite_get_number(anchor.material) + sprite_get_number(hull.material) + sprite_get_number(core.material)
 	}
@@ -185,7 +201,7 @@ function draw_me(sliceSurf, effectSurf, targetSurf) {
 	var shadowX = x -(obj_arena.x - x) * 0.03
 	var shadowY = y -(obj_arena.y - y) * 0.03
 	
-	var yTiltSkew = ( 1 - (1 - baseTiltY/100) + slantVAnim ) / ( 1 + zPosition / 50 )
+	var yTiltSkew = ( baseTiltY / 100 + slantVAnim - 0.8) / ( 1 + zPosition / 50 )
 	var xTiltSkew = 1 / ( 1 + zPosition / 30 )
 	
 	draw_sprite_ext(spr_blade_base_shadow,0,shadowX,shadowY,xTiltSkew,yTiltSkew,0,c_white,.1) // draw self
@@ -265,14 +281,21 @@ function die() {
 	deathFlag = true
 }
 
-function takeDamage(damage) {
+function takeDamage(damage,ally) {
 	if currentTriggers > 0 {
 		currentTriggers--
 		hitFlashType = DAMAGE_TYPE.SHIELD
+		hitFlash = 1
+		hitFlashColorMerge = 1
 	} else {
-		currentLife -= damage
+		
+		var damageTaken = damage * (1-ally*.95) // .8 is same team damage resistance
+		
+		currentLife -= damageTaken
 		hitFlashType = DAMAGE_TYPE.HEALTH
 		
+		hitFlash = clamp((damageTaken*2)/stats.maxLife,0,1)
+		hitFlashColorMerge = 1
 		if currentLife <= 0 {
 			die()
 		}
@@ -280,6 +303,7 @@ function takeDamage(damage) {
 	
 	currentTriggersCooldown = 0
 }
+
 
 #endregion
 

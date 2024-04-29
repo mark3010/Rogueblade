@@ -30,9 +30,9 @@ core =		new Model(spr_core1_pattern,spr_core1_material)
 	//combat
 	stats.collisionDamage = 10
 	//kinetics
-	stats.acc = .5
-	stats.deflectPower = 100
-	stats.deflectResist = 0
+	stats.acc = .3
+	stats.deflectionPower = 150
+	stats.deflectionResistance = 150
 
 refreshCurrents()
 

@@ -13,10 +13,11 @@ if room == room_arena {
 	surface_set_target(expSurf)
 	draw_clear(c_black)
 	draw_sprite_stretched(spr_exp_bar,1,0,0,expWidth*playerXPScale,expHeight)
-	surface_reset_target();
-	
-	scr_textStyle1(960/2,25,playerLevel,global.font,fa_center,c_white,1,1)
-	draw_surface(expSurf,960/2-expWidth/2,45)
+	surface_reset_target()
+	//draw_set_halign(fa_center)
+	//draw_text(960/2,15,playerLevel)
+	scr_textStyle1(960/2,15,playerLevel,global.font,fa_center,c_white,1,1)
+	draw_surface(expSurf,960/2-expWidth/2,35)
 }
 
 
@@ -134,7 +135,7 @@ if room == room_arena {
 
 		//draw on screen
 		draw_surface(triggersCooldownSurf,triggersCooldownPosX-triggersCooldownWidth/2,triggersCooldownPosY)
-		scr_textStyle1(triggersCooldownPosX,triggersCooldownPosY-15,string(playerCurrentTriggers)+"/"+string(playerMaxTriggers),global.font,fa_center,c_white,1,1)
+		scr_textStyle1(triggersCooldownPosX,triggersCooldownPosY-12,string(playerCurrentTriggers)+"/"+string(playerMaxTriggers),global.font,fa_center,c_white,1,1)
 	
 }
 #endregion

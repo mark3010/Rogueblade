@@ -24,4 +24,20 @@ case camState.STICK:
 x += (xTo - x) / smoothStrength
 y += (yTo - y) / smoothStrength
 
-camera_set_view_pos(view_camera[0], x - (camWidth * 0.5), y - (camHeight * 0.5))
+//zoom interpolate
+//INTERPOLATION
+if (interpolateCurvePosition < 1) {
+	var _value = animcurve_channel_evaluate(interpolateChannel,interpolateCurvePosition)
+	
+	var _diff = interpolateFillTarget - interpolateFillStart
+	interpolateFill = interpolateFillStart + _diff * _value
+	
+	interpolateCurvePosition += interpolateCurveSpeed
+	
+	if interpolateCurvePosition > 1 {interpolateCurvePosition = 1}
+}
+
+var zoomAnim = 1 + (zoomLevel-1) * (interpolateFill)
+
+camera_set_view_pos(view_camera[0], x - (camWidth * 0.5 * zoomAnim), y - (camHeight * 0.5 * zoomAnim))
+camera_set_view_size(view_camera[0],camWidth*zoomAnim,camHeight*zoomAnim)
