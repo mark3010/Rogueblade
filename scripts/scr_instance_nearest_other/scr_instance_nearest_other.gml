@@ -9,5 +9,5 @@ function scr_instance_nearest_other(objectType){
 	var target =  instance_nearest(xx,yy,objectType);
 	x = xx;
 	y = yy;
-	return target;
+	if target != id {return target;}
 }

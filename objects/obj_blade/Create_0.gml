@@ -33,7 +33,7 @@ stats = {
 	zBounciness : 60,			//PERCENTAGE - 100% means bounce with no loss, 0% means no bouncy at all
 	acc : 0.2,					//PIXEL/TICK - acceleration
 	//weapon
-	attacksPerSecond : 60
+	attacksPerSecond : 3
 }
 
 attackCooldown = 0

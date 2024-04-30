@@ -88,12 +88,20 @@ if EXP >= EXPCapList[level-1] {
 
 //ATTACKS
 if currentTriggers != stats.maxTriggers {		//condition
-	if attackCooldown >= stats.attacksPerSecond / 60 {	//attack pattern
+	if attackCooldown >= 60 / stats.attacksPerSecond  {	//attack pattern
 		attackCooldown = 0
 		
 		var target = scr_instance_nearest_other(obj_blade)
 		
 		if instance_exists(target) {
+			//shoot animation
+			
+			var shootDir = point_direction(x,y,target.x,target.y)
+			var shootPointX = x + lengthdir_x(30,shootDir)
+			var shootPointY = y + lengthdir_y(30,shootDir) - 20
+			
+			var shootAnim = instance_create_layer(shootPointX,shootPointY,layer,obj_shot_flare)
+			//bullet
 			var bullet = instance_create_layer(x,y-20,layer,obj_bullet)
 			bullet.ownerId = id
 			bullet.direction = point_direction(x,y,target.x,target.y)
