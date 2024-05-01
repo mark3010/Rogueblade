@@ -9,7 +9,7 @@
 /// @param {bool}		boolean			overlay sprite on top
 /// @description						render sprite stack
 
-function scr_render3d_v2(argument0,argument1,argument2,argument3,argument4,argument5=[0,0],argument6=false) {
+function scr_render3d_hull(argument0,argument1,argument2,argument3,argument4,argument5=[0,0],argument6=0) {
 	
 	//setup
 	var model = argument0.pattern
@@ -31,7 +31,7 @@ function scr_render3d_v2(argument0,argument1,argument2,argument3,argument4,argum
 	
 	var tilt = argument5
 	
-	var overlayFlag = argument6
+	var hitAlpha = argument6
 	
 	var localLayerNumber = 0 
 	
@@ -64,29 +64,6 @@ function scr_render3d_v2(argument0,argument1,argument2,argument3,argument4,argum
 		
 		//draw sprite stack layer START----------------------
 		
-		// if script has overlay arg ---------------------------
-		// !REDO THIS PART LATER!
-		
-		if overlayFlag //&& localLayerNumber==sprite_get_number(model)/2 
-		{
-			draw_clear_alpha(c_blue,0)
-			rotationSpeed = - rotationSpeed * 0.3
-			
-			//circle mask
-			draw_sprite_ext(model,0,sliceCenterX,sliceCenterY,1,1,0,c_white,1)
-			
-			//material
-			gpu_set_colorwriteenable(1,1,1,0)
-			draw_sprite_ext(spr_core_lid,0,sliceCenterX,sliceCenterY,1,1,0,c_white,1)
-			gpu_set_colorwriteenable(1,1,1,1)
-			
-			//draw lid
-			surface_set_target(target)
-			draw_surface_ext(slice,targetLayerCenterX,targetLayerCenterY,xTiltSkew,yTiltSkew,0,color,1)
-			surface_reset_target()
-		}
-		//-----------------------------------------------------------
-		
 		//wipe surface 
 		draw_clear_alpha(c_blue,0)
 		if global.debugMode draw_clear_alpha(c_blue,.4)
@@ -111,30 +88,16 @@ function scr_render3d_v2(argument0,argument1,argument2,argument3,argument4,argum
 		
 		if global.debugMode draw_circle(targetCenterX,targetCenterY,targetCenterX,true)
 		
-		/*if overlayFlag && localLayerNumber==sprite_get_number(model)/2 {
-			//draw to effect layer, and apply effects
-			surface_set_target(effect)
-			draw_clear_alpha(c_white,0)
-			draw_surface_ext(slice,0,0,xTiltSkew,yTiltSkew,0,color,1)
-			
-			surface_reset_target()
-			
-			//draw to stack with shader
-			shader_set(shd_inline)
-			
-			var texture = surface_get_texture(slice)
-			var t_width = texture_get_texel_width(texture)
-			var t_height = texture_get_texel_height(texture)
-			shader_set_uniform_f(shd_texel_handle,t_width,t_height)	
-			
-			draw_surface_ext(effect,targetLayerCenterX,targetLayerCenterY,1,1,0,c_white,1)
-			
+		draw_surface_ext(slice,targetLayerCenterX,targetLayerCenterY,xTiltSkew,yTiltSkew,0,c_white,1)
+		
+		if hitAlpha > 0 {
+			shader_set(shd_flash)
+			gpu_set_blendmode(bm_add)
+			draw_surface_ext(slice,targetLayerCenterX,targetLayerCenterY,xTiltSkew,yTiltSkew,0,color,hitAlpha)
+			gpu_set_blendmode(bm_normal)
 			shader_reset()
-		} else {*/
-			draw_surface_ext(slice,targetLayerCenterX,targetLayerCenterY,xTiltSkew,yTiltSkew,0,color,1)
-			
-		//}
-	
+		}
+
 		if global.debugMode draw_circle(targetCenterX,targetCenterY,5,true)
 		
 		surface_reset_target()

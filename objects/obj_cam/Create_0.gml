@@ -20,7 +20,6 @@ yTo = y
 
 smoothStrength = 25 // higher is more smooth
 
-
 //zoom
 zoomLevel = 1
 interpolateFill = 0
@@ -32,6 +31,14 @@ interpolateChannel = animcurve_get_channel(interpolateCurveStruct,0)
 
 interpolateCurvePosition = 0
 interpolateCurveSpeed = 0.0
+
+//rotation
+playerTorqueStrength = 0
+twist = 0
+
+function torque(add) {
+	twist += add * playerTorqueStrength
+}
 
 function zoomIn() {
 	zoomLevel = 2

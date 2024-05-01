@@ -6,7 +6,7 @@ if other.id != ownerId {
 	reflectionVector = -point_direction(x,y,other.x,other.y)
 	//collision power
 	other.vel[X] += lengthdir_x(2, reflectionVector)
-	other.vel[Y] += lengthdir_y(2, reflectionVector)
+	other.vel[Y] -= lengthdir_y(2, reflectionVector)
 	
 	
 	//find blade edge intersection

@@ -10,8 +10,8 @@
   "managed": true,
   "overriddenProperties": [],
   "parent": {
-    "name": "ingame",
-    "path": "folders/Objects/effects/ingame.yy",
+    "name": "particles",
+    "path": "folders/Objects/effects/ingame/particles.yy",
   },
   "parentObjectId": {
     "name": "obj_effect",

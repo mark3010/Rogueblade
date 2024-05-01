@@ -40,4 +40,8 @@ if (interpolateCurvePosition < 1) {
 var zoomAnim = 1 + (zoomLevel-1) * (interpolateFill)
 
 camera_set_view_pos(view_camera[0], x - (camWidth * 0.5 * zoomAnim), y - (camHeight * 0.5 * zoomAnim))
+camera_set_view_angle(view_camera[0],twist)
 camera_set_view_size(view_camera[0],camWidth*zoomAnim,camHeight*zoomAnim)
+
+//rotation
+twist = lerp(0,twist,0.9)

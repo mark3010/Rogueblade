@@ -33,7 +33,8 @@ stats = {
 	zBounciness : 60,			//PERCENTAGE - 100% means bounce with no loss, 0% means no bouncy at all
 	acc : 0.2,					//PIXEL/TICK - acceleration
 	//weapon
-	attacksPerSecond : 3
+	attacksPerSecond : 3,
+	recoil :	.6				//measured in 1/100 of velocity
 }
 
 attackCooldown = 0
@@ -209,12 +210,12 @@ function draw_me(sliceSurf, effectSurf, targetSurf) {
 	
 	#endregion
 	
-	var hitCol = merge_color(c_white,c_aqua,hitFlash)
-	if hitFlashType == 0 {hitCol = merge_color(c_white,c_red,hitFlash/2)}
+	var hitCol = c_teal //shield
+	if hitFlashType == 0 {hitCol = merge_color(c_gray,c_maroon,hitFlashColorMerge)} //life
 
 	//generate model to target surface
 	if anchor	!= -1	{scr_render3d_v2(anchor,targetSurf,sliceSurf,effectSurf,c_white,animationTilt)}
-	if hull		!= -1	{scr_render3d_v2(hull,targetSurf,sliceSurf,effectSurf,hitCol,animationTilt)}
+	if hull		!= -1	{scr_render3d_hull(hull,targetSurf,sliceSurf,effectSurf,hitCol,animationTilt,hitFlash)}
 	if core		!= -1	{scr_render3d_v2(core,targetSurf,sliceSurf,effectSurf,c_white,animationTilt,true)}
 	
 	//render settings for blade
@@ -294,8 +295,8 @@ function takeDamage(damage,ally) {
 		currentLife -= damageTaken
 		hitFlashType = DAMAGE_TYPE.HEALTH
 		
-		hitFlash = clamp((damageTaken*2)/stats.maxLife,0,1)
-		hitFlashColorMerge = 1
+		hitFlash = 1
+		hitFlashColorMerge = clamp((damageTaken*4)/stats.maxLife,0,1)
 		if currentLife <= 0 {
 			die()
 		}

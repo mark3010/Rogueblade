@@ -31,6 +31,7 @@ dir = point_direction(0,0,dirX,dirY)
 
 if (move_right || move_left) {
 		velAdd[@ X] += lengthdir_x(stats.acc,dir)
+		obj_cam.torque(lengthdir_x(stats.acc,dir))
 }
 
 if (move_up || move_down) {
@@ -97,15 +98,21 @@ if currentTriggers != stats.maxTriggers {		//condition
 			//shoot animation
 			
 			var shootDir = point_direction(x,y,target.x,target.y)
-			var shootPointX = x + lengthdir_x(30,shootDir)
-			var shootPointY = y + lengthdir_y(30,shootDir) - 20
+			var shootPointX = x + lengthdir_x(22,shootDir)
+			var shootPointY = y + lengthdir_y(22,shootDir) - 20
 			
 			var shootAnim = instance_create_layer(shootPointX,shootPointY,layer,obj_shot_flare)
 			//bullet
+			
 			var bullet = instance_create_layer(x,y-20,layer,obj_bullet)
 			bullet.ownerId = id
 			bullet.direction = point_direction(x,y,target.x,target.y)
 			bullet.image_angle = bullet.direction
+			
+			//recoil
+			vel[X] += lengthdir_x(stats.recoil, shootDir+180)
+			vel[Y] += lengthdir_y(stats.recoil, shootDir+180)
 		}
+		
 	}
 }

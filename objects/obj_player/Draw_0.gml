@@ -2,6 +2,9 @@
 // You can write your code in this editor
 event_inherited()
 
+//TESTING LIGHTS
+
+
 //DEBUG STUFF
 
 if global.debugMode {

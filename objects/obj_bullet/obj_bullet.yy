@@ -9,8 +9,8 @@
   "managed": true,
   "overriddenProperties": [],
   "parent": {
-    "name": "ingame",
-    "path": "folders/Objects/effects/ingame.yy",
+    "name": "attacks",
+    "path": "folders/Objects/effects/ingame/attacks.yy",
   },
   "parentObjectId": {
     "name": "obj_attack",

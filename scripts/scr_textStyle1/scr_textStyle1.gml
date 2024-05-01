@@ -20,4 +20,5 @@ function scr_textStyle1(argument0,argument1,argument2,argument3,argument4,argume
 	draw_set_color(argument5)
 	draw_set_alpha(argument6)
 	draw_text_transformed(argument0,argument1,argument2,argument7,argument7,0)
+	draw_set_alpha(1)
 }
