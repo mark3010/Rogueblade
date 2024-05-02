@@ -15,12 +15,14 @@ if other.id != ownerId {
 	var pointY = lengthdir_y(sprite_width,dir) / 2
 	var heightCorrection = 20
 
-	instance_create_depth(other.x+pointX,other.y+pointY-heightCorrection,depth,obj_hit_impact)
+	var impact = instance_create_depth(other.x+pointX,other.y+pointY-heightCorrection,depth,obj_hit_impact)
+	impact.lightColor = lightColor
 	
 	repeat (2+irandom(2)) {
-		instance_create_depth(other.x+pointX,other.y+pointY-heightCorrection,depth,obj_hitspark)
+		var spark = instance_create_depth(other.x+pointX,other.y+pointY-heightCorrection,depth,obj_hitspark)
+		spark.lightColor = lightColor
 	}
-	other.takeDamage(0.5,false)
+	other.takeDamage(0.5,direction,false)
 	
 	var damageNumber = instance_create_depth(other.x,other.y-heightCorrection-16,depth,obj_damage_number)
 	damageNumber.damage = 10

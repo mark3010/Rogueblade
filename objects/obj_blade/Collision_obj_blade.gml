@@ -36,8 +36,8 @@ if cooldownInstanceExists(other.instanceId) == undefined && collision {
 	//other.vel[Z] += irandom(500) / 100 * (1 - power(0.5,other.stats.deflectionResistance / 100)) * stats.deflectionPower / 100
 	
 	//damage calculation
-	takeDamage(1,team==other.team)
-	other.takeDamage(1,team==other.team)
+	takeDamage(1,-reflectionVector,team==other.team)
+	other.takeDamage(1,-reflectionVector+180,team==other.team)
 	
 	if team != other.team {
 		//find middle intersection

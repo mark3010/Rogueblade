@@ -18,6 +18,8 @@ function createGame(gameModeType) {
 
 	arena = instance_create_layer(arenaX,arenaY,layerBackground,obj_arena)
 	arena.init(gameModeType)
+	arenaLight = instance_create_layer(arenaX,arenaY,layerBackground,obj_spotlight)
+	arenaLightShaft = instance_create_layer(arenaX,arenaY,layerBackground,obj_shaftlight)
 	
 	var directionRandom = irandom(359)
 	var directionDistance = 2

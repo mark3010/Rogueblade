@@ -102,10 +102,12 @@ if currentTriggers != stats.maxTriggers {		//condition
 			var shootPointY = y + lengthdir_y(22,shootDir) - 20
 			
 			var shootAnim = instance_create_layer(shootPointX,shootPointY,layer,obj_shot_flare)
+			shootAnim.lightColor = merge_color(c_white,c_aqua,0)
 			//bullet
 			
 			var bullet = instance_create_layer(x,y-20,layer,obj_bullet)
 			bullet.ownerId = id
+			bullet.lightColor = merge_color(c_white,c_aqua,0)
 			bullet.direction = point_direction(x,y,target.x,target.y)
 			bullet.image_angle = bullet.direction
 			

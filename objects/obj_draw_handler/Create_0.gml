@@ -2,6 +2,7 @@
 // You can write your code in this editor
 event_inherited()
 
+global.debugLight = false
 
 ds_depthgrid =	0
 renderTarget = -1
@@ -11,11 +12,11 @@ light_surface = -1
 
 function checkRenderSurfaces() {
 	if (!surface_exists(renderTarget)) { 
-		renderTarget = surface_create(32*3,32*3)
+		renderTarget = surface_create(32*6,32*6)
 	}
 	
 	if (!surface_exists(renderSlice)) { 
-		renderSlice = surface_create(32,32)
+		renderSlice = surface_create(64,64)
 	}
 
 	if (!surface_exists(renderEffect)) { 

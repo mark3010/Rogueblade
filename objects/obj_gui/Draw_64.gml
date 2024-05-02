@@ -2,7 +2,7 @@
 #region LEVEL
 if room == room_arena {
 	if instance_exists(obj_player) {
-		playerXPScale = (obj_player.EXP / obj_player.EXPCapList[obj_player.level-1])
+		playerXPScale = lerp(playerXPScale,(obj_player.EXP / obj_player.EXPCapList[obj_player.level-1]),.1)
 		playerLevel = "LEVEL: " + string(obj_player.level)
 	}
 	

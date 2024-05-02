@@ -62,14 +62,15 @@ function scr_render3d_hull(argument0,argument1,argument2,argument3,argument4,arg
 		
 		var rotationSpeed = rotationAnim
 		
+		
 		//draw sprite stack layer START----------------------
 		
 		//wipe surface 
 		draw_clear_alpha(c_blue,0)
-		if global.debugMode draw_clear_alpha(c_blue,.4)
+		//if global.debugMode draw_clear_alpha(c_blue,.4)
 		
 		//circle mask
-		draw_sprite_ext(model,localLayerNumber,sliceCenterX,sliceCenterY,1,1,0,c_white,1)
+		draw_sprite_ext(model,localLayerNumber,sliceCenterX,sliceCenterY,1 - 0.5 * (hitDistortion * hitDistortionStrength),1+hitDistortion*hitDistortionStrength,hitDistortionDirection,c_white,1)
 			
 		//material
 		gpu_set_colorwriteenable(1,1,1,0)
@@ -78,9 +79,12 @@ function scr_render3d_hull(argument0,argument1,argument2,argument3,argument4,arg
 
 		//cutout pattern mask
 		gpu_set_blendmode(bm_subtract)
-		draw_sprite_ext(model,localLayerNumber+1,sliceCenterX,sliceCenterY,1,1,rotationSpeed,c_white,1)
+		draw_sprite_ext(model,localLayerNumber+1,sliceCenterX,sliceCenterY,1 - 0.5 * (hitDistortion * hitDistortionStrength),1+hitDistortion*hitDistortionStrength,rotationSpeed,c_white,1)
 		gpu_set_blendmode(bm_normal)
 
+		//distort the blade from damaging hits
+		
+		//slice = draw_surface_ext(slice,0,0,.5,2,0,c_white,1)
 		//draw beyblade layer END----------------------
 	
 		//draw layer to beyblade body

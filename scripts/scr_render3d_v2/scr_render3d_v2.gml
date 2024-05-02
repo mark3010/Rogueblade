@@ -89,7 +89,7 @@ function scr_render3d_v2(argument0,argument1,argument2,argument3,argument4,argum
 		
 		//wipe surface 
 		draw_clear_alpha(c_blue,0)
-		if global.debugMode draw_clear_alpha(c_blue,.4)
+		//if global.debugMode draw_clear_alpha(c_blue,.4)
 		
 		//circle mask
 		draw_sprite_ext(model,localLayerNumber,sliceCenterX,sliceCenterY,1,1,0,c_white,1)
@@ -109,7 +109,7 @@ function scr_render3d_v2(argument0,argument1,argument2,argument3,argument4,argum
 		//draw layer to beyblade body
 		surface_set_target(target)
 		
-		if global.debugMode draw_circle(targetCenterX,targetCenterY,targetCenterX,true)
+		//if global.debugMode draw_circle(targetCenterX,targetCenterY,targetCenterX,true)
 		
 		/*if overlayFlag && localLayerNumber==sprite_get_number(model)/2 {
 			//draw to effect layer, and apply effects

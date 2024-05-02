@@ -86,6 +86,11 @@ attackCooldown++
 velVector = point_distance(0,0,vel[X],vel[Y])
 dragVector = point_distance(0,0,-velXSurplus*dragStrength,-velYSurplus*dragStrength)
 
-//ANIMATION VARIABLE
+//ANIMATION VARIABLES
 hitFlash = lerp(hitFlash,0,.2)
 lifetime ++
+spawnAnim = lerp(spawnAnim,0,.3)
+hitDistortion = lerp(hitDistortion,0,.2)
+if hitDistortion < .05 {
+	hitDistortionDirection=0
+}

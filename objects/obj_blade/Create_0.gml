@@ -2,7 +2,6 @@ scr_bladeArenaSync()
 
 //ID
 instanceId = global.instanceIDCounter++
-
 #region ENUMS
 
 enum TEAM {
@@ -20,7 +19,7 @@ enum DAMAGE_TYPE {
 #region STATS
 stats = {
 	//resources
-	maxLife : 2,
+	maxLife : 5,
 	lifeRegen : 0,
 	maxTriggers : 0,
 	//movement
@@ -78,6 +77,9 @@ vel = [0,0,0]			// holds current velocity
 velAdd = [0,0,0]		// holds temporary vector to add to velocity 
 zPosition = 110 + irandom(20)
 
+//add some spawn z speed
+vel[Z] = 2+irandom(10)/10
+
 velVector = 0
 dragVector = 0
 velXSurplus = 0
@@ -105,6 +107,9 @@ slopeAngleStrengthY = 1.3		//tilt effect, higher => more tilt
 slopeAngleStrengthX = 1.3		//tilt effect, higher => more tilt
 baseTiltY = 1.5					//higher than 0 means more tilted towards north, 
 rotationBaseSpeed = 8			//base animation speed for rotating blade
+hitDistortionStrength = .25
+spawnAnim = 8 // used for white recolor at spawn, when 0 blade is 0% white
+
 // other
 slantH = 0
 slantV = 0
@@ -112,6 +117,8 @@ animationTilt = [0,0] // variable that controls blade animation tilt axis
 animationTiltMovement = [0,0]
 animationTiltArena = [0,0]
 rotationAnim = 0
+hitDistortion = 0
+hitDistortionDirection = 0
 
 function animationsCalculate() {
 	rotationAnim += rotationBaseSpeed
@@ -230,7 +237,7 @@ function draw_me(sliceSurf, effectSurf, targetSurf) {
 	//render anchor point settings for surface
 	var wm = matrix_get(matrix_world);          // Store this here, restore it later
 	matrix_set(matrix_world, matrix_build(
-	    x, y - zPosition, 0,
+	    x, y+6 - zPosition , 0,
 	    0, 0, -slantHAnim/1.5-animationTilt[X]*20,
 	    1, 1, 1
 	))
@@ -238,6 +245,14 @@ function draw_me(sliceSurf, effectSurf, targetSurf) {
 	//render blade
 	draw_surface_ext(targetSurf,-surface_get_width(targetSurf)/2,-surface_get_height(targetSurf)/2,1,1,0,c_white,1)
 	
+	//white overlay for blade spawn
+	if spawnAnim > 0 {
+		shader_set(shd_flash)
+		gpu_set_blendmode(bm_add)
+		draw_surface_ext(targetSurf,-surface_get_width(targetSurf)/2,-surface_get_height(targetSurf)/2,1,1,0,c_white,spawnAnim)
+		gpu_set_blendmode(bm_normal)
+		shader_reset()
+	}
 	//reset matrix and shader
 	matrix_set(matrix_world, wm)
 	shader_reset()
@@ -245,7 +260,6 @@ function draw_me(sliceSurf, effectSurf, targetSurf) {
 	//wipe surfaces
 	surface_set_target(targetSurf)
 	draw_clear_alpha(c_white,0)
-	if global.debugMode draw_clear_alpha(c_red,.2)
 	surface_reset_target()
 
 	surface_set_target(sliceSurf)
@@ -282,7 +296,8 @@ function die() {
 	deathFlag = true
 }
 
-function takeDamage(damage,ally) {
+function takeDamage(damage,damageDirection,ally) {
+	//damage calculation
 	if currentTriggers > 0 {
 		currentTriggers--
 		hitFlashType = DAMAGE_TYPE.SHIELD
@@ -303,6 +318,10 @@ function takeDamage(damage,ally) {
 	}
 	
 	currentTriggersCooldown = 0
+	
+	//animation calculation
+	hitDistortion = 1
+	hitDistortionDirection = damageDirection
 }
 
 
@@ -328,6 +347,11 @@ function cooldownsCalculate() {
 	}
 }
 #endregion
+
+//spawn anim
+instance_create_depth(x,y-zPosition,layer,obj_death_explosion)
+
+
 
 //DEBUG
 if global.debugMode {instance_create_layer(x,y,layer,obj_spawn_point_debug)}

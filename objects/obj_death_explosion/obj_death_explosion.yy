@@ -14,8 +14,8 @@
     "path": "folders/Objects/effects/ingame/particles.yy",
   },
   "parentObjectId": {
-    "name": "obj_effect",
-    "path": "objects/obj_effect/obj_effect.yy",
+    "name": "obj_light",
+    "path": "objects/obj_light/obj_light.yy",
   },
   "persistent": false,
   "physicsAngularDamping": 0.1,

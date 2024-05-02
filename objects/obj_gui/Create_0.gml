@@ -34,6 +34,7 @@ waveListPosY = 540-bottomMargin
 #region EXP
 expWidth = 60
 expHeight = sprite_get_height(spr_exp_bar)
+playerXPScale = 0
 
 currentUpgradeTimerMax = 4*60
 currentUpgradeTimer = currentUpgradeTimerMax
