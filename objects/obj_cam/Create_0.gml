@@ -36,6 +36,19 @@ interpolateCurveSpeed = 0.0
 playerTorqueStrength = 0
 twist = 0
 
+//shake
+shake = false
+shake_time = 0
+shake_magnitude = 0
+shake_fade = 0.25
+
+function screenshake(_time, _magnitude, _fade) {
+	shake = true
+	shake_time = _time
+	shake_magnitude = _magnitude
+	shake_fade = _fade
+}
+
 function torque(add) {
 	twist += add * playerTorqueStrength
 }

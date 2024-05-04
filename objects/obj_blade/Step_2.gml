@@ -1,10 +1,13 @@
 if deathFlag {
-	ds_map_destroy(cooldownMap)
+	ds_map_destroy(cooldownMap) //cleanup
+	if instance_exists(obj_killCounter) {obj_killCounter.countKill(id,groupId)} // count death
+	if instance_exists(obj_cam) {obj_cam.screenshake(2,1,0.1)} // shake screen
+	
+	//CREATE DEATH EFFECTS
 	var popStrength = (130+irandom(100))/100
 	var popRotation = (irandom(400))/100 - 2
-	
-	//EFFECTS
 	var deathExplosion = instance_create_layer(x,y-10,layer,obj_death_explosion)
+	
 	/*
 	//anchor
 	var anchorPart = instance_create_layer(x,y,layer,obj_blade_part)

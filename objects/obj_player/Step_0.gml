@@ -9,10 +9,15 @@ move_down  = keyboard_check(global.key_down)
 move_left  = keyboard_check(global.key_left)
 move_right = keyboard_check(global.key_right)
 
-dash_up    = keyboard_check_pressed(global.key_dash_up)
-dash_down  = keyboard_check_pressed(global.key_dash_down)
-dash_left  = keyboard_check_pressed(global.key_dash_left)
-dash_right = keyboard_check_pressed(global.key_dash_right)
+dash_up_dir    = keyboard_check_released(global.key_dash_up)
+dash_down_dir  = keyboard_check_released(global.key_dash_down)
+dash_left_dir  = keyboard_check_released(global.key_dash_left)
+dash_right_dir = keyboard_check_released(global.key_dash_right)
+
+dash_up    = keyboard_check(global.key_dash_up)
+dash_down  = keyboard_check(global.key_dash_down)
+dash_left  = keyboard_check(global.key_dash_left)
+dash_right = keyboard_check(global.key_dash_right)
 
 var dirX, dirY, dir
 
@@ -39,35 +44,72 @@ if (move_up || move_down) {
 }
 
 //DASH
-if (dash_right || dash_left) {
-	dirX = dash_right-dash_left
-}
-if (dash_up || dash_down) {
-	dirY = dash_down-dash_up
+if (dash_right || dash_left || dash_up || dash_down) {
+	if dashPower < 100 {dashPower++}
+	isDashing = true
 }
 
-dir = point_direction(0,0,dirX,dirY)
-
-if (dash_right || dash_left) {
-		
+if dashPower > 0 {
+	
+	//calculate direction
+	dirX = dash_right_dir-dash_left_dir
+	dirY = dash_down_dir-dash_up_dir
+	dir = point_direction(0,0,dirX,dirY)
+	
+	if dash_right_dir || dash_left_dir {
 		//carry momentum
 		if sign(vel[@ X]) != sign(lengthdir_x(15,dir)) {
 			velAdd[@ X] = 0//-vel[@ X]
 		}
-		
 		//add dash
-		velAdd[@ X] += lengthdir_x(15,dir)
-}
-
-if (dash_up || dash_down) {
+		velAdd[@ X] += lengthdir_x(10+15*dashPower/100,dir)
+		dashPower = 0
+		isDashing = false
+		
+	} else if dash_up_dir || dash_down_dir{
 		//carry momentum
 		if sign(velAdd[@ Y]) != sign(lengthdir_x(15,dir)) {
 			velAdd[@ Y] = 0//-vel[@ Y]
 		}
-		
 		//add dash
-		velAdd[@ Y] += lengthdir_y(15,dir)
+		velAdd[@ Y] += lengthdir_y(10+15*dashPower/100,dir)
+		dashPower = 0
+		isDashing = false
+	}
 }
+
+if (dash_right || dash_left ) {
+	//dirX = dash_right-dash_left
+}
+
+if (dash_up || dash_down) {
+	//dirY = dash_down-dash_up
+}
+
+dir = point_direction(0,0,dirX,dirY)
+
+/*
+if (dash_right || dash_left) {
+		if dashPower < 100 {dashPower++}
+} else {
+	//carry momentum
+	if sign(vel[@ X]) != sign(lengthdir_x(15,dir)) {
+		velAdd[@ X] = 0//-vel[@ X]
+	}
+	//add dash
+	velAdd[@ X] += lengthdir_x(15*dashPower,dir)
+}
+
+if (dash_up || dash_down) {
+	if dashPower < 100 {dashPower++}
+} else {
+		//carry momentum
+		if sign(velAdd[@ Y]) != sign(lengthdir_x(15,dir)) {
+			velAdd[@ Y] = 0//-vel[@ Y]
+		}
+		//add dash
+		velAdd[@ Y] += lengthdir_y(15*dashPower,dir)
+}*/
 
 event_inherited()
 
@@ -89,6 +131,9 @@ if EXP >= EXPCapList[level-1] {
 
 //ATTACKS
 if currentTriggers != stats.maxTriggers {		//condition
+	
+	isAttacking = true
+	
 	if attackCooldown >= 60 / stats.attacksPerSecond  {	//attack pattern
 		attackCooldown = 0
 		
@@ -102,12 +147,12 @@ if currentTriggers != stats.maxTriggers {		//condition
 			var shootPointY = y + lengthdir_y(22,shootDir) - 20
 			
 			var shootAnim = instance_create_layer(shootPointX,shootPointY,layer,obj_shot_flare)
-			shootAnim.lightColor = merge_color(c_white,c_aqua,0)
+			shootAnim.lightColor = lightColor
 			//bullet
 			
 			var bullet = instance_create_layer(x,y-20,layer,obj_bullet)
 			bullet.ownerId = id
-			bullet.lightColor = merge_color(c_white,c_aqua,0)
+			bullet.lightColor = lightColor
 			bullet.direction = point_direction(x,y,target.x,target.y)
 			bullet.image_angle = bullet.direction
 			
@@ -117,4 +162,6 @@ if currentTriggers != stats.maxTriggers {		//condition
 		}
 		
 	}
+} else {
+	isAttacking = false
 }

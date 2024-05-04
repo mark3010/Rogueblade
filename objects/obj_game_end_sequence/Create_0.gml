@@ -7,7 +7,8 @@ var dataImprint = {
 	timer : {
 		gameTime : obj_timer.gameTime,
 		},
-	wave : obj_wave_director.waveList
+	wave : obj_wave_director.waveList,
+	kills : obj_killCounter.kills
 }
 
 //data file object

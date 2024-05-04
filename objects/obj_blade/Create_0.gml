@@ -2,6 +2,8 @@ scr_bladeArenaSync()
 
 //ID
 instanceId = global.instanceIDCounter++
+groupId = -1
+
 #region ENUMS
 
 enum TEAM {
@@ -19,7 +21,7 @@ enum DAMAGE_TYPE {
 #region STATS
 stats = {
 	//resources
-	maxLife : 5,
+	maxLife : 3,
 	lifeRegen : 0,
 	maxTriggers : 0,
 	//movement
@@ -28,8 +30,8 @@ stats = {
 	velMax : 4,					//VELOCITY - max speed before drag is applied
 	maxTriggersCooldown : 240,	//SECONDS 
 	triggersCooldownRegen : 1,	
-	zGravity : 30,				//PIXELS/SECOND
-	zBounciness : 60,			//PERCENTAGE - 100% means bounce with no loss, 0% means no bouncy at all
+	zGravity : 40,				//PIXELS/SECOND
+	zBounciness : 50,			//PERCENTAGE - 100% means bounce with no loss, 0% means no bouncy at all
 	acc : 0.2,					//PIXEL/TICK - acceleration
 	//weapon
 	attacksPerSecond : 3,
@@ -297,15 +299,19 @@ function die() {
 }
 
 function takeDamage(damage,damageDirection,ally) {
+	var damageTaken = 0
 	//damage calculation
 	if currentTriggers > 0 {
+		
+		damageTaken = damage
+		
 		currentTriggers--
 		hitFlashType = DAMAGE_TYPE.SHIELD
 		hitFlash = 1
 		hitFlashColorMerge = 1
 	} else {
 		
-		var damageTaken = damage * (1-ally*.95) // .8 is same team damage resistance
+		damageTaken = damage * (1-ally*.95) // .8 is same team damage resistance
 		
 		currentLife -= damageTaken
 		hitFlashType = DAMAGE_TYPE.HEALTH
@@ -322,6 +328,10 @@ function takeDamage(damage,damageDirection,ally) {
 	//animation calculation
 	hitDistortion = 1
 	hitDistortionDirection = damageDirection
+	
+	//damage number
+	var damageNumber = instance_create_depth(other.x,other.y-20-16,depth,obj_damage_number)
+	damageNumber.damage = damageTaken
 }
 
 
@@ -349,9 +359,8 @@ function cooldownsCalculate() {
 #endregion
 
 //spawn anim
-instance_create_depth(x,y-zPosition,layer,obj_death_explosion)
-
-
+var spawnParticle = instance_create_layer(x,y,layer,obj_death_explosion)
+spawnParticle.zPosition = zPosition
 
 //DEBUG
 if global.debugMode {instance_create_layer(x,y,layer,obj_spawn_point_debug)}

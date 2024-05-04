@@ -101,7 +101,7 @@ function draw_me(sliceSurf, effectSurf, targetSurf) {
 	var yTiltSkew = ( baseTiltY / 100 + slantVAnim - 0.8) / ( 1 + zPosition / 50 )
 	var xTiltSkew = 1 / ( 1 + zPosition / 30 )
 	
-	draw_sprite_ext(spr_blade_base_shadow,0,shadowX,shadowY,xTiltSkew,yTiltSkew,0,c_white,.1) // draw self
+	draw_sprite_ext(spr_blade_base_shadow,0,shadowX,shadowY,xTiltSkew,yTiltSkew,0,c_white,.1*image_alpha) // draw self
 	//scr_render3d_shadow(spr_blade_base_shadow)
 	
 	#endregion

@@ -29,6 +29,10 @@ if room == room_menu {
 	if keyboard_check_pressed(vk_escape) {
 		game_end()
 	}
+	
+	if keyboard_check_pressed(ord("R")) {
+		room_restart()
+	}
 }
 #endregion
 #region ARENA
@@ -60,6 +64,10 @@ if room == room_arena {
 			instance_activate_layer(layer_get_id("layerBackground"))
 			show_debug_message("unpause")
 		}
+	}
+	
+	if keyboard_check_pressed(ord("R")) {
+		room_restart()
 	}
 	
 }

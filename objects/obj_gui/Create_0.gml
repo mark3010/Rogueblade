@@ -24,11 +24,16 @@ timerPosY = 540-bottomMargin
 	triggersCooldownWidth = 100
 	triggersCooldownHeight = sprite_get_height(spr_triggers_cooldown_bar)
 	triggersCooldownAlpha = 1
+//indicators
+	playerIsAttacking = 0
+	playerIsDashing = 0
 #endregion
 
 #region WAVELIST
 waveListPosX = 960-sideMargin
 waveListPosY = 540-bottomMargin
+waveTimerWidth = 50
+waveTimerHeight = sprite_get_height(spr_wave_timer_bar)
 #endregion
 
 #region EXP
@@ -56,4 +61,6 @@ function updateUpgradeDisplay(text) {
 	healthFillSurf = surface_create(healthWidth * 2 + sprite_get_width(spr_health_bar) * 4,healthHeight)
 	expSurf = surface_create(expWidth,expHeight)
 	triggersCooldownSurf = surface_create(triggersCooldownWidth,triggersCooldownHeight)
+	waveTimerSurf = surface_create(waveTimerWidth,waveTimerHeight);
+
 #endregion

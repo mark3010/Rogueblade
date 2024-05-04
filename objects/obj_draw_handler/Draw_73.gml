@@ -27,7 +27,7 @@ with (obj_blade) {
 	draw_sprite_ext(spr_light,0,self.x,self.y-self.dimensions.zLength-zPosition,1,1,0,c_white,1)
 }
 
-with (obj_light) {
+with (obj_effect_depth) {
 	draw_sprite_ext(self.lightSource,0,self.x,self.y,1,1,0,lightColor,1)
 }
 

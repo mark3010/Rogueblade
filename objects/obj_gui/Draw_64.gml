@@ -14,8 +14,6 @@ if room == room_arena {
 	draw_clear(c_black)
 	draw_sprite_stretched(spr_exp_bar,1,0,0,expWidth*playerXPScale,expHeight)
 	surface_reset_target()
-	//draw_set_halign(fa_center)
-	//draw_text(960/2,15,playerLevel)
 	scr_textStyle1(960/2,15,playerLevel,global.font,fa_center,c_white,1,1)
 	draw_surface(expSurf,960/2-expWidth/2,35)
 }
@@ -37,9 +35,21 @@ if instance_exists(obj_timer) {
 	//format time
 	var timeFormatted = obj_text_formatter.gameTimeFormatted(obj_timer.gameTime)
 
-	scr_textStyle1(timerPosX,timerPosY-30,timeFormatted,global.font,fa_left,c_white,1,2)
-	scr_textStyle1(timerPosX,timerPosY,"Time Elapsed",global.font,fa_left,c_white,1,1)
+	scr_textStyle1(timerPosX,timerPosY-50,timeFormatted,global.font,fa_left,c_white,1,2)
+	scr_textStyle1(timerPosX,timerPosY-20,"Time Elapsed",global.font,fa_left,c_white,1,1)
 }
+
+
+
+#endregion
+#region KILLCOUNTER
+if instance_exists(obj_killCounter) {
+	scr_textStyle1(timerPosX+18,timerPosY,string(obj_killCounter.kills),global.font,fa_left,c_white,1,1)
+	//scr_textStyle1(timerPosX,timerPosY,"Kills: " +string(obj_killCounter.kills),global.font,fa_left,c_white,1,1)
+	draw_sprite(spr_skull,0,timerPosX,timerPosY)
+}
+
+
 
 #endregion
 
@@ -67,6 +77,10 @@ if instance_exists(obj_player) {
 	playerMaxTriggersCooldown = obj_player.stats.maxTriggersCooldown
 	playerCurrentTriggersCooldown = obj_player.currentTriggersCooldown
 	
+	//indicators
+	
+	playerIsAttacking = lerp(playerIsAttacking,obj_player.isAttacking,.5)
+	playerIsDashing = lerp(playerIsDashing,obj_player.isDashing,.5)
 
 	
 } else {
@@ -137,6 +151,17 @@ if room == room_arena {
 		draw_surface(triggersCooldownSurf,triggersCooldownPosX-triggersCooldownWidth/2,triggersCooldownPosY)
 		scr_textStyle1(triggersCooldownPosX,triggersCooldownPosY-12,string(playerCurrentTriggers)+"/"+string(playerMaxTriggers),global.font,fa_center,c_white,1,1)
 	
+	//shooting indicator
+		var indicatorXOffset = triggersCooldownWidth/2+16
+	draw_sprite(spr_shooting_toggle,0,triggersCooldownPosX + indicatorXOffset,triggersCooldownPosY-8)
+	draw_sprite_ext(spr_shooting_toggle,1,triggersCooldownPosX + indicatorXOffset,triggersCooldownPosY-8,1,1,0,c_white,playerIsAttacking)
+	
+	//dash indicator
+	draw_sprite(spr_dashing_toggle,0,triggersCooldownPosX - indicatorXOffset,triggersCooldownPosY-8)
+	draw_sprite_ext(spr_dashing_toggle,1,triggersCooldownPosX - indicatorXOffset,triggersCooldownPosY-8,1,1,0,c_white,playerIsDashing)
+	
+	
+	
 }
 #endregion
 
@@ -151,11 +176,37 @@ if instance_exists(obj_wave_director) {
 		var waveDisplayDirection = "Direction: "+string(waveTypeNames[obj_wave_director.waveList[i].waveDirection])
 		
 		//top part
-		scr_textStyle1(waveListPosX,waveListPosY-yWaveListOffset-30,waveDisplayName,global.font,fa_right,c_white,1,2)
+		scr_textStyle1(waveListPosX,waveListPosY-yWaveListOffset-50,waveDisplayName,global.font,fa_right,c_white,1,2)
 		//bottom part
-		scr_textStyle1(waveListPosX,waveListPosY-yWaveListOffset,waveDisplayDirection,global.font,fa_right,c_white,1,1)
-		//scr_textStyle1(waveListPosX-130,waveListPosY-yWaveListOffset,"|",global.font,fa_right,c_white,1,1)
-		//scr_textStyle1(waveListPosX-140,waveListPosY-yWaveListOffset,waveDisplayElapsed,global.font,fa_right,c_white,1,1)
+		scr_textStyle1(waveListPosX,waveListPosY-yWaveListOffset-20,waveDisplayDirection,global.font,fa_right,c_white,1,1)
+
+		if !surface_exists(waveTimerSurf) {
+			waveTimerSurf = surface_create(waveTimerWidth,waveTimerHeight);
+		}	
+	
+		//wave conditions
+			//timer
+		surface_set_target(waveTimerSurf)
+		draw_clear(c_black)
+		draw_rectangle_color(1,1,waveTimerWidth-2,waveTimerHeight-2,c_white,c_white,c_white,c_white,true)
+		
+		var waveTimePassed = obj_wave_director.waveList[i].timer
+		var waveMaxTimer = obj_wave_director.waveList[i].maxTimer
+		var waveTimerScale = 1 - waveTimePassed / waveMaxTimer
+		
+		draw_sprite_stretched(spr_wave_timer_bar, 1, 0, 0, waveTimerWidth * waveTimerScale, waveTimerHeight)
+		surface_reset_target()
+		
+		draw_surface(waveTimerSurf,waveListPosX-waveTimerWidth,waveListPosY)
+		
+			//current wave kill count
+		var paddingX = 10
+		scr_textStyle1(waveListPosX-waveTimerWidth-paddingX,waveListPosY-yWaveListOffset,"|",global.font,fa_right,c_white,1,1)
+		
+		var waveKillCount = string(obj_wave_director.currentWaveKills) + "/" + string(obj_wave_director.currentWaveEntityTotal)
+		scr_textStyle1(waveListPosX-waveTimerWidth-paddingX*3,waveListPosY-yWaveListOffset,waveKillCount,global.font,fa_center,c_white,1,1)
+		string_width(waveKillCount)
+		draw_sprite(spr_skull,1,waveListPosX-waveTimerWidth-paddingX*3-string_width(waveKillCount)-10,waveListPosY-yWaveListOffset)
 			
 	}
 }

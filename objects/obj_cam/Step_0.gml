@@ -45,3 +45,23 @@ camera_set_view_size(view_camera[0],camWidth*zoomAnim,camHeight*zoomAnim)
 
 //rotation
 twist = lerp(0,twist,0.9)
+
+//shake
+if (shake) 
+{ 
+   shake_time -= 1
+   var _xval = choose(-shake_magnitude, shake_magnitude)
+   var _yval = choose(-shake_magnitude, shake_magnitude) 
+   camera_set_view_pos(view_camera[0], x - (camWidth * 0.5 * zoomAnim)+_xval, y - (camHeight * 0.5 * zoomAnim)+_yval)
+
+   if (shake_time <= 0) 
+   { 
+      shake_magnitude -= shake_fade 
+
+      if (shake_magnitude <= 0) 
+      {  
+		camera_set_view_pos(view_camera[0], x - (camWidth * 0.5 * zoomAnim), y - (camHeight * 0.5 * zoomAnim))
+		shake = false 
+      } 
+   } 
+}

@@ -19,6 +19,8 @@ enum waveSpawnerType {
 #region WAVES
 waveList = []
 waveNumber = 1
+currentWaveKills = 0
+currentWaveEntityTotal = 10
 
 function Wave(
 _waveName = "none",
@@ -33,7 +35,7 @@ _waveDirection = irandom(waveType.total-1)
 	cycles = _cycles
 	enemies = _enemies
 	waveDirection = _waveDirection
-	spawnTrigger = maxTimer / cycles
+	spawnTrigger = 1
 }
 
 function generateWave() {
@@ -42,9 +44,33 @@ function generateWave() {
 	var waveCyclesTotal =	2 + irandom(1 + floor(waveNumber/4))
 	var waveEnemiesPerWave =	1 + irandom(1 + floor(waveNumber/4) + floor(waveNumber/4))
 	var waveMaxTimer =	(waveCyclesTotal + irandom(floor(waveNumber/4))) * 200
+	var waveDirection = validWaveDirection(waveEnemiesPerWave)
+	
+	var generatedWave = new Wave(waveName,waveMaxTimer,waveCyclesTotal,waveEnemiesPerWave,waveDirection)	
 	waveNumber++
 	
-	return new Wave(waveName,waveMaxTimer,waveCyclesTotal,waveEnemiesPerWave)	
+	currentWaveKills = 0
+	currentWaveEntityTotal = generatedWave.enemies
+	
+	return generatedWave	
+}
+
+function validWaveDirection(numberOfEnemies) {
+	
+	var waveDirection = noone
+	
+	//only pick directions that are valid according to enemy amount
+	if numberOfEnemies <= 1 {
+		waveDirection = 3+irandom(3)
+		
+	} else if numberOfEnemies <= 2 {
+		waveDirection = 1+irandom(5)
+	
+	} else {
+		waveDirection = irandom(waveType.total-1)
+	}
+	
+	return waveDirection
 }
 
 #endregion

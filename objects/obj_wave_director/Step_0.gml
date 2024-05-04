@@ -9,9 +9,9 @@ if !global.gameActive exit
 for (var i = 0; i < array_length(waveList); ++i;) {
 	//reduce wave timer
 	waveList[i].timer -= 1
-	
-	if waveList[i].timer mod waveList[i].spawnTrigger == 0 {
-
+	//if waveList[i].timer mod waveList[i].spawnTrigger == 0 {
+	if waveList[i].spawnTrigger > 0 {
+		waveList[i].spawnTrigger = 0
 		//handle wave distribution
 		//determine which spawners to spawn from
 		var pickSpawnerList = [1,2,3,4]
@@ -71,10 +71,11 @@ for (var i = 0; i < array_length(waveList); ++i;) {
 }
 #endregion
 
+//condition for ending waves
 #region WAVELIST DESTROY
 //check if no more waves are left, delete
 for (var o = array_length(waveList)-1; o >= 0; --o;) {
-	if waveList[o].timer <= 0 {
+	if waveList[o].timer <= 0 || currentWaveEntityTotal == currentWaveKills{
 		delete waveList[o]
 		array_delete(waveList,o,1)
 	}
@@ -85,6 +86,7 @@ for (var o = array_length(waveList)-1; o >= 0; --o;) {
 //if no wave is active, append new wave
 if array_length(waveList) == 0 {
 	array_push(waveList,generateWave())
+	
 }
 #endregion
 

@@ -2,9 +2,7 @@
 // You can write your code in this editor
 event_inherited()
 
-
 //DEBUG STUFF
-
 if global.debugMode {
 	//arena breakpoints
 	draw_set_color(c_red)

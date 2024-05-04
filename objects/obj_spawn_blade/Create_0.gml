@@ -5,7 +5,7 @@ deathTrigger = 90 // in frames
 size = 20 //in pixels
 color = c_white
 centerDist = 0
-
+groupId = -1
 //CORRECT POSITION TO INSIDE ARENA
 scr_bladeArenaSync()
 

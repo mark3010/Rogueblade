@@ -4,7 +4,7 @@
 lifetime++
 
 if lifetime >= deathTrigger {
-	image_alpha -= .05
+	image_alpha -= .1
 }
 
 if image_alpha <= 0 {

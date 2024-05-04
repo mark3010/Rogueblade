@@ -1,9 +1,11 @@
 {
-  "resourceType": "GMNotes",
-  "resourceVersion": "1.1",
-  "name": "Note1",
-  "parent": {
-    "name": "RogueBlade",
-    "path": "RogueBlade.yyp",
+  "$GMNotes":"",
+  "%Name":"Note1",
+  "name":"Note1",
+  "parent":{
+    "name":"RogueBlade",
+    "path":"RogueBlade.yyp",
   },
+  "resourceType":"GMNotes",
+  "resourceVersion":"2.0",
 }

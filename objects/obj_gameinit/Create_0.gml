@@ -35,6 +35,7 @@ function createGame(gameModeType) {
 			player = instance_create_layer(playerXSpawn,playerYSpawn,layerEntities,obj_player)
 			waveDirector = instance_create_layer(x,y,layerEntities,obj_wave_director)
 			timer = instance_create_layer(x,y,layerEntities,obj_timer)
+			killCounter = instance_create_layer(x,y,layerEntities,obj_killCounter)
 			upgradeHandler = instance_create_layer(x,y,layerEntities,obj_upgrade_handler)
 			
 			audio_play_sound(snd_music, 1, true)

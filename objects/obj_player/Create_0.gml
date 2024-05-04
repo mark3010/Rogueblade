@@ -16,9 +16,21 @@ global.key_dash_right = vk_right
 global.key_dash_left = vk_left
 
 //COMPONENTS
+var randomCore = irandom(2)
+
+if randomCore == 0 {
+	core =		new Model(spr_core1_pattern,spr_core1_material)
+	lightColor = merge_color(c_white,c_aqua,.00)
+} else if randomCore == 1 {
+	core =		new Model(spr_core1_pattern,spr_core1_material3)
+	lightColor = merge_color(c_white,c_green,.00)
+} else {
+	core =		new Model(spr_core1_pattern,spr_core1_material4)
+	lightColor = merge_color(c_white,c_red,.00)
+}
 anchor =	new Model(spr_anchor1_pattern,spr_anchor1_material)
 hull =		new Model(spr_hull1_pattern,spr_hull1_material)
-core =		new Model(spr_core1_pattern,spr_core1_material)
+//core =		new Model(spr_core1_pattern,spr_core1_material)
 
 //BASE PLAYER STATS
 	//override
@@ -31,8 +43,8 @@ core =		new Model(spr_core1_pattern,spr_core1_material)
 	stats.collisionDamage = 10
 	//kinetics
 	stats.acc = .3
-	stats.deflectionPower = 150
-	stats.deflectionResistance = 150
+	//stats.deflectionPower = 150
+	//stats.deflectionResistance = 150
 
 refreshCurrents()
 
@@ -50,3 +62,6 @@ for (var i = 0; i < maxLevel-1; i++) {
 	
 //other
 team = TEAM.ALLY
+isAttacking = false
+isDashing = false
+dashPower = 0
