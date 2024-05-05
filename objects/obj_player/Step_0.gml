@@ -35,17 +35,17 @@ if (move_up || move_down) {
 dir = point_direction(0,0,dirX,dirY)
 
 if (move_right || move_left) {
-		velAdd[@ X] += lengthdir_x(stats.acc,dir)
+		velAdd[@ X] += lengthdir_x(stats.acc,dir) * (1.2 - isDashing)/1.2
 		obj_cam.torque(lengthdir_x(stats.acc,dir))
 }
 
 if (move_up || move_down) {
-		velAdd[@ Y] += lengthdir_y(stats.acc,dir)
+		velAdd[@ Y] += lengthdir_y(stats.acc,dir) * (1.2 - isDashing)/1.2
 }
 
 //DASH
 if (dash_right || dash_left || dash_up || dash_down) {
-	if dashPower < 100 {dashPower++}
+	if dashPower < 100 {dashPower += 2}
 	isDashing = true
 }
 
@@ -132,7 +132,7 @@ if EXP >= EXPCapList[level-1] {
 //ATTACKS
 if currentTriggers != stats.maxTriggers {		//condition
 	
-	isAttacking = true
+	isAttacking = 1
 	
 	if attackCooldown >= 60 / stats.attacksPerSecond  {	//attack pattern
 		attackCooldown = 0
@@ -163,5 +163,6 @@ if currentTriggers != stats.maxTriggers {		//condition
 		
 	}
 } else {
-	isAttacking = false
+	isAttacking -= .025
+	if isAttacking < 0 {isAttacking = 0}
 }

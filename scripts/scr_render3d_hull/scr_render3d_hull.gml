@@ -92,11 +92,18 @@ function scr_render3d_hull(argument0,argument1,argument2,argument3,argument4,arg
 		
 		if global.debugMode draw_circle(targetCenterX,targetCenterY,targetCenterX,true)
 		
-		draw_surface_ext(slice,targetLayerCenterX,targetLayerCenterY,xTiltSkew,yTiltSkew,0,c_white,1)
 		
+		//decide if charging dash
+		if localLayerNumber<=sprite_get_number(model)/2 {
+			var col = merge_color(c_white,energyColor,dashPower/100)
+			draw_surface_ext(slice,targetLayerCenterX,targetLayerCenterY,xTiltSkew,yTiltSkew,0,col,1)
+		} else {
+			draw_surface_ext(slice,targetLayerCenterX,targetLayerCenterY,xTiltSkew,yTiltSkew,0,c_white,1)
+		}
+
 		if hitAlpha > 0 {
 			shader_set(shd_flash)
-			gpu_set_blendmode(bm_add)
+			gpu_set_blendmode(bm_add);
 			draw_surface_ext(slice,targetLayerCenterX,targetLayerCenterY,xTiltSkew,yTiltSkew,0,color,hitAlpha)
 			gpu_set_blendmode(bm_normal)
 			shader_reset()

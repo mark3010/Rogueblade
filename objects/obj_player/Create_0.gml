@@ -21,12 +21,15 @@ var randomCore = irandom(2)
 if randomCore == 0 {
 	core =		new Model(spr_core1_pattern,spr_core1_material)
 	lightColor = merge_color(c_white,c_aqua,.00)
+	energyColor = c_aqua
 } else if randomCore == 1 {
 	core =		new Model(spr_core1_pattern,spr_core1_material3)
 	lightColor = merge_color(c_white,c_green,.00)
+	energyColor = c_green
 } else {
 	core =		new Model(spr_core1_pattern,spr_core1_material4)
 	lightColor = merge_color(c_white,c_red,.00)
+	energyColor = c_red
 }
 anchor =	new Model(spr_anchor1_pattern,spr_anchor1_material)
 hull =		new Model(spr_hull1_pattern,spr_hull1_material)
@@ -62,6 +65,3 @@ for (var i = 0; i < maxLevel-1; i++) {
 	
 //other
 team = TEAM.ALLY
-isAttacking = false
-isDashing = false
-dashPower = 0

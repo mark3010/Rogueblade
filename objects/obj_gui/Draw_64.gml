@@ -79,8 +79,11 @@ if instance_exists(obj_player) {
 	
 	//indicators
 	
-	playerIsAttacking = lerp(playerIsAttacking,obj_player.isAttacking,.5)
+	playerIsAttacking = lerp(playerIsAttacking,ceil(obj_player.isAttacking),.5)
+	playerAttackScale = obj_player.isAttacking
 	playerIsDashing = lerp(playerIsDashing,obj_player.isDashing,.5)
+	playerDashScale = obj_player.dashPower
+	
 
 	
 } else {
@@ -153,14 +156,17 @@ if room == room_arena {
 	
 	//shooting indicator
 		var indicatorXOffset = triggersCooldownWidth/2+16
-	draw_sprite(spr_shooting_toggle,0,triggersCooldownPosX + indicatorXOffset,triggersCooldownPosY-8)
-	draw_sprite_ext(spr_shooting_toggle,1,triggersCooldownPosX + indicatorXOffset,triggersCooldownPosY-8,1,1,0,c_white,playerIsAttacking)
+		
+		var shootCol = merge_color(c_yellow,c_ltgray,.5)
+		draw_sprite_ext(spr_shooting_toggle,0,triggersCooldownPosX + indicatorXOffset,triggersCooldownPosY-8,1,1,0,shootCol,1)
+		draw_sprite_ext(spr_shooting_toggle,1,triggersCooldownPosX + indicatorXOffset,triggersCooldownPosY-8,1,1,0,shootCol,playerIsAttacking)
+		draw_sprite_ext(spr_toggle_bar,floor(playerAttackScale*sprite_get_number(spr_toggle_bar))-1,triggersCooldownPosX + indicatorXOffset,triggersCooldownPosY-8,1,1,0,c_white,playerIsAttacking)
 	
-	//dash indicator
-	draw_sprite(spr_dashing_toggle,0,triggersCooldownPosX - indicatorXOffset,triggersCooldownPosY-8)
-	draw_sprite_ext(spr_dashing_toggle,1,triggersCooldownPosX - indicatorXOffset,triggersCooldownPosY-8,1,1,0,c_white,playerIsDashing)
-	
-	
+		//dash indicator
+		var dashCol = merge_color(c_orange,c_ltgray,.5)
+		draw_sprite_ext(spr_dashing_toggle,0,triggersCooldownPosX - indicatorXOffset,triggersCooldownPosY-8,1,1,0,dashCol,1)
+		draw_sprite_ext(spr_dashing_toggle,1,triggersCooldownPosX - indicatorXOffset,triggersCooldownPosY-8,1,1,0,dashCol,playerIsDashing)
+		draw_sprite_ext(spr_toggle_bar,floor(playerDashScale/100*sprite_get_number(spr_toggle_bar))-1,triggersCooldownPosX - indicatorXOffset,triggersCooldownPosY-8,1,1,0,c_white,playerIsDashing)
 	
 }
 #endregion

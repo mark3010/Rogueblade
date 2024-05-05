@@ -39,6 +39,9 @@ stats = {
 }
 
 attackCooldown = 0
+isAttacking = false
+isDashing = false
+dashPower = 0
 
 function lifeCalculate() {
 	currentLife += stats.lifeRegen/60
@@ -154,6 +157,8 @@ constructor {
 }
 
 anchor =	new Model(spr_anchor1_pattern,spr_anchor1_material2)
+	lightColor = c_white
+	energyColor = c_white
 hull =		new Model(spr_hull1_pattern,spr_hull1_material2)
 core =		new Model(spr_core1_pattern,spr_core1_material2)
 
@@ -219,8 +224,9 @@ function draw_me(sliceSurf, effectSurf, targetSurf) {
 	
 	#endregion
 	
-	var hitCol = c_teal //shield
-	if hitFlashType == 0 {hitCol = merge_color(c_gray,c_maroon,hitFlashColorMerge)} //life
+	var hitCol = c_aqua //shield
+	if hitFlashType == 0 {hitCol = merge_color(c_white,c_red,hitFlashColorMerge)//hitCol = merge_color(c_gray,c_maroon,hitFlashColorMerge)
+		} //life
 
 	//generate model to target surface
 	if anchor	!= -1	{scr_render3d_v2(anchor,targetSurf,sliceSurf,effectSurf,c_white,animationTilt)}
@@ -245,7 +251,9 @@ function draw_me(sliceSurf, effectSurf, targetSurf) {
 	))
 	
 	//render blade
+	//shader_set(shd_outline)
 	draw_surface_ext(targetSurf,-surface_get_width(targetSurf)/2,-surface_get_height(targetSurf)/2,1,1,0,c_white,1)
+	//shader_reset()
 	
 	//white overlay for blade spawn
 	if spawnAnim > 0 {
