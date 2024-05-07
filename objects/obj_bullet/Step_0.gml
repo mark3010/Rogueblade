@@ -8,17 +8,10 @@ if speed < .5 {
 event_inherited()
 
 image_xscale = image_xscale * .9
-image_yscale = image_yscale * .8
+image_yscale = image_yscale * .9
 
 //speed -= 1
 speed = speed * .85
 
 image_angle = direction
 //simulate gravity on trajectory
-if direction > 90 and direction < 270 {
-	direction++
-
-} else {
-	direction--
-}
-

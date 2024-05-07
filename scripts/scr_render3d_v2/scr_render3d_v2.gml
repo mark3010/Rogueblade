@@ -55,7 +55,7 @@ function scr_render3d_v2(argument0,argument1,argument2,argument3,argument4,argum
 		var layerToSurfaceCenterX = targetCenterX - sliceCenterX + slantH * sign(obj_arena.x-x) * layerNumber / 10
 		var layerToSurfaceCenterY = targetCenterY - sliceCenterY + slantV * sign(obj_arena.y-y) * layerNumber / 10
 		
-		var layerStackLengthIntervalY = (iterationNumber/2) * yTiltLengthMod
+		var layerStackLengthIntervalY = (iterationNumber/2) * yTiltLengthMod *(1-dashPower/100*.2)
 		
 		var targetLayerCenterX = layerToSurfaceCenterX									+ 1 //center fix
 		var targetLayerCenterY = layerToSurfaceCenterY - 1 * layerStackLengthIntervalY	+ 1 //center fix

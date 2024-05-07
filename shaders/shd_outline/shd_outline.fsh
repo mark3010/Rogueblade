@@ -32,7 +32,8 @@ void main()
 		alpha = max(alpha, texture2D(gm_BaseTexture, vec2( v_vTexcoord.x - pixelSizeDg.x, v_vTexcoord.y - pixelSizeDg.y )).a);
 		
 		if(alpha > 0.0) {
-			newColor = vec4(0.1,0.1,0.1,1.0);
+			//newColor = vec4(0.1,0.1,0.1,1.0);
+			newColor = vec4(0,0,0,1.0);
 		}
 	}
 	

@@ -10,11 +10,20 @@ if cooldownInstanceExists(other.instanceId) == undefined && collision {
 		audio_play_sound(snd_collision_health, 10, false)
 	}
 	
+	//resolved charged dashes
+	if isDashing {executeDash()}
+	if other.isDashing{other.executeDash()}
+	
+	if dashKineticModifierDuration > 0 {other.dashKineticModifierDuration = other.dashKineticModifierDurationMax}
+	if other.dashKineticModifierDuration > 0 {dashKineticModifierDuration = dashKineticModifierDurationMax}
+	
+	
 	//collision calculation
 	reflectionVector = -point_direction(x,y,other.x,other.y)
 	var collisionTimer = 5
 	var reflectStrength = 6
-
+	var heightDifferentiation = - sign(zPosition - other.zPosition)
+	
 	//me
 	cooldownInstanceAdd(cooldownMap,other.instanceId,collisionTimer)
 	//velocity dump
@@ -23,6 +32,10 @@ if cooldownInstanceExists(other.instanceId) == undefined && collision {
 	//collision power
 	vel[X] -= lengthdir_x(reflectStrength * (other.stats.deflectionPower / stats.deflectionPower) ,reflectionVector)
 	vel[Y] += lengthdir_y(reflectStrength * (other.stats.deflectionPower / stats.deflectionPower) ,reflectionVector)
+	
+	
+	vel[Z]-=(abs(vel[X])+abs(vel[Y])) * heightDifferentiation
+	
 	//vel[Z] += irandom(500) / 100 * (1 - power(0.5,stats.deflectionResistance / 100)) * other.stats.deflectionPower / 100
 	
 	//other
@@ -35,9 +48,11 @@ if cooldownInstanceExists(other.instanceId) == undefined && collision {
 	other.vel[Y] -= lengthdir_y(reflectStrength * (stats.deflectionPower / other.stats.deflectionPower), reflectionVector)
 	//other.vel[Z] += irandom(500) / 100 * (1 - power(0.5,other.stats.deflectionResistance / 100)) * stats.deflectionPower / 100
 	
+	other.vel[Z]-=-(abs(other.vel[X])+abs(other.vel[Y]))* heightDifferentiation
+	
 	//damage calculation
-	takeDamage(1,-reflectionVector,team==other.team)
-	other.takeDamage(1,-reflectionVector+180,team==other.team)
+	takeDamage(2,-reflectionVector,team==other.team)
+	other.takeDamage(2,-reflectionVector+180,team==other.team)
 	
 	if team != other.team {
 		//find middle intersection
@@ -50,7 +65,8 @@ if cooldownInstanceExists(other.instanceId) == undefined && collision {
 		//other.takeDamage(1)
 		
 		repeat (2+irandom(2)) {
-			instance_create_layer(x+midX,y+midY-heightCorrection,layer,obj_hitspark)
+			var spark = instance_create_layer(x+midX,y+midY-heightCorrection,layer,obj_hitspark)
+			spark.energyColor = energyColor
 		}
 	}
 	

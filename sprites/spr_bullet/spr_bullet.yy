@@ -23,7 +23,7 @@
   ],
   "name":"spr_bullet",
   "nineSlice":null,
-  "origin":3,
+  "origin":4,
   "parent":{
     "name":"effects",
     "path":"folders/Sprites/effects.yy",
@@ -75,7 +75,7 @@
     ],
     "visibleRange":null,
     "volume":1.0,
-    "xorigin":0,
+    "xorigin":24,
     "yorigin":3,
   },
   "swatchColours":null,

@@ -3,10 +3,10 @@
 
 if other.id != ownerId {
 	
-	reflectionVector = -point_direction(x,y,other.x,other.y)
+	reflectionVector = point_direction(x,y,other.x,other.y) +180
 	//collision power
-	other.vel[X] += lengthdir_x(2, reflectionVector)
-	other.vel[Y] -= lengthdir_y(2, reflectionVector)
+	other.vel[X] -= lengthdir_x(1, reflectionVector)
+	other.vel[Y] -= lengthdir_y(1, reflectionVector)
 	
 	
 	//find blade edge intersection
@@ -16,11 +16,17 @@ if other.id != ownerId {
 	var heightCorrection = 20
 
 	var impact = instance_create_layer(other.x+pointX,other.y+pointY-heightCorrection,layer,obj_hit_impact)
+	impact.zPosition = zPosition
 	impact.lightColor = lightColor
+	impact.energyColor = energyColor
 	
-	repeat (2+irandom(2)) {
+	repeat (1+irandom(1)) {
 		var spark = instance_create_layer(other.x+pointX,other.y+pointY-heightCorrection,layer,obj_hitspark)
+		spark.zPosition = zPosition
+		spark.energyColor = energyColor
 		spark.lightColor = lightColor
+		spark.sprite_index = spr_spark_small
+		spark.speed = 4 +irandom(5)
 	}
 	
 	other.takeDamage(0.5,direction,false)

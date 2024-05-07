@@ -32,6 +32,8 @@ interpolateChannel = animcurve_get_channel(interpolateCurveStruct,0)
 interpolateCurvePosition = 0
 interpolateCurveSpeed = 0.0
 
+zoomPlayerDashAnim = 0
+zoomPlayerZPositionAnim = 0
 //rotation
 playerTorqueStrength = 0
 twist = 0

@@ -96,8 +96,8 @@ if velVector > stats.velMax {
 	velXSurplus = vel[X] * (surplusVector - 1)
 	velYSurplus = vel[Y] * (surplusVector - 1)
 	
-	vel[X] -= velXSurplus*dragStrength
-	vel[Y] -= velYSurplus*dragStrength
+	vel[X] -= velXSurplus * dragStrength * (1 - ceil(dashKineticModifierDuration/dashKineticModifierDurationMax) + dashKineticModifier)
+	vel[Y] -= velYSurplus * dragStrength * (1 - ceil(dashKineticModifierDuration/dashKineticModifierDurationMax) + dashKineticModifier)
 }
 
 //ATTACK
@@ -110,8 +110,8 @@ dragVector = point_distance(0,0,-velXSurplus*dragStrength,-velYSurplus*dragStren
 //ANIMATION VARIABLES
 hitFlash = lerp(hitFlash,0,.2)
 lifetime ++
-spawnAnim = lerp(spawnAnim,0,.3)
+spawnAnim = lerp(spawnAnim,0,.2)
 hitDistortion = lerp(hitDistortion,0,.2)
-if hitDistortion < .05 {
+if hitDistortion < .05 && hitDistortion > -.05 {
 	hitDistortionDirection=0
 }

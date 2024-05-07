@@ -33,9 +33,12 @@ stats = {
 	zGravity : 40,				//PIXELS/SECOND
 	zBounciness : 50,			//PERCENTAGE - 100% means bounce with no loss, 0% means no bouncy at all
 	acc : 0.2,					//PIXEL/TICK - acceleration
+	dashStrength : 1,
+	dashChargeRate : 1,			
+	dashResistance : 80,		//% damage resistance
 	//weapon
 	attacksPerSecond : 3,
-	recoil :	.6				//measured in 1/100 of velocity
+	recoil :	.16				//measured in 1/100 of velocity
 }
 
 attackCooldown = 0
@@ -43,6 +46,14 @@ isAttacking = false
 isDashing = false
 dashPower = 0
 
+dashKineticModifier = 0			//influence from kinetics during dash 1 == 100%
+dashKineticModifierDuration = 0
+dashKineticModifierDurationMax = 4
+	dash_right_dir = 0
+	dash_left_dir = 0
+	dash_up_dir = 0
+	dash_down_dir = 0
+	
 function lifeCalculate() {
 	currentLife += stats.lifeRegen/60
 
@@ -157,7 +168,7 @@ constructor {
 }
 
 anchor =	new Model(spr_anchor1_pattern,spr_anchor1_material2)
-	lightColor = c_white
+	lightColor = -1
 	energyColor = c_white
 hull =		new Model(spr_hull1_pattern,spr_hull1_material2)
 core =		new Model(spr_core1_pattern,spr_core1_material2)
@@ -219,8 +230,38 @@ function draw_me(sliceSurf, effectSurf, targetSurf) {
 	var yTiltSkew = ( baseTiltY / 100 + slantVAnim - 0.8) / ( 1 + zPosition / 50 )
 	var xTiltSkew = 1 / ( 1 + zPosition / 30 )
 	
-	draw_sprite_ext(spr_blade_base_shadow,0,shadowX,shadowY,xTiltSkew,yTiltSkew,0,c_white,.1) // draw self
-	//scr_render3d_shadow(spr_blade_base_shadow)
+	draw_sprite_ext(spr_blade_base_shadow,0,shadowX,shadowY,xTiltSkew,yTiltSkew,0,c_white,.15) // draw self
+	
+	//draw underlight
+	if lightColor != -1 {
+		var underlightAlpha = (.4 * 1/(1+(zPosition / 5)) + (.3 * dashPower/100) )* sign(currentTriggers)
+		var underlightScale = .2 + (.1 * dashPower/100)
+		gpu_set_blendmode(bm_eq_add)
+		draw_sprite_ext(spr_light,0,x,y,underlightScale,underlightScale,0,energyColor,underlightAlpha)
+		gpu_set_blendmode(bm_normal)
+	}
+	
+	//draw charge indicator
+	var dashFullyCharged = (dashPower == 100)
+	
+	if ceil(dashPower/100)  == 1 {
+	//gpu_set_blendmode(bm_eq_add)
+	var dashDir = point_direction(0,0,dash_right_dir-dash_left_dir,dash_down_dir-dash_up_dir)
+	var dashIndicatorDrawLength = 30
+	var dashIndicatorX = x+lengthdir_x(dashIndicatorDrawLength,dashDir)
+	var dashIndicatorY = y+lengthdir_y(dashIndicatorDrawLength,dashDir)
+	var dashIndicatorAlpha = dashPower/100
+	var dashIndicatorScale = .5+.5*dashPower/100
+	draw_sprite_ext(spr_dash_indicator,dashFullyCharged,dashIndicatorX,dashIndicatorY,dashIndicatorScale,dashIndicatorScale,dashDir,lightColor,dashIndicatorAlpha)
+	draw_set_alpha(dashIndicatorAlpha)
+	draw_circle_color(x,y,dashIndicatorScale*14,lightColor,lightColor,true)
+	draw_set_alpha(1)
+	}
+	
+	if dashFullyCharged {
+		
+		draw_circle_color(x,y,16,lightColor,lightColor,true)
+	}
 	
 	#endregion
 	
@@ -231,7 +272,10 @@ function draw_me(sliceSurf, effectSurf, targetSurf) {
 	//generate model to target surface
 	if anchor	!= -1	{scr_render3d_v2(anchor,targetSurf,sliceSurf,effectSurf,c_white,animationTilt)}
 	if hull		!= -1	{scr_render3d_hull(hull,targetSurf,sliceSurf,effectSurf,hitCol,animationTilt,hitFlash)}
-	if core		!= -1	{scr_render3d_v2(core,targetSurf,sliceSurf,effectSurf,c_white,animationTilt,true)}
+	if core		!= -1	{if core.pattern == spr_core2_pattern {scr_render3d_v2(core,targetSurf,sliceSurf,effectSurf,c_white,animationTilt,false)}
+						else {scr_render3d_v2(core,targetSurf,sliceSurf,effectSurf,c_white,animationTilt,true)}
+		
+							}
 	
 	//render settings for blade
 	shader_set(shd_outline)
@@ -311,7 +355,7 @@ function takeDamage(damage,damageDirection,ally) {
 	//damage calculation
 	if currentTriggers > 0 {
 		
-		damageTaken = damage
+		damageTaken = 1
 		
 		currentTriggers--
 		hitFlashType = DAMAGE_TYPE.SHIELD
@@ -340,6 +384,7 @@ function takeDamage(damage,damageDirection,ally) {
 	//damage number
 	var damageNumber = instance_create_depth(other.x,other.y-20-16,depth,obj_damage_number)
 	damageNumber.damage = damageTaken
+	damageNumber.direction = damageDirection
 }
 
 

@@ -20,6 +20,7 @@ function createGame(gameModeType) {
 	arena.init(gameModeType)
 	arenaLight = instance_create_layer(arenaX,arenaY,layerBackground,obj_spotlight)
 	arenaLightShaft = instance_create_layer(arenaX,arenaY,layerBackground,obj_shaftlight)
+	atmosphere = instance_create_layer(arenaX,arenaY,layerBackground,obj_atmosphere)
 	
 	var directionRandom = irandom(359)
 	var directionDistance = 2
@@ -43,6 +44,10 @@ function createGame(gameModeType) {
 		case gameModeType.PRACTICE:
 			camera = instance_create_layer(arena.x,arena.y,layerEntities,obj_cam)
 			player = instance_create_layer(playerXSpawn,playerYSpawn,layerEntities,obj_player)
+			arenaLight.lightXScale= .45
+			arenaLight.lightYScale= .45
+			arenaLightShaft.lightXScale= .45
+			arenaLightShaft.lightYScale= .45
 		break
 	}
 	

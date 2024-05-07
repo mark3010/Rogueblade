@@ -9,6 +9,7 @@ slantH = 1
 slantV = 1
 rotationAnim = 0
 vel = [0,0]
+dashPower = 0
 //tweakable
 slopeAngleStrengthY = 1.3		//tilt effect, higher => more tilt
 slopeAngleStrengthX = 1.3		//tilt effect, higher => more tilt

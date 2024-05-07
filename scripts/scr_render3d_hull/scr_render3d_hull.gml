@@ -55,7 +55,7 @@ function scr_render3d_hull(argument0,argument1,argument2,argument3,argument4,arg
 		var layerToSurfaceCenterX = targetCenterX - sliceCenterX + slantH * sign(obj_arena.x-x) * layerNumber / 10
 		var layerToSurfaceCenterY = targetCenterY - sliceCenterY + slantV * sign(obj_arena.y-y) * layerNumber / 10
 		
-		var layerStackLengthIntervalY = (iterationNumber/2) * yTiltLengthMod
+		var layerStackLengthIntervalY = (iterationNumber/2) * yTiltLengthMod * (1-dashPower/100*.2)
 		
 		var targetLayerCenterX = layerToSurfaceCenterX									+ 1 //center fix
 		var targetLayerCenterY = layerToSurfaceCenterY - 1 * layerStackLengthIntervalY	+ 1 //center fix
@@ -90,13 +90,16 @@ function scr_render3d_hull(argument0,argument1,argument2,argument3,argument4,arg
 		//draw layer to beyblade body
 		surface_set_target(target)
 		
+		//debug
 		if global.debugMode draw_circle(targetCenterX,targetCenterY,targetCenterX,true)
 		
-		
 		//decide if charging dash
-		if localLayerNumber<=sprite_get_number(model)/2 {
-			var col = merge_color(c_white,energyColor,dashPower/100)
-			draw_surface_ext(slice,targetLayerCenterX,targetLayerCenterY,xTiltSkew,yTiltSkew,0,col,1)
+		if localLayerNumber<=sprite_get_number(model)/2 && localLayerNumber > 1 {
+			//var col = merge_color(c_white,energyColor,dashPower/100)
+			shader_set(shd_tint2)
+			draw_surface_ext(slice,targetLayerCenterX,targetLayerCenterY,xTiltSkew,yTiltSkew,0,energyColor,1)
+			shader_reset()
+			draw_surface_ext(slice,targetLayerCenterX,targetLayerCenterY,xTiltSkew,yTiltSkew,0,c_white,1-dashPower/100+sign(dashKineticModifierDuration))
 		} else {
 			draw_surface_ext(slice,targetLayerCenterX,targetLayerCenterY,xTiltSkew,yTiltSkew,0,c_white,1)
 		}

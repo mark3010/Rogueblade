@@ -3,6 +3,9 @@ if deathFlag {
 	if instance_exists(obj_killCounter) {obj_killCounter.countKill(id,groupId)} // count death
 	if instance_exists(obj_cam) {obj_cam.screenshake(2,1,0.1)} // shake screen
 	
+	var deathPosX = x
+	var deathPosY = y-zPosition
+	
 	//CREATE DEATH EFFECTS
 	var popStrength = (130+irandom(100))/100
 	var popRotation = (irandom(400))/100 - 2
@@ -23,7 +26,7 @@ if deathFlag {
 	
 	//DEBRIS
 	//hull
-	var hullPart = instance_create_layer(x,y,layer,obj_blade_part)
+	var hullPart = instance_create_layer(deathPosX,deathPosY,layer,obj_blade_part)
 	hullPart.model = hull
 	hullPart.animationTilt = animationTilt
     array_copy(hullPart.vel, 0, vel, 0, array_length(vel))
@@ -32,17 +35,16 @@ if deathFlag {
 	hullPart.stats = stats
 	
 	//change vel
-	hullPart.vel[X] *= .4
-	hullPart.vel[Y] *= .4
-	hullPart.vel[X] += irandom(100)/25 -2
-	hullPart.vel[Y] += irandom(100)/25 -2
+	//hullPart.vel[X] //*= 
+	//hullPart.vel[Y] //*= 
+	hullPart.vel[X] += irandom(50)/25 -1
+	hullPart.vel[Y] += irandom(50)/25 -1
 	hullPart.vel[Z] = 5*popStrength
-	hullPart.zPosition = 1
 	hullPart.zRotSpeed = popRotation
 	//
 	
 	//core
-	var corePart = instance_create_layer(x,y,layer,obj_blade_part)
+	var corePart = instance_create_layer(deathPosX,deathPosY,layer,obj_blade_part)
 	corePart.model = core
 	corePart.animationTilt = animationTilt
 	array_copy(corePart.vel, 0, vel, 0, array_length(vel))
@@ -56,7 +58,6 @@ if deathFlag {
 	corePart.vel[X] += irandom(100)/25 -2
 	corePart.vel[Y] += irandom(100)/25 -2
 	corePart.vel[Z] = (6+irandom(200)/200)*popStrength
-	corePart.zPosition = 1
 	corePart.zRotSpeed = popRotation*1.3
 	//
 	

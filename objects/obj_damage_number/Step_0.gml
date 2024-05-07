@@ -10,3 +10,5 @@ if lifetime >= deathTrigger {
 if image_alpha <= 0 {
 	instance_destroy()
 }
+
+speed = speed * .8
