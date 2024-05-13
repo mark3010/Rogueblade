@@ -76,6 +76,8 @@ if instance_exists(obj_player) {
 	playerCurrentTriggers = obj_player.currentTriggers
 	playerMaxTriggersCooldown = obj_player.stats.maxTriggersCooldown
 	playerCurrentTriggersCooldown = obj_player.currentTriggersCooldown
+	playerLightColor = obj_player.lightColor
+	playerEnergyColor = obj_player.energyColor
 	
 	//indicators
 	
@@ -92,7 +94,8 @@ if instance_exists(obj_player) {
 	playerCurrentLife = 0
 }
 
-if room == room_arena {
+if room == room_arena || global.guiTestEnable {
+	
 	if !surface_exists(healthSurf) {
 		healthSurf = surface_create(healthWidth * 2 + sprite_get_width(spr_health_bar) * 4,healthHeight)
 	}
@@ -146,13 +149,30 @@ if room == room_arena {
 		//cooldown container
 		draw_clear(c_black)
 		//blue cooldown part
-		draw_sprite_stretched(spr_triggers_cooldown_bar,3,0,0,triggersCooldownWidth*playerTriggersCooldownScale,triggersCooldownHeight)
+		draw_sprite_stretched_ext(spr_triggers_cooldown_bar,0,0,0,triggersCooldownWidth*playerTriggersCooldownScale,triggersCooldownHeight,playerLightColor,1)
 
 		surface_reset_target();
 
 		//draw on screen
 		draw_surface(triggersCooldownSurf,triggersCooldownPosX-triggersCooldownWidth/2,triggersCooldownPosY)
-		scr_textStyle1(triggersCooldownPosX,triggersCooldownPosY-12,string(playerCurrentTriggers)+"/"+string(playerMaxTriggers),global.font,fa_center,c_white,1,1)
+		
+		//draw triggers
+		var triggerSprite = spr_trigger_bar
+		var triggerPadding = 2
+		var triggerWidth = (surface_get_width(triggersCooldownSurf) -  triggerPadding) / playerMaxTriggers - triggerPadding
+		var triggerHeight = sprite_get_height(triggerSprite)
+		var triggerBaseX = triggersCooldownPosX - surface_get_width(triggersCooldownSurf)/2 + triggerPadding
+		var triggerBaseY = triggersCooldownPosY -triggerHeight
+		var triggerDisplaceBarX = 0
+		
+		//draw_rectangle_color()
+
+		repeat(playerCurrentTriggers) {
+			draw_sprite_stretched_ext(spr_trigger_bar,1,triggerBaseX+triggerDisplaceBarX,triggerBaseY,triggerWidth,triggerHeight,playerEnergyColor,1)
+			triggerDisplaceBarX += triggerWidth + triggerPadding
+		}
+
+		//scr_textStyle1(triggersCooldownPosX,triggersCooldownPosY-12,string(playerCurrentTriggers)+"/"+string(playerMaxTriggers),global.font,fa_center,c_white,1,1)
 	
 	//shooting indicator
 		var indicatorXOffset = triggersCooldownWidth/2+16

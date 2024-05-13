@@ -1,4 +1,4 @@
-
+global.guiTestEnable = false
 bottomMargin = 25
 sideMargin = 25
 #region TIMER
@@ -19,7 +19,7 @@ timerPosY = 540-bottomMargin
 	healthAnim = 0
 //triggers
 	triggersCooldownPosX = healthPosX
-	triggersCooldownPosY = healthPosY-8
+	triggersCooldownPosY = healthPosY-5
 
 	triggersCooldownWidth = 100
 	triggersCooldownHeight = sprite_get_height(spr_triggers_cooldown_bar)

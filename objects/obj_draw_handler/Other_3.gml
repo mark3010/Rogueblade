@@ -15,3 +15,7 @@ if (surface_exists(renderSlice)) {
 if (surface_exists(renderEffect)) { 
 	surface_free(renderEffect)
 }
+
+if (surface_exists(game_surface)) { 
+	surface_free(game_surface)
+}

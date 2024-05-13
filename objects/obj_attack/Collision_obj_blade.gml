@@ -1,13 +1,13 @@
 /// @description Insert description here
 // You can write your code in this editor
+var collision = scr_isBetweenIncluding(zPosition,other.zPosition,other.zPosition+20)
 
-if other.id != ownerId {
+if other.id != ownerId && collision {
 	
 	reflectionVector = point_direction(x,y,other.x,other.y) +180
 	//collision power
 	other.vel[X] -= lengthdir_x(1, reflectionVector)
 	other.vel[Y] -= lengthdir_y(1, reflectionVector)
-	
 	
 	//find blade edge intersection
 	var dir = point_direction(other.x,other.y,x,y)
@@ -29,7 +29,7 @@ if other.id != ownerId {
 		spark.speed = 4 +irandom(5)
 	}
 	
-	other.takeDamage(0.5,direction,false)
+	other.takeDamage(5,direction,false)
 	
 	deathFlag = true
 }

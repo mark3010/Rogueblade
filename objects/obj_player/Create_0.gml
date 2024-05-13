@@ -15,8 +15,22 @@ global.key_dash_down = vk_down
 global.key_dash_right = vk_right
 global.key_dash_left = vk_left
 
+//MOVEMENT
+move_up    = 0
+move_down  = 0
+move_left  = 0
+move_right = 0
+dash_up    = 0
+dash_down  = 0
+dash_left  = 0
+dash_right = 0
+dash_up_release    = 0
+dash_down_release  = 0
+dash_left_release  = 0
+dash_right_release = 0
+
 //COMPONENTS
-var randomCore = irandom(6)
+var randomCore = irandom(12)
 if randomCore == 0 {
 	core =		new Model(spr_core1_pattern,spr_core1_material)
 	lightColor = merge_color(c_white,c_aqua,.4)
@@ -37,11 +51,41 @@ if randomCore == 0 {
 	core =		new Model(spr_core3_pattern,spr_core1_material5)
 	lightColor = merge_color(c_white,c_black,0)
 	energyColor = merge_color(c_white,c_black,0)
+}else if randomCore == 5 {
+	core =		new Model(spr_core1_pattern,spr_core1_material6)
+	lightColor = merge_color(c_white,c_purple,.4)
+	energyColor = merge_color(c_white,c_purple,.8)
+}else if randomCore == 6 {
+	core =		new Model(spr_core1_pattern,spr_core1_material7)
+	lightColor = merge_color(c_white,c_blue,.4)
+	energyColor = merge_color(c_white,c_blue,.8)
+}else if randomCore == 7 {
+	core =		new Model(spr_core1_pattern,spr_core1_material8)
+	lightColor = merge_color(c_white,c_black,1)
+	energyColor = merge_color(c_white,c_black,1)
+}else if randomCore == 8 {
+	core =		new Model(spr_core1_pattern,spr_core1_material9)
+	lightColor = merge_color(c_white,c_yellow,.4)
+	energyColor = merge_color(c_white,c_yellow,.8)
+}else if randomCore == 9 {
+	core =		new Model(spr_core1_pattern,spr_core1_material10)
+	lightColor = merge_color(c_white,c_aqua,.2)
+	energyColor = merge_color(c_white,c_aqua,.6)
+}else if randomCore == 10 {
+	core =		new Model(spr_core1_pattern,spr_core1_material11)
+	lightColor = merge_color(c_white,c_orange,.2)
+	energyColor = merge_color(c_white,c_orange,.6)
+}else if randomCore == 11 {
+	core =		new Model(spr_core1_pattern,spr_core1_material12)
+	lightColor = merge_color(c_white,c_green,.2)
+	energyColor = merge_color(c_white,c_green,.6)
 } else {
 	core =		new Model(spr_core1_pattern,spr_core1_material5)
 	lightColor = merge_color(c_white,c_orange,.4)
 	energyColor = merge_color(c_white,c_orange,.8)
 }
+
+
 
 anchor =	new Model(spr_anchor1_pattern,spr_anchor1_material)
 
@@ -60,7 +104,7 @@ if randomHull == 0 {
 
 //BASE PLAYER STATS
 	//override
-	stats.maxLife = 4
+	stats.maxLife = 40
 	stats.lifeRegen = 0.3 //per second
 	stats.maxTriggers = 2
 	stats.maxTriggersCooldown = 60*4 //seconds 

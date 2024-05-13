@@ -2,7 +2,7 @@
   "$GMSprite":"",
   "%Name":"spr_triggers_cooldown_bar",
   "bboxMode":0,
-  "bbox_bottom":2,
+  "bbox_bottom":1,
   "bbox_left":0,
   "bbox_right":0,
   "bbox_top":0,
@@ -16,7 +16,7 @@
   ],
   "gridX":0,
   "gridY":0,
-  "height":3,
+  "height":2,
   "HTile":false,
   "layers":[
     {"$GMImageLayer":"","%Name":"d42e4ebc-0079-4a7c-9223-5c6b21d7f421","blendMode":0,"displayName":"default","isLocked":false,"name":"d42e4ebc-0079-4a7c-9223-5c6b21d7f421","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},

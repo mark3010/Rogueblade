@@ -4,9 +4,8 @@
 //draw game surface
 draw_surface_stretched(application_surface,0,0,window_get_width(),window_get_height())
 
-
 //draw light surface
-if instance_exists(obj_gameinit) {
+if instance_exists(obj_atmosphere) {
 	var alpha = .1
 	gpu_set_blendmode(bm_add)
 	draw_surface_stretched_ext(self.light_surface,0,0,window_get_width(),window_get_height(),c_white,.05)
@@ -19,5 +18,4 @@ if instance_exists(obj_gameinit) {
 	
 	draw_surface_stretched_ext(self.light_surface,0,0,window_get_width(),window_get_height(),c_white,alpha)
 	gpu_set_blendmode(bm_normal)
-	
 }

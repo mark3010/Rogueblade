@@ -4,6 +4,9 @@ event_inherited()
 
 global.debugLight = false
 
+game_surface = -1
+game_surface_x = 960
+game_surface_y = 540
 ds_depthgrid =	0
 renderTarget = -1
 renderSlice = -1
@@ -11,6 +14,9 @@ renderEffect = -1
 light_surface = -1
 
 function checkRenderSurfaces() {
+	if (!surface_exists(game_surface)) { 
+		game_surface = surface_create(game_surface_x,game_surface_y)
+	}
 	if (!surface_exists(renderTarget)) { 
 		renderTarget = surface_create(32*6,32*6)
 	}

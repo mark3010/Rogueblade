@@ -9,8 +9,8 @@
   "name":"obj_text_highscore_list",
   "overriddenProperties":[],
   "parent":{
-    "name":"ui",
-    "path":"folders/Objects/ui.yy",
+    "name":"unselectable",
+    "path":"folders/Objects/ui/unselectable.yy",
   },
   "parentObjectId":null,
   "persistent":false,

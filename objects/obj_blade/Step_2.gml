@@ -9,8 +9,14 @@ if deathFlag {
 	//CREATE DEATH EFFECTS
 	var popStrength = (130+irandom(100))/100
 	var popRotation = (irandom(400))/100 - 2
-	var deathExplosion = instance_create_layer(x,y-10,layer,obj_death_explosion)
+	var deathExplosion = instance_create_layer(x,y,layer,obj_death_explosion)
 	
+	/*
+	repeat(5) {
+		var bladeShardDirection = point_direction(x,y,x+vel[X],y+vel[Y]) + irandom(80) - 40
+		var bladeShard = instance_create_layer(x,y,layer,obj_blade_shard)
+		bladeShard.direction = bladeShardDirection
+	}*/
 	/*
 	//anchor
 	var anchorPart = instance_create_layer(x,y,layer,obj_blade_part)

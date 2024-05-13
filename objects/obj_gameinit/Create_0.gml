@@ -15,6 +15,7 @@ function createGame(gameModeType) {
 	var layerEntities = layer_create(0,"layerEntities")
 	var layerGround = layer_create(1,"layerGround")
 	var layerBackground = layer_create(2,"layerBackground")
+	var layerPause = layer_create(-1,"layerPause")
 
 	arena = instance_create_layer(arenaX,arenaY,layerBackground,obj_arena)
 	arena.init(gameModeType)
@@ -39,9 +40,13 @@ function createGame(gameModeType) {
 			killCounter = instance_create_layer(x,y,layerEntities,obj_killCounter)
 			upgradeHandler = instance_create_layer(x,y,layerEntities,obj_upgrade_handler)
 			
+			skilltree = instance_create_layer(x,y,layerPause,obj_skilltree_generator)
+			instance_deactivate_layer(layerPause)
+			
 			audio_play_sound(snd_music, 1, true)
 		break
 		case gameModeType.PRACTICE:
+			gui = instance_create_layer(x,y,layerEntities,obj_gui)
 			camera = instance_create_layer(arena.x,arena.y,layerEntities,obj_cam)
 			player = instance_create_layer(playerXSpawn,playerYSpawn,layerEntities,obj_player)
 			arenaLight.lightXScale= .45

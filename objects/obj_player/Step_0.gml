@@ -1,28 +1,26 @@
 //run parent code
+if !global.inputHighjack {
+	//MOVEMENT
+	move_up    = keyboard_check(global.key_up)
+	move_down  = keyboard_check(global.key_down)
+	move_left  = keyboard_check(global.key_left)
+	move_right = keyboard_check(global.key_right)
 
+	//dash_up_dir    = keyboard_check_pressed(global.key_dash_up)
+	//dash_down_dir  = keyboard_check_pressed(global.key_dash_down)
+	//dash_left_dir  = keyboard_check_pressed(global.key_dash_left)
+	//dash_right_dir = keyboard_check_pressed(global.key_dash_right)
 
+	dash_up    = keyboard_check_pressed(global.key_dash_up)
+	dash_down  = keyboard_check_pressed(global.key_dash_down)
+	dash_left  = keyboard_check_pressed(global.key_dash_left)
+	dash_right = keyboard_check_pressed(global.key_dash_right)
 
-
-//MOVEMENT
-move_up    = keyboard_check(global.key_up)
-move_down  = keyboard_check(global.key_down)
-move_left  = keyboard_check(global.key_left)
-move_right = keyboard_check(global.key_right)
-
-//dash_up_dir    = keyboard_check_pressed(global.key_dash_up)
-//dash_down_dir  = keyboard_check_pressed(global.key_dash_down)
-//dash_left_dir  = keyboard_check_pressed(global.key_dash_left)
-//dash_right_dir = keyboard_check_pressed(global.key_dash_right)
-
-dash_up    = keyboard_check_pressed(global.key_dash_up)
-dash_down  = keyboard_check_pressed(global.key_dash_down)
-dash_left  = keyboard_check_pressed(global.key_dash_left)
-dash_right = keyboard_check_pressed(global.key_dash_right)
-
-dash_up_release    = keyboard_check_released(global.key_dash_up)
-dash_down_release  = keyboard_check_released(global.key_dash_down)
-dash_left_release  = keyboard_check_released(global.key_dash_left)
-dash_right_release = keyboard_check_released(global.key_dash_right)
+	dash_up_release    = keyboard_check_released(global.key_dash_up)
+	dash_down_release  = keyboard_check_released(global.key_dash_down)
+	dash_left_release  = keyboard_check_released(global.key_dash_left)
+	dash_right_release = keyboard_check_released(global.key_dash_right)
+}
 
 var dirX, dirY, dir
 
@@ -48,9 +46,6 @@ if (move_up || move_down) {
 		velAdd[@ Y] += lengthdir_y(stats.acc,dir) * (1.5 - isDashing)/1.5
 }
 
-//DASH
-dashKineticModifierDuration-- 
-if dashKineticModifierDuration < 0 {dashKineticModifierDuration = 0}
 
 	//record direction
 if (dash_right || dash_left || dash_up || dash_down) && !isDashing {
@@ -130,7 +125,7 @@ if currentTriggers != stats.maxTriggers {		//condition
 	
 	isAttacking = 1
 	
-	if attackCooldown >= 60 / stats.attacksPerSecond  {	//attack pattern
+	if attackCooldown >= 60 / stats.attacksPerSecond {	//attack pattern
 		attackCooldown = 0
 		
 		var target = scr_instance_nearest_other(obj_blade)
@@ -163,6 +158,9 @@ if currentTriggers != stats.maxTriggers {		//condition
 		
 	}
 } else {
+	attackCooldown = 0
 	isAttacking -= .025
 	if isAttacking < 0 {isAttacking = 0}
 }
+
+if isAttacking {attackCooldown++}

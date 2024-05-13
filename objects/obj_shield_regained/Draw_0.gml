@@ -1,14 +1,12 @@
 /// @description Insert description here
 // You can write your code in this editor
 
-var radius = ( deathTrigger - lifetime ) / 10 * size
+var radius = ( deathTrigger - lifetime ) / 20 * size
 var alpha = ( deathTrigger - lifetime ) / deathTrigger / 2
 
-draw_set_color(color)
-draw_set_alpha(alpha)
 
-
-draw_circle(target.x,target.y,radius,false)
-
-draw_set_color(c_white)
-draw_set_alpha(1)
+gpu_set_blendmode(bm_eq_add)
+draw_sprite_ext(spr_light,0,x,y-zPosition,radius,radius,direction,energyColor,alpha)
+draw_sprite_ext(spr_circle4,0,target.x,target.y,radius,radius,0,energyColor,alpha)
+//draw_circle(target.x,target.y,radius,false)
+gpu_set_blendmode(bm_normal)

@@ -26,13 +26,20 @@ with (obj_spotlight) {
 	draw_sprite_ext(self.lightSource,0,self.x,self.y,lightXScale,lightYScale,0,lightColor,lightAlpha)
 }
 
+with (obj_text_logo) {
+	shader_set(shd_flash)
+	
+	draw_sprite_ext(spr_light,0,self.xDisplace,self.yDisplace,lightXScale*4,lightYScale*.7,self.direction,c_aqua,lightAlpha*.7)
+	draw_sprite_ext(sprite_index,0,self.xDisplace,self.yDisplace,lightXScale,lightYScale,self.direction,c_white,lightAlpha)
+	
+	shader_reset()
+}
+
 with (obj_blade) {
 	draw_sprite_ext(spr_light,0,self.x,self.y-self.dimensions.zLength-zPosition,1,1,0,c_white,.7)
 }
 
-with (obj_effect_depth) {
-	//draw_sprite_ext(self.lightSource,0,self.x,self.y,lightXScale,lightYScale,self.direction,c_white,lightAlpha)
-}
+
 
 gpu_set_blendmode(bm_normal)
 

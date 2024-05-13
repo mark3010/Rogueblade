@@ -21,7 +21,7 @@ enum DAMAGE_TYPE {
 #region STATS
 stats = {
 	//resources
-	maxLife : 3,
+	maxLife : 30,
 	lifeRegen : 0,
 	maxTriggers : 0,
 	//movement
@@ -37,7 +37,7 @@ stats = {
 	dashChargeRate : 1,			
 	dashResistance : 80,		//% damage resistance
 	//weapon
-	attacksPerSecond : 3,
+	attacksPerSecond : 6,
 	recoil :	.16				//measured in 1/100 of velocity
 }
 
@@ -71,8 +71,9 @@ function triggersCalculate() {
 		currentTriggers = stats.maxTriggers
 		currentTriggersCooldown = 0
 		audio_play_sound(snd_shield_full, 5, false)
-		var shieldRegainedAnim = instance_create_layer(x,y,layer_get_id("layerGround"),obj_shield_regained) 
+		var shieldRegainedAnim = instance_create_layer(x,y,layer,obj_shield_regained) 
 		shieldRegainedAnim.target = id
+		shieldRegainedAnim.energyColor = energyColor
 	}
 }
 
@@ -125,6 +126,7 @@ baseTiltY = 1.5					//higher than 0 means more tilted towards north,
 rotationBaseSpeed = 8			//base animation speed for rotating blade
 hitDistortionStrength = .25
 spawnAnim = 8 // used for white recolor at spawn, when 0 blade is 0% white
+spinDownDuration = 60
 
 // other
 slantH = 0
@@ -137,7 +139,7 @@ hitDistortion = 0
 hitDistortionDirection = 0
 
 function animationsCalculate() {
-	rotationAnim += rotationBaseSpeed
+	rotationAnim += rotationBaseSpeed * (1 + spinDownDuration/120*5)
 	
 	//HORISONTAL
 	animationTiltMovement[@ X] = lerp(animationTiltMovement[@ X],sign(velAdd[@ X]), stats.acc / stats.velMax)	// tilt for self acceleration
@@ -267,13 +269,16 @@ function draw_me(sliceSurf, effectSurf, targetSurf) {
 	
 	var hitCol = c_aqua //shield
 	if hitFlashType == 0 {hitCol = merge_color(c_white,c_red,hitFlashColorMerge)//hitCol = merge_color(c_gray,c_maroon,hitFlashColorMerge)
-		} //life
-
+		}
+	var coreShine = c_ltgrey
+	if currentTriggers > 0 || stats.maxTriggers == 0 {
+		coreShine = c_white
+	}
 	//generate model to target surface
 	if anchor	!= -1	{scr_render3d_v2(anchor,targetSurf,sliceSurf,effectSurf,c_white,animationTilt)}
 	if hull		!= -1	{scr_render3d_hull(hull,targetSurf,sliceSurf,effectSurf,hitCol,animationTilt,hitFlash)}
-	if core		!= -1	{if core.pattern == spr_core2_pattern {scr_render3d_v2(core,targetSurf,sliceSurf,effectSurf,c_white,animationTilt,false)}
-						else {scr_render3d_v2(core,targetSurf,sliceSurf,effectSurf,c_white,animationTilt,true)}
+	if core		!= -1	{if core.pattern == spr_core2_pattern {scr_render3d_v2(core,targetSurf,sliceSurf,effectSurf,coreShine,animationTilt,false)}
+						else {scr_render3d_v2(core,targetSurf,sliceSurf,effectSurf,coreShine,animationTilt,true)}
 		
 							}
 	
@@ -372,6 +377,11 @@ function takeDamage(damage,damageDirection,ally) {
 		hitFlashColorMerge = clamp((damageTaken*4)/stats.maxLife,0,1)
 		if currentLife <= 0 {
 			die()
+			repeat(5) {
+			var bladeShardDirection = damageDirection + irandom(80) - 40
+			var bladeShard = instance_create_layer(x,y,layer,obj_blade_shard)
+			bladeShard.direction = bladeShardDirection
+			}
 		}
 	}
 	
@@ -382,9 +392,11 @@ function takeDamage(damage,damageDirection,ally) {
 	hitDistortionDirection = damageDirection
 	
 	//damage number
-	var damageNumber = instance_create_depth(other.x,other.y-20-16,depth,obj_damage_number)
-	damageNumber.damage = damageTaken
-	damageNumber.direction = damageDirection
+	if team == TEAM.ENEMY {
+		var damageNumber = instance_create_depth(other.x,other.y-20-16,depth,obj_damage_number)
+		damageNumber.damage = damageTaken
+		damageNumber.direction = damageDirection
+	}
 }
 
 

@@ -79,6 +79,10 @@ vel[@ Z] += velAdd[@ Z]
 
 velAdd = [0,0,0]
 
+//DASH
+dashKineticModifierDuration-- 
+if dashKineticModifierDuration < 0 {dashKineticModifierDuration = 0}
+
 //CORRECT POSITION TO INSIDE ARENA
 if (x > arenaSlopedBorderX || x < arenaSlopedBorderX) {
 	x = arenaSlopedBorderX
@@ -100,9 +104,6 @@ if velVector > stats.velMax {
 	vel[Y] -= velYSurplus * dragStrength * (1 - ceil(dashKineticModifierDuration/dashKineticModifierDurationMax) + dashKineticModifier)
 }
 
-//ATTACK
-attackCooldown++
-
 //CALCULATE BLADE KINETIC ATTRIBUTES
 velVector = point_distance(0,0,vel[X],vel[Y])
 dragVector = point_distance(0,0,-velXSurplus*dragStrength,-velYSurplus*dragStrength)
@@ -112,6 +113,11 @@ hitFlash = lerp(hitFlash,0,.2)
 lifetime ++
 spawnAnim = lerp(spawnAnim,0,.2)
 hitDistortion = lerp(hitDistortion,0,.2)
+
+
 if hitDistortion < .05 && hitDistortion > -.05 {
 	hitDistortionDirection=0
+}
+if spinDownDuration > 0 {
+	spinDownDuration--
 }
