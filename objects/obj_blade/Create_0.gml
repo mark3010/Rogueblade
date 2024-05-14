@@ -270,17 +270,17 @@ function draw_me(sliceSurf, effectSurf, targetSurf) {
 	var hitCol = c_aqua //shield
 	if hitFlashType == 0 {hitCol = merge_color(c_white,c_red,hitFlashColorMerge)//hitCol = merge_color(c_gray,c_maroon,hitFlashColorMerge)
 		}
-	var coreShine = c_ltgrey
+	var coreShine = c_white//c_ltgrey
 	if currentTriggers > 0 || stats.maxTriggers == 0 {
 		coreShine = c_white
 	}
 	//generate model to target surface
 	if anchor	!= -1	{scr_render3d_v2(anchor,targetSurf,sliceSurf,effectSurf,c_white,animationTilt)}
 	if hull		!= -1	{scr_render3d_hull(hull,targetSurf,sliceSurf,effectSurf,hitCol,animationTilt,hitFlash)}
-	if core		!= -1	{if core.pattern == spr_core2_pattern {scr_render3d_v2(core,targetSurf,sliceSurf,effectSurf,coreShine,animationTilt,false)}
-						else {scr_render3d_v2(core,targetSurf,sliceSurf,effectSurf,coreShine,animationTilt,true)}
-		
-							}
+	if core		!= -1	{ 
+							if core.pattern == spr_core2_pattern {scr_render3d_core(core,targetSurf,sliceSurf,effectSurf,coreShine,animationTilt,false)}
+							else {scr_render3d_core(core,targetSurf,sliceSurf,effectSurf,coreShine,animationTilt,true)}
+						}
 	
 	//render settings for blade
 	shader_set(shd_outline)

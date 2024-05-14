@@ -56,6 +56,28 @@ repeat(2) { // draws right side, flips to draw left
 	flip *= -1
 }
 
+//DRAW ARENA INFO
+/*
+draw_set_color(merge_color(c_black,c_gray,.6))
+draw_set_alpha(1)
+draw_set_font(font_freefall)
+draw_set_halign(fa_center)
+draw_text(x,y+baseRadius+gameModeTextY,tradeMarkText)
+draw_set_color(merge_color(c_black,c_gray,.3))
+draw_set_font(font_freefall)
+draw_set_halign(fa_center)
+draw_text(x,y+baseRadius+gameModeTextY-1,tradeMarkText)
+draw_set_alpha(1)*/
+
+draw_set_color(c_white)
+draw_set_alpha(.2)
+draw_set_font(font_freefall)
+draw_set_halign(fa_center)
+draw_text(x,y+baseRadius+gameModeTextY,tradeMarkText)
+draw_set_alpha(1)
+
+
+
 if global.debugMode {
 	draw_set_alpha(.1)
 	draw_point(x,y)

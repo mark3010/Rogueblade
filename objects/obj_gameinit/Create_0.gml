@@ -59,3 +59,14 @@ function createGame(gameModeType) {
 	global.gameActive = true
 	camera.focus(player.id)
 }
+
+function loadPlayer(creationLayer) {
+	//playerModder = instance_create_depth(playerXSpawn,playerYSpawn,-9999,obj_player_modder)
+	//player = instance_create_layer(playerXSpawn,playerYSpawn,creationLayer,obj_player)
+	
+	//var saveData = obj_file_handler.getProgress()
+	
+	//player.core = playerModder.getModel(saveData.blade.core)
+	//player.hull = playerModder.getModel(saveData.blade.hull)
+	//player.anchor = playerModder.getModel(saveData.blade.anchor)
+}

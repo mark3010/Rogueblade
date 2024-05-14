@@ -20,3 +20,8 @@ function goTo(layerName) {
 		show_debug_log("ERROR: menu page not found: \"" + string(layerName) + "\"")
 	}
 }
+
+function init(layerName) {
+	goTo(layerName)
+	obj_ui_selector.setBasePage(layerName)
+}

@@ -1,5 +1,5 @@
 text = "Settings"
 
 function click() {
-	obj_menu_page_handler.goTo("lay_menu2_2")
+	obj_ui_selector.goToPage("lay_menu2_2")
 }

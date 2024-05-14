@@ -30,77 +30,40 @@ dash_left_release  = 0
 dash_right_release = 0
 
 //COMPONENTS
-var randomCore = irandom(12)
-if randomCore == 0 {
-	core =		new Model(spr_core1_pattern,spr_core1_material)
-	lightColor = merge_color(c_white,c_aqua,.4)
-	energyColor = merge_color(c_white,c_aqua,.8)
-} else if randomCore == 1 {
-	core =		new Model(spr_core1_pattern,spr_core1_material3)
-	lightColor = merge_color(c_white,c_green,.4)
-	energyColor = merge_color(c_white,c_green,.8)
-}else if randomCore == 2 {
-	core =		new Model(spr_core1_pattern,spr_core1_material4)
-	lightColor = merge_color(c_white,c_red,.4)
-	energyColor = merge_color(c_white,c_red,.8)
-}else if randomCore == 3 {
-	core =		new Model(spr_core2_pattern,spr_core2_material)
-	lightColor = merge_color(c_white,c_yellow,.2)
-	energyColor = merge_color(c_white,c_yellow,.5)
-}else if randomCore == 4 {
-	core =		new Model(spr_core3_pattern,spr_core1_material5)
-	lightColor = merge_color(c_white,c_black,0)
-	energyColor = merge_color(c_white,c_black,0)
-}else if randomCore == 5 {
-	core =		new Model(spr_core1_pattern,spr_core1_material6)
-	lightColor = merge_color(c_white,c_purple,.4)
-	energyColor = merge_color(c_white,c_purple,.8)
-}else if randomCore == 6 {
-	core =		new Model(spr_core1_pattern,spr_core1_material7)
-	lightColor = merge_color(c_white,c_blue,.4)
-	energyColor = merge_color(c_white,c_blue,.8)
-}else if randomCore == 7 {
-	core =		new Model(spr_core1_pattern,spr_core1_material8)
-	lightColor = merge_color(c_white,c_black,1)
-	energyColor = merge_color(c_white,c_black,1)
-}else if randomCore == 8 {
-	core =		new Model(spr_core1_pattern,spr_core1_material9)
-	lightColor = merge_color(c_white,c_yellow,.4)
-	energyColor = merge_color(c_white,c_yellow,.8)
-}else if randomCore == 9 {
-	core =		new Model(spr_core1_pattern,spr_core1_material10)
-	lightColor = merge_color(c_white,c_aqua,.2)
-	energyColor = merge_color(c_white,c_aqua,.6)
-}else if randomCore == 10 {
-	core =		new Model(spr_core1_pattern,spr_core1_material11)
-	lightColor = merge_color(c_white,c_orange,.2)
-	energyColor = merge_color(c_white,c_orange,.6)
-}else if randomCore == 11 {
-	core =		new Model(spr_core1_pattern,spr_core1_material12)
-	lightColor = merge_color(c_white,c_green,.2)
-	energyColor = merge_color(c_white,c_green,.6)
-} else {
-	core =		new Model(spr_core1_pattern,spr_core1_material5)
-	lightColor = merge_color(c_white,c_orange,.4)
-	energyColor = merge_color(c_white,c_orange,.8)
+function loadPlayer() {
+	var playerBuilder = instance_create_layer(x,y,layer,obj_player_builder)
+	var playerSettings = playerBuilder.getPlayerSettings()
+
+	core = playerSettings.core.core
+	lightColor = playerSettings.core.lightColor
+	energyColor = playerSettings.core.energyColor
+	hull = playerSettings.hull
+	anchor = playerSettings.anchor
+
+	instance_destroy(playerBuilder)
 }
 
+loadPlayer()
 
-
-anchor =	new Model(spr_anchor1_pattern,spr_anchor1_material)
-
-var randomHull = irandom(3)
-if randomHull == 0 {
-	hull =		new Model(spr_hull1_pattern,spr_hull1_material)
-} else if randomHull == 1 {
-	hull =		new Model(spr_hull2_pattern,spr_hull2_material)
-} else if randomHull == 2 {
-	hull =		new Model(spr_hull4_pattern,spr_hull4_material)
-} else {
-	hull =		new Model(spr_hull3_pattern,spr_hull3_material)
+function updatePlayerCore(coreEnum) {
+	var playerBuilder = instance_create_layer(x,y,layer,obj_player_builder)
+	core = playerBuilder.getCore(coreEnum).core
+	lightColor = playerBuilder.getCore(coreEnum).lightColor
+	energyColor = playerBuilder.getCore(coreEnum).energyColor
+	instance_destroy(playerBuilder)
 }
 
-//core =		new Model(spr_core1_pattern,spr_core1_material)
+function updatePlayerHull(coreEnum) {
+	var playerBuilder = instance_create_layer(x,y,layer,obj_player_builder)
+	hull = playerBuilder.getHull(coreEnum)
+	instance_destroy(playerBuilder)
+}
+
+function updatePlayerAnchor(coreEnum) {
+	var playerBuilder = instance_create_layer(x,y,layer,obj_player_builder)
+	anchor = playerBuilder.getAnchor(coreEnum)
+	instance_destroy(playerBuilder)
+}
 
 //BASE PLAYER STATS
 	//override

@@ -2,11 +2,11 @@
 // You can write your code in this editor
 
 //SEARCH FOR MENU OPTIONS
-if selected == noone {
-	findStarterMenuOption()
-} else if !instance_exists(selected) {
-	selected = noone
-}
+//if selected == noone {
+//	findStarterMenuOption()
+//} else if !instance_exists(selected) {
+//	selected = noone
+//}
 
 //ACTIVATE MENU OPTION
 if keyboard_check_pressed(vk_space) || keyboard_check_pressed(vk_enter) {

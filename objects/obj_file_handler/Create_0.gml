@@ -1,12 +1,65 @@
 event_inherited()
 
+#region // GAME PROGRESS
+
+//GAME DATA SAVE FILE
+progressDataFileName = "gameData"
+dataFileBlueprint = {
+	accountLevel : 0,
+	accountExperience : 0,
+	difficultyLevel : 0,
+	difficultyLevelSelected : 0,
+	blade : {	core : 0,
+				hull : 0,
+				anchor : 0
+			},
+	conditionalUnlocks : {}
+}
+
+//GAME PROGRESS FILE HANDLING
+function saveProgress(data, progressDataFileName) {
+	var json = json_stringify(data)
+	
+	var buffer = buffer_create(string_byte_length(json)+1, buffer_fixed, 1)
+	buffer_write(buffer, buffer_string,json)
+	buffer_save(buffer, progressDataFileName)
+	buffer_delete(buffer)
+}
+
+function loadProgress(progressDataFileName) {
+	if (!file_exists(progressDataFileName)) {
+		return
+	}
+	
+	var buffer = buffer_load(progressDataFileName)
+	var json = buffer_read(buffer, buffer_string)
+	var fileStruct = json_parse(json)
+	
+	buffer_delete(buffer)
+	return fileStruct
+}
+
+function getProgress() {
+	var progressData = loadProgress(progressDataFileName)
+	return progressData
+}
+
+//GENERATE SAVE FILE
+if (!file_exists(progressDataFileName)) {
+	saveProgress(dataFileBlueprint, progressDataFileName)
+}
+
+#endregion
+
+#region // HIGH SCORES
+
 //HIGHSCORE SAVE FILE
 scoreFileName = "highscores"
 highscoreBlueprint = {
 	scores : [],
 }
 
-//FILEHANDLING
+//SCORE FILE HANDLING
 function saveScores(data, scoreFileName) {
 	var json = json_stringify(data)
 	
@@ -44,3 +97,4 @@ if (!file_exists(scoreFileName)) {
 	saveScores(highscoreBlueprint, scoreFileName)
 }
 
+#endregion

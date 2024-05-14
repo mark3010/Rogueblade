@@ -21,3 +21,12 @@ if instance_exists(obj_save_score_snapshot) {
 	saveScores(scoreData,scoreFileName)
 }
 
+//add saved scores to highscore list
+if instance_exists(obj_save_progress_snapshot) {
+	//grab saved score file
+	var progress = obj_save_progress_snapshot.data
+	instance_destroy(obj_save_progress_snapshot)
+	
+	//update saveFile
+	saveScores(progress,progressDataFileName)
+}

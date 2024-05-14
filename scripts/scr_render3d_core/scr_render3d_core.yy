@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"scr_render3d_core",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_render3d_core",
+  "parent":{
+    "name":"blade",
+    "path":"folders/Scripts/blade.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
