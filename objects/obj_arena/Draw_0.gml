@@ -7,7 +7,7 @@ var colSlant3 = merge_color($66564D,c_white,.11)
 var colSlant4 = merge_color($66564D,c_white,.05)
 var colSides = #3A4351
 var colSidesBot = c_black
-
+draw_set_alpha(1)
 // z-depth of arena
 
 draw_rectangle_color(x-baseWidth-baseRadius,y,x+baseWidth+baseRadius,y+baseRadius*5,colSides,colSides,colSidesBot,colSidesBot,false)
@@ -69,12 +69,47 @@ draw_set_halign(fa_center)
 draw_text(x,y+baseRadius+gameModeTextY-1,tradeMarkText)
 draw_set_alpha(1)*/
 
+var inscriptionAlpha = .4
 draw_set_color(c_white)
-draw_set_alpha(.2)
+draw_set_alpha(inscriptionAlpha)
 draw_set_font(font_freefall)
 draw_set_halign(fa_center)
 draw_text(x,y+baseRadius+gameModeTextY,tradeMarkText)
-draw_set_alpha(1)
+
+if gameModeCurrent == gameModeType.PRACTICE {
+	draw_set_color(c_white)
+	draw_set_alpha(inscriptionAlpha)
+	draw_set_font(font_silkscreen)
+	draw_set_halign(fa_center)
+	var xOffset = -10
+	var yOffset = 0
+	draw_text(x+xOffset,y+baseRadius+gameModeTextY+16,"Ascension cleared:")
+	
+	var amount = 1+data.difficultyLevel
+	var levelText = 0
+	repeat(amount) {
+		draw_sprite(spr_tiny_checkbox,sign(levelText),x+66+xOffset,y+baseRadius+gameModeTextY+19+12*levelText)
+		draw_text(x+56+xOffset,y+baseRadius+gameModeTextY+16+12*levelText,amount-levelText)
+		yOffset += 8
+		levelText++
+	}
+	draw_set_alpha(1)
+} else {
+	/*
+	gpu_set_blendmode(bm_eq_add)
+	draw_sprite_ext(spr_light,0,x,y+baseRadius+gameModeTextY+18,.7,.2,0,c_aqua,.2)
+	gpu_set_blendmode(bm_normal)
+	
+	*/
+	draw_set_color(c_white)
+	draw_set_alpha(inscriptionAlpha)
+	draw_set_font(font_silkscreen)
+	draw_set_halign(fa_center)
+	draw_text(x,y+baseRadius+gameModeTextY+16,"Ascension level: ")
+	draw_text(x+46,y+baseRadius+gameModeTextY+16,data.difficultyLevelSelected)
+	draw_set_alpha(1)
+}
+
 
 
 

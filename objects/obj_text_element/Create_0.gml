@@ -2,7 +2,7 @@
 // You can write your code in this editor
 text = "no text set"
 align = fa_center
-color = c_white
-alpha = 1
+color = #E3F1F1
+alpha = 0
 size = 1
 font = global.font

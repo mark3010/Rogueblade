@@ -4,7 +4,9 @@ pages = []
 
 function goTo(layerName) {
 	if array_contains(pages,layerName) {
-	
+		
+		with obj_ui_item {alpha = 0}
+		
 		var pageTotal = array_length(pages)
 		for (var i = 0; pageTotal>i; i++) {
 			var currentLayer = layer_get_id(pages[i])

@@ -97,7 +97,7 @@ function scr_render3d_hull(argument0,argument1,argument2,argument3,argument4,arg
 		if localLayerNumber<=sprite_get_number(model)/2 && localLayerNumber > 1 {
 			//var col = merge_color(c_white,energyColor,dashPower/100)
 			shader_set(shd_tint2)
-			draw_surface_ext(slice,targetLayerCenterX,targetLayerCenterY,xTiltSkew,yTiltSkew,0,energyColor,1)
+			draw_surface_ext(slice,targetLayerCenterX,targetLayerCenterY,xTiltSkew,yTiltSkew,0,core.energyColor,1)
 			shader_reset()
 			draw_surface_ext(slice,targetLayerCenterX,targetLayerCenterY,xTiltSkew,yTiltSkew,0,c_white,1-dashPower/100+sign(dashKineticModifierDuration))
 		} else {

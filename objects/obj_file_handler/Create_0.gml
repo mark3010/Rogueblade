@@ -1,5 +1,31 @@
 event_inherited()
+#region // UNLOCKS
 
+//later add connection to player unlocks
+function getCoreUnlocks() {
+	var unlocks = []
+	array_push(unlocks,BLADE_CORE.BLUE)
+	array_push(unlocks,BLADE_CORE.RED)
+	array_push(unlocks,BLADE_CORE.GREEN)
+	array_push(unlocks,BLADE_CORE.ORANGE)
+	return unlocks
+}
+
+function getHullUnlocks() {
+	var unlocks = []
+	array_push(unlocks,BLADE_HULL.BALANCE)
+	array_push(unlocks,BLADE_HULL.HURRICANE)
+	array_push(unlocks,BLADE_HULL.BLOSSOM)
+
+	return unlocks
+}
+
+function getAnchorUnlocks() {
+	var unlocks = []
+	array_push(unlocks,BLADE_ANCHOR.PELLET)
+	return unlocks
+}
+#endregion
 #region // GAME PROGRESS
 
 //GAME DATA SAVE FILE

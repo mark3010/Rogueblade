@@ -11,3 +11,8 @@ if instance_exists(obj_ui_selector) {
 if keyboard_check_pressed(triggerKey) {
 	click()
 }
+
+alpha = lerp(alpha,1,global.uiFadeSpeed)
+
+popAnimation = lerp(popAnimation,1,.2)
+popMod = 1 + (1-popAnimation) * .1

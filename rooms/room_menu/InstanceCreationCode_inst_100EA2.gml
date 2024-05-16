@@ -3,4 +3,6 @@ triggerKey = vk_escape
 function click() {
 	obj_ui_selector.goBack()
 	global.guiTestEnable = false
+	obj_cam.followTarget(obj_player)
+	obj_cam.zoomAdd(-.5)
 }

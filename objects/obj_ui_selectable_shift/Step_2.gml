@@ -11,8 +11,18 @@ if isSelected {
 	
 		selected += iterate
 		
+		if iterate > 0 {
+			shiftRightAnim = 1
+		}
+		if iterate < 0 {
+			shiftLeftAnim = 1
+		}
 		if iterate != 0 {
 			click()
+			pop()
 		}
 	}
 }
+
+shiftRightAnim = lerp(shiftRightAnim,0,.2)
+shiftLeftAnim = lerp(shiftLeftAnim,0,.2)

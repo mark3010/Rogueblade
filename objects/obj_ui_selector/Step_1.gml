@@ -45,7 +45,7 @@ if keyboard_check_pressed(vk_down) || keyboard_check_pressed(vk_up) {
 		    }
 		}
 		
-		if TARG != noone {selected = TARG}
+		if TARG != noone {setSelectedItem(TARG)}
 	}
 }
 

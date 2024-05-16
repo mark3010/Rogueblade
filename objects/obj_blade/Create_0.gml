@@ -28,7 +28,7 @@ stats = {
 	deflectionPower : 100,
 	deflectionResistance : 100,
 	velMax : 4,					//VELOCITY - max speed before drag is applied
-	maxTriggersCooldown : 240,	//SECONDS 
+	maxTriggersCooldown : 0,	//SECONDS 
 	triggersCooldownRegen : 1,	
 	zGravity : 40,				//PIXELS/SECOND
 	zBounciness : 50,			//PERCENTAGE - 100% means bounce with no loss, 0% means no bouncy at all
@@ -67,13 +67,13 @@ function triggersCalculate() {
 		currentTriggersCooldown += stats.triggersCooldownRegen
 	}
 
-	if currentTriggersCooldown >= stats.maxTriggersCooldown {
+	if currentTriggersCooldown >= stats.maxTriggersCooldown && stats.maxTriggersCooldown != 0 {
 		currentTriggers = stats.maxTriggers
 		currentTriggersCooldown = 0
 		audio_play_sound(snd_shield_full, 5, false)
 		var shieldRegainedAnim = instance_create_layer(x,y,layer,obj_shield_regained) 
 		shieldRegainedAnim.target = id
-		shieldRegainedAnim.energyColor = energyColor
+		shieldRegainedAnim.energyColor = core.energyColor
 	}
 }
 
@@ -169,16 +169,18 @@ constructor {
 	material = _material
 }
 
-anchor =	new Model(spr_anchor1_pattern,spr_anchor1_material2)
-	lightColor = -1
-	energyColor = c_white
-hull =		new Model(spr_hull1_pattern,spr_hull1_material2)
-core =		new Model(spr_core1_pattern,spr_core1_material2)
+anchor =	{anchor : new Model(spr_anchor1_pattern,spr_anchor1_material2)}
+	//lightColor = -1
+	//energyColor = c_white
+hull =		{hull : new Model(spr_hull1_pattern,spr_hull1_material2)}
+core =		{core : new Model(spr_core1_pattern,spr_core1_material2),
+			lightColor : -1,
+			energyColor : c_white}
 
 function physicsCalculate() {
 	velocity = point_distance(x,y,x+vel[X],y+vel[Y])
 	dimensions = {
-		zLength : sprite_get_number(anchor.material) + sprite_get_number(hull.material) + sprite_get_number(core.material)
+		zLength : sprite_get_number(anchor.anchor.material) + sprite_get_number(hull.hull.material) + sprite_get_number(core.core.material)
 	}
 }
 
@@ -232,16 +234,16 @@ function draw_me(sliceSurf, effectSurf, targetSurf) {
 	var yTiltSkew = ( baseTiltY / 100 + slantVAnim - 0.8) / ( 1 + zPosition / 50 )
 	var xTiltSkew = 1 / ( 1 + zPosition / 30 )
 	
-	draw_sprite_ext(spr_blade_base_shadow,0,shadowX,shadowY,xTiltSkew,yTiltSkew,0,c_white,.15) // draw self
-	
 	//draw underlight
-	if lightColor != -1 {
-		var underlightAlpha = (.4 * 1/(1+(zPosition / 5)) + (.3 * dashPower/100) )* sign(currentTriggers)
-		var underlightScale = .2 + (.1 * dashPower/100)
+	if core.lightColor != -1 {
+		var underlightAlpha = (.7 * 1/(1+(zPosition / 5)) + (.3 * dashPower/100) )* sign(currentTriggers)
+		var underlightScale = (.2 + (.1 * dashPower/100))*1.3
 		gpu_set_blendmode(bm_eq_add)
-		draw_sprite_ext(spr_light,0,x,y,underlightScale,underlightScale,0,energyColor,underlightAlpha)
+		draw_sprite_ext(spr_light,0,x,y,underlightScale,underlightScale,0,core.energyColor,underlightAlpha)
 		gpu_set_blendmode(bm_normal)
 	}
+	//draw shadow
+	draw_sprite_ext(spr_blade_base_shadow,0,shadowX,shadowY,xTiltSkew,yTiltSkew,0,c_white,.15)
 	
 	//draw charge indicator
 	var dashFullyCharged = (dashPower == 100)
@@ -254,15 +256,15 @@ function draw_me(sliceSurf, effectSurf, targetSurf) {
 	var dashIndicatorY = y+lengthdir_y(dashIndicatorDrawLength,dashDir)
 	var dashIndicatorAlpha = dashPower/100
 	var dashIndicatorScale = .5+.5*dashPower/100
-	draw_sprite_ext(spr_dash_indicator,dashFullyCharged,dashIndicatorX,dashIndicatorY,dashIndicatorScale,dashIndicatorScale,dashDir,lightColor,dashIndicatorAlpha)
+	draw_sprite_ext(spr_dash_indicator,dashFullyCharged,dashIndicatorX,dashIndicatorY,dashIndicatorScale,dashIndicatorScale,dashDir,core.lightColor,dashIndicatorAlpha)
 	draw_set_alpha(dashIndicatorAlpha)
-	draw_circle_color(x,y,dashIndicatorScale*14,lightColor,lightColor,true)
+	draw_circle_color(x,y,dashIndicatorScale*14,core.lightColor,core.lightColor,true)
 	draw_set_alpha(1)
 	}
 	
 	if dashFullyCharged {
 		
-		draw_circle_color(x,y,16,lightColor,lightColor,true)
+		draw_circle_color(x,y,16,core.lightColor,core.lightColor,true)
 	}
 	
 	#endregion
@@ -275,11 +277,11 @@ function draw_me(sliceSurf, effectSurf, targetSurf) {
 		coreShine = c_white
 	}
 	//generate model to target surface
-	if anchor	!= -1	{scr_render3d_v2(anchor,targetSurf,sliceSurf,effectSurf,c_white,animationTilt)}
-	if hull		!= -1	{scr_render3d_hull(hull,targetSurf,sliceSurf,effectSurf,hitCol,animationTilt,hitFlash)}
-	if core		!= -1	{ 
-							if core.pattern == spr_core2_pattern {scr_render3d_core(core,targetSurf,sliceSurf,effectSurf,coreShine,animationTilt,false)}
-							else {scr_render3d_core(core,targetSurf,sliceSurf,effectSurf,coreShine,animationTilt,true)}
+	if anchor.anchor	!= -1	{scr_render3d_v2(anchor.anchor,targetSurf,sliceSurf,effectSurf,c_white,animationTilt)}
+	if hull.hull		!= -1	{scr_render3d_hull(hull.hull,targetSurf,sliceSurf,effectSurf,hitCol,animationTilt,hitFlash)}
+	if core.core		!= -1	{ 
+							if core.core.pattern == spr_core2_pattern {scr_render3d_core(core.core,targetSurf,sliceSurf,effectSurf,coreShine,animationTilt,false)}
+							else {scr_render3d_core(core.core,targetSurf,sliceSurf,effectSurf,coreShine,animationTilt,true)}
 						}
 	
 	//render settings for blade

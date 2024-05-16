@@ -5,13 +5,20 @@
 text = "no text set"
 align = fa_center
 color = c_grey
-alpha = 1
+alpha = 0
 size = 1
 font = global.font
 
-selectedColor = c_white
+selectedColor = c_black
 triggerKey = noone
 
 function click() {
 	show_debug_message("no function defined")
 }
+
+function pop() {
+	popAnimation = 0
+}
+
+popAnimation = 1
+popMod = 1

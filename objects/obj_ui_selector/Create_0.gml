@@ -1,5 +1,6 @@
 /// @description Insert description here
 // You can write your code in this editor
+global.uiFadeSpeed = .3
 menuPath = []
 currentPage = -1
 function pageMemory(_layerPage,_optionId) 
@@ -27,7 +28,7 @@ function findStarterMenuOption() {
 		}
 	}
 
-	selected = topButton
+	setSelectedItem(topButton)
 }
 
 function goToPage(_layerName) {
@@ -38,26 +39,27 @@ function goToPage(_layerName) {
 	
 	findStarterMenuOption()
 	
-	show_debug_message(menuPath)
 }
 
 function goBack() {
 	var lastPage = menuPath[array_length(menuPath)-1]
 	obj_menu_page_handler.goTo(lastPage[0])
 	currentPage = lastPage[0]
-	selected = lastPage[1]
+	setSelectedItem(lastPage[1])
 	array_pop(menuPath)
-	show_debug_message(menuPath)
 }
 
 function setBasePage(_layerName) {
 	currentPage = _layerName
 	findStarterMenuOption()
-	show_debug_message(menuPath)
 }
 
 function forget() {
 	menuPath = []
-	selected = noone
-	show_debug_message(menuPath)
+	setSelectedItem(noone)
+}
+
+function setSelectedItem(selectedId) {
+	selected = selectedId
+	if instance_exists(selected) {selected.pop()}
 }

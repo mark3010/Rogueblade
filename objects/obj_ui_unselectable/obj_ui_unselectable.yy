@@ -14,7 +14,10 @@
     "name":"unselectable",
     "path":"folders/Objects/ui/unselectable.yy",
   },
-  "parentObjectId":null,
+  "parentObjectId":{
+    "name":"obj_ui_item",
+    "path":"objects/obj_ui_item/obj_ui_item.yy",
+  },
   "persistent":false,
   "physicsAngularDamping":0.1,
   "physicsDensity":0.5,

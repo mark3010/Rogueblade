@@ -13,4 +13,5 @@ function click() {
 	
 	obj_file_handler.saveProgress(data,fileName)
 	obj_ui_selector.goBack()
+	obj_cam.zoomAdd(0)
 }

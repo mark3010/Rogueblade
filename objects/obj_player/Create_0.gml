@@ -29,16 +29,28 @@ dash_down_release  = 0
 dash_left_release  = 0
 dash_right_release = 0
 
+function healFull() {
+	currentLife = stats.maxLife
+	currentTriggers = stats.maxTriggers
+}
+
 //COMPONENTS
 function loadPlayer() {
 	var playerBuilder = instance_create_layer(x,y,layer,obj_player_builder)
 	var playerSettings = playerBuilder.getPlayerSettings()
 
-	core = playerSettings.core.core
+	core = playerSettings.core
+	stats = scr_structs_combine(stats,core.stats,"add")
+
 	lightColor = playerSettings.core.lightColor
 	energyColor = playerSettings.core.energyColor
+	
 	hull = playerSettings.hull
+	stats = scr_structs_combine(stats,hull.stats,"add")
+	
 	anchor = playerSettings.anchor
+	stats = scr_structs_combine(stats,anchor.stats,"add")
+	healFull()
 
 	instance_destroy(playerBuilder)
 }
@@ -47,7 +59,11 @@ loadPlayer()
 
 function updatePlayerCore(coreEnum) {
 	var playerBuilder = instance_create_layer(x,y,layer,obj_player_builder)
-	core = playerBuilder.getCore(coreEnum).core
+	//change part
+	stats = scr_structs_combine(stats,core.stats,"subtract")
+	core = playerBuilder.getCore(coreEnum)
+	stats = scr_structs_combine(stats,core.stats,"add")
+	healFull()
 	lightColor = playerBuilder.getCore(coreEnum).lightColor
 	energyColor = playerBuilder.getCore(coreEnum).energyColor
 	instance_destroy(playerBuilder)
@@ -55,29 +71,37 @@ function updatePlayerCore(coreEnum) {
 
 function updatePlayerHull(coreEnum) {
 	var playerBuilder = instance_create_layer(x,y,layer,obj_player_builder)
+	//change part
+	stats = scr_structs_combine(stats,hull.stats,"subtract")
 	hull = playerBuilder.getHull(coreEnum)
+	stats = scr_structs_combine(stats,hull.stats,"add")
+	healFull()
+	
 	instance_destroy(playerBuilder)
 }
 
 function updatePlayerAnchor(coreEnum) {
 	var playerBuilder = instance_create_layer(x,y,layer,obj_player_builder)
+	//change part
+	stats = scr_structs_combine(stats,anchor.stats,"subtract")
 	anchor = playerBuilder.getAnchor(coreEnum)
+	stats = scr_structs_combine(stats,anchor.stats,"add")
+	healFull()
+	
 	instance_destroy(playerBuilder)
 }
 
 //BASE PLAYER STATS
 	//override
-	stats.maxLife = 40
-	stats.lifeRegen = 0.3 //per second
-	stats.maxTriggers = 2
-	stats.maxTriggersCooldown = 60*4 //seconds 
-	stats.triggersCooldownRegen = 1
+	//stats.maxLife = 40
+	//stats.lifeRegen = 0.3 //per second
+	//stats.maxTriggers = 2
+	//stats.maxTriggersCooldown = 60*4 //seconds 
+	//stats.triggersCooldownRegen = 1
 	//combat
-	stats.collisionDamage = 10
+	//stats.collisionDamage = 10
 	//kinetics
-	stats.acc = .3
-	//stats.deflectionPower = 150
-	//stats.deflectionResistance = 150
+	//stats.acc = .3
 
 refreshCurrents()
 

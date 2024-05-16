@@ -3,4 +3,5 @@ triggerKey = vk_escape
 
 function click() {
 	obj_ui_selector.goBack()
+	obj_cam.pan()
 }

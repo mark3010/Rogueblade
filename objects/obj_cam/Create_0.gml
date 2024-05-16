@@ -44,6 +44,17 @@ shake_time = 0
 shake_magnitude = 0
 shake_fade = 0.25
 
+zoomCustom = 0
+zoomCustomAnim = 0
+
+function followTarget(instance) {
+	follow = instance
+	state = camState.FOLLOW
+}
+function pan() {
+	state = camState.PAN
+}
+
 function screenshake(_time, _magnitude, _fade) {
 	shake = true
 	shake_time = _time
@@ -79,6 +90,10 @@ function zoomOut() {
 
 	interpolateCurvePosition = 0
 	interpolateCurveSpeed = 0.01
+}
+
+function zoomAdd(number) {
+	zoomCustom = number
 }
 
 zoomIn()

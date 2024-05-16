@@ -4,3 +4,5 @@
 if keyboard_check_pressed(triggerKey) {
 	click()
 }
+
+alpha = lerp(alpha,1,global.uiFadeSpeed)

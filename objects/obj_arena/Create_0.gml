@@ -7,6 +7,8 @@ gameMode = -1
 tradeMarkText = "GNKI ENTMT"
 gameModeText = "-1"
 gameModeTextY = 6
+gameModeCurrent = noone
+data = obj_file_handler.getProgress()
 arenas = {
 	normal : {
 		flatWidth	: 80,
@@ -24,7 +26,7 @@ arenas = {
 }
 
 function init(gameMode) {
-	var data = obj_file_handler.getProgress()
+	//var data = obj_file_handler.getProgress()
 	show_debug_message(data)
 	switch (gameMode) {
 		case gameModeType.NORMAL:
@@ -32,7 +34,7 @@ function init(gameMode) {
 			flatRadius	= arenas.normal.flatRadius
 			baseWidth	= arenas.normal.baseWidth
 			baseRadius	= arenas.normal.baseRadius
-			gameMode = gameModeType.NORMAL
+			gameModeCurrent = gameModeType.NORMAL
 			gameModeText = "SURVIVAL"
 		break
 		case gameModeType.PRACTICE:
@@ -40,9 +42,15 @@ function init(gameMode) {
 			flatRadius	= arenas.practice.flatRadius
 			baseWidth	= arenas.practice.baseWidth
 			baseRadius	= arenas.practice.baseRadius
-			gameMode = gameModeType.PRACTICE
+			gameModeCurrent = gameModeType.PRACTICE
 			gameModeText = "PRACTICE"
 		break
 	}
 
+}
+
+function draw_light() {
+	if gameModeCurrent == gameModeType.NORMAL {
+		//draw_sprite_ext(spr_light,0,x,y+baseRadius+gameModeTextY+18,1,.5,0,c_white,.7)
+	}
 }

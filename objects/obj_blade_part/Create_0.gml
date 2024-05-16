@@ -109,7 +109,8 @@ function draw_me(sliceSurf, effectSurf, targetSurf) {
 	
 
 	//generate model to target surface
-	if model	!= -1	{scr_render3d_v2(model,targetSurf,sliceSurf,effectSurf,c_white,animationTilt,isCore)}
+	if variable_instance_exists(model,"core")	{scr_render3d_v2(model.core,targetSurf,sliceSurf,effectSurf,c_white,animationTilt,isCore)}
+	else if variable_instance_exists(model,"hull")	{scr_render3d_v2(model.hull,targetSurf,sliceSurf,effectSurf,c_white,animationTilt,isCore)}
 
 	//render settings for blade
 	//shader_set(shd_outline)

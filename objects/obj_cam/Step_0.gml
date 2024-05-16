@@ -48,8 +48,9 @@ if instance_exists(obj_player)==true {
 
 zoomPlayerDashAnim = lerp(zoomPlayerDashAnim,zoomPlayerDash,.05)
 zoomPlayerZPositionAnim = lerp(zoomPlayerZPositionAnim,zoomPlayerZPosition/1000,.05)
+zoomCustomAnim = lerp(zoomCustomAnim,zoomCustom,.1)
 
-var zoomAnim = 1 + zoomCurveFunction + zoomPlayerDashAnim + zoomPlayerZPositionAnim
+var zoomAnim = 1 + zoomCurveFunction + zoomPlayerDashAnim + zoomPlayerZPositionAnim + zoomCustomAnim
 
 camera_set_view_pos(view_camera[0], x - (camWidth * 0.5 * zoomAnim), y - (camHeight * 0.5 * zoomAnim))
 camera_set_view_angle(view_camera[0],twist)
