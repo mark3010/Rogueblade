@@ -62,6 +62,8 @@ function getCore(bladePartEnum) {
 			type: "CORE",
 			name: "RED",
 			description: "On trigger: attack once from 1 point\ntarget: nearest enemy\nMod: adds many projectiles" ,
+			targeting: "Nearest enemy" ,
+			behavior: "Attack once from 1 point. Adds many projectiles" ,
 			stats: {
 				maxTriggers : 1,
 				maxTriggersCooldown : 150
@@ -78,6 +80,8 @@ function getCore(bladePartEnum) {
 			type: "CORE",
 			name: "BLUE",
 			description: "On trigger: Attack continuously from 1 point\nTarget: nearest enemy\nMod: Attack duration 2.5 s.",
+			targeting: "Nearest enemy",
+			behavior: "Attack continuously from 1 point. Attack duration 2.5 s.",
 			stats: {
 				maxTriggers : 2,
 				maxTriggersCooldown : 180
@@ -93,7 +97,9 @@ function getCore(bladePartEnum) {
 			energyColor : merge_color(c_white,c_green,.8),
 			type: "CORE",
 			name: "GREEN",
-			description: "On trigger: Fire a burst of attacks of from 2 points.\nTarget: spinning 360 degree angle \nMod: attacks are equals to (attacks per second) * 2",
+			description: "On trigger: \nTarget: spinning 360 degree angle \nMod: attacks are equals to (attacks per second) * 2",
+			targeting: "Spinning 360 degree angle",
+			behavior: "Fire a burst of attacks of from 2 points. Attacks are equals to (attacks per second) * 2",
 			stats: {
 				maxTriggers : 4,
 				maxTriggersCooldown : 240
@@ -110,6 +116,8 @@ function getCore(bladePartEnum) {
 			type: "CORE",
 			name: "ORANGE",
 			description: "On trigger: Attack continuously while shield trigger is on cooldown\nTarget: Nearest enemy\nMod: increasing attack speed over time",
+			targeting: "Nearest enemy",
+			behavior: "Attack continuously while shield trigger is on cooldown. Gradually Increases attack speed over time while active",
 			stats: {
 				maxTriggers : 2,
 				maxTriggersCooldown : 240

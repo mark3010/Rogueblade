@@ -147,6 +147,7 @@
     {"id":{"name":"scr_bladeArenaSync","path":"scripts/scr_bladeArenaSync/scr_bladeArenaSync.yy",},},
     {"id":{"name":"scr_bladePositionCheck","path":"scripts/scr_bladePositionCheck/scr_bladePositionCheck.yy",},},
     {"id":{"name":"scr_camFocus","path":"scripts/scr_camFocus/scr_camFocus.yy",},},
+    {"id":{"name":"scr_draw_list","path":"scripts/scr_draw_list/scr_draw_list.yy",},},
     {"id":{"name":"scr_instance_create_sparks","path":"scripts/scr_instance_create_sparks/scr_instance_create_sparks.yy",},},
     {"id":{"name":"scr_instance_farthest_other","path":"scripts/scr_instance_farthest_other/scr_instance_farthest_other.yy",},},
     {"id":{"name":"scr_instance_nearest_other","path":"scripts/scr_instance_nearest_other/scr_instance_nearest_other.yy",},},
