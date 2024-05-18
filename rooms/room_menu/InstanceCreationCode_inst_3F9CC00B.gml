@@ -1,6 +1,6 @@
 text = "Anchor"
-selected = obj_file_handler.getProgress().blade.anchor
 setSelection(obj_file_handler.getAnchorUnlocks())
+selected = array_get_index(selection,obj_file_handler.getProgress().blade.anchor)
 
 function click() {
 	obj_player.updatePlayerAnchor(getSelection())

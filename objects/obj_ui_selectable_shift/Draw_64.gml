@@ -8,11 +8,11 @@ var descriptionWidth = 100
 var arrowDisplaceX = descriptionWidth/1.6
 var arrowDisplaceY = 2
 
+
 var selectedTextDisplay = name(getSelection())
 
 if isSelected {
 	//TITLE
-
 	scr_textStyle1(x,y+lineStartY-6,text,font,align,color,alpha,size)
 	draw_set_color(color)
 	draw_line(x+lineStartX,y+lineStartY,x+descriptionWidth,y+lineStartY)

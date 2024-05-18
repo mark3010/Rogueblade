@@ -1,23 +1,18 @@
 {
   "$GMObject":"",
-  "%Name":"obj_ui_unselectable",
+  "%Name":"obj_skilltree_upgrade_generator",
   "eventList":[
     {"$GMEvent":"","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-    {"$GMEvent":"","%Name":"","collisionObjectId":null,"eventNum":75,"eventType":8,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-    {"$GMEvent":"","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":8,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
     {"$GMEvent":"","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":3,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
   ],
   "managed":true,
-  "name":"obj_ui_unselectable",
+  "name":"obj_skilltree_upgrade_generator",
   "overriddenProperties":[],
   "parent":{
-    "name":"unselectable",
-    "path":"folders/Objects/ui/unselectable.yy",
+    "name":"skills",
+    "path":"folders/Objects/ui/skills.yy",
   },
-  "parentObjectId":{
-    "name":"obj_ui_item",
-    "path":"objects/obj_ui_item/obj_ui_item.yy",
-  },
+  "parentObjectId":null,
   "persistent":false,
   "physicsAngularDamping":0.1,
   "physicsDensity":0.5,
@@ -35,10 +30,7 @@
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
   "solid":false,
-  "spriteId":{
-    "name":"spr_text_element",
-    "path":"sprites/spr_text_element/spr_text_element.yy",
-  },
+  "spriteId":null,
   "spriteMaskId":null,
   "visible":true,
 }

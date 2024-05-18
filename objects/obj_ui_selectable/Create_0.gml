@@ -22,3 +22,4 @@ function pop() {
 
 popAnimation = 1
 popMod = 1
+isSelected = false

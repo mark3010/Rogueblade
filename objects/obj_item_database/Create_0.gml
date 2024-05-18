@@ -62,11 +62,13 @@ function getCore(bladePartEnum) {
 			type: "CORE",
 			name: "RED",
 			description: "On trigger: attack once from 1 point\ntarget: nearest enemy\nMod: adds many projectiles" ,
-			targeting: "Nearest enemy" ,
-			behavior: "Attack once from 1 point. Adds many projectiles" ,
+			targeting: "Nearest enemy." ,
+			behavior: "Attack once from 1 port. Adds many projectiles." ,
 			stats: {
 				maxTriggers : 1,
-				maxTriggersCooldown : 150
+				maxTriggersCooldown : 150,
+				maxProjectiles : 8,
+				projectileSpread : 60
 			},
 			model: "SPDR-1",
 			manifacturer: "Kani Corp"
@@ -80,11 +82,11 @@ function getCore(bladePartEnum) {
 			type: "CORE",
 			name: "BLUE",
 			description: "On trigger: Attack continuously from 1 point\nTarget: nearest enemy\nMod: Attack duration 2.5 s.",
-			targeting: "Nearest enemy",
-			behavior: "Attack continuously from 1 point. Attack duration 2.5 s.",
+			targeting: "Nearest enemy.",
+			behavior: "Attack continuously from 1 port. Attack duration 2.5 s.",
 			stats: {
 				maxTriggers : 2,
-				maxTriggersCooldown : 180
+				maxTriggersCooldown : 240
 			},
 			model: "ADAM",
 			manifacturer: "GNKI ENTMT"
@@ -98,8 +100,8 @@ function getCore(bladePartEnum) {
 			type: "CORE",
 			name: "GREEN",
 			description: "On trigger: \nTarget: spinning 360 degree angle \nMod: attacks are equals to (attacks per second) * 2",
-			targeting: "Spinning 360 degree angle",
-			behavior: "Fire a burst of attacks of from 2 points. Attacks are equals to (attacks per second) * 2",
+			targeting: "Spinning 360 degree angle.",
+			behavior: "Fire one burst of attacks of from 2 ports. Attacks are equals to (attacks per second) * 2.",
 			stats: {
 				maxTriggers : 4,
 				maxTriggersCooldown : 240
@@ -116,8 +118,8 @@ function getCore(bladePartEnum) {
 			type: "CORE",
 			name: "ORANGE",
 			description: "On trigger: Attack continuously while shield trigger is on cooldown\nTarget: Nearest enemy\nMod: increasing attack speed over time",
-			targeting: "Nearest enemy",
-			behavior: "Attack continuously while shield trigger is on cooldown. Gradually Increases attack speed over time while active",
+			targeting: "Nearest enemy.",
+			behavior: "Attack from 1 port continuously while shield trigger cooldown is active. starts at 50% effective attack speed and ramps to 150% over 5 seconds while firing.",
 			stats: {
 				maxTriggers : 2,
 				maxTriggersCooldown : 240
@@ -250,7 +252,9 @@ function getHull(bladePartEnum) {
 			type: "HULL",
 			name: "BALANCE",
 			description: "MISSING" ,
-			stats: {},
+			stats: {
+				lifeRegen : 0.5
+			},
 			model: "NaN",
 			manifacturer: "NaN"
 			}
@@ -261,7 +265,9 @@ function getHull(bladePartEnum) {
 			type: "HULL",
 			name: "HURRICANE",
 			description: "MISSING" ,
-			stats: {},
+			stats: {
+				lifeRegen : 0.5
+			},
 			model: "NaN",
 			manifacturer: "NaN"
 			}
@@ -272,7 +278,9 @@ function getHull(bladePartEnum) {
 			type: "HULL",
 			name: "BLOSSOM",
 			description: "MISSING" ,
-			stats: {},
+			stats: {
+				lifeRegen : 0.5
+			},
 			model: "NaN",
 			manifacturer: "NaN"
 			}
@@ -283,7 +291,9 @@ function getHull(bladePartEnum) {
 			type: "HULL",
 			name: "CONSTRUCT",
 			description: "MISSING" ,
-			stats: {},
+			stats: {
+				lifeRegen : 0.5
+			},
 			model: "NaN",
 			manifacturer: "NaN"
 			}

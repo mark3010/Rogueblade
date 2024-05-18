@@ -22,25 +22,6 @@ scr_bladeArenaSync()
 	var dist = point_distance(arenaFlatBorderX,arenaFlatBorderY,arenaSlopedBorderX,arenaSlopedBorderY)
 	var dir = point_direction(arenaFlatBorderX,arenaFlatBorderY,arenaSlopedBorderX,arenaSlopedBorderY)
 	
-//z axis
-/*
-if zPosition <= 0 && vel[Z] < -1 {	//bounce on ground
-	vel[Z] = -vel[Z] * stats.zBounciness / 100
-	
-	//apply underlying force
-	vel[@ X] -= sign(lengthdir_x(dist,dir)) * slantH * 3
-	vel[@ Y] -= sign(lengthdir_y(dist,dir)) * slantV * 3
-}
-
-if zPosition <= 0 && vel[Z] > -1 && vel[Z] <= 0 {	//cut bounce
-	vel[Z] = 0
-	zPosition = 0
-}
-
-if zPosition > 0 {					//apply gravity
-	vel[Z] -= (stats.zGravity / 60)
-}
-*/
 var gravityVec = - (stats.zGravity / 60)
 
 //gravity

@@ -1,6 +1,9 @@
 text = "Hull"
-selected = obj_file_handler.getProgress().blade.hull
+
+show_debug_message("SELECTED HERHJHRAJDIKAJNJDHNAKJNDKJN: - "+string(selected))
+
 setSelection(obj_file_handler.getHullUnlocks())
+selected = array_get_index(selection,obj_file_handler.getProgress().blade.hull)
 
 function click() {
 	obj_player.updatePlayerHull(getSelection())

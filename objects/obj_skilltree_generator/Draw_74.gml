@@ -8,17 +8,21 @@ if !surface_exists(skillTreeSurf) {
 }
 
 //DRAW SKILL TREE AND EFFECTS
-var _resolutionArray = [640,360]
-var _camAdjustX = 0 - surface_get_width(skillTreeSurf)/2 + camera_get_view_width(view_camera[0])/2 //camera_get_view_x(view_camera[0])//-interpolateFill[X]*1// + (1-interpolateZoomFill)*640/2 * 1
-var _camAdjustY = 0 - surface_get_height(skillTreeSurf)/2 + camera_get_view_height(view_camera[0])/2//camera_get_view_y(view_camera[0])//-interpolateFill[Y]*1// + (1-interpolateZoomFill)*360/2 * 1
-var _skilltreeScale = (2-(1-interpolateZoomFill))*1
+var _resolutionArray = [960,540]
+var _displaceX = 180
+var _displaceY = 0
+var _camAdjustX = 0 - surface_get_width(skillTreeSurf)/2 + _resolutionArray[X]/2 + _displaceX - (interpolateZoomFill)*skillTreeSurfSize[X]/2 // + camera_get_view_width(view_camera[0])/2 //camera_get_view_x(view_camera[0])//-interpolateFill[X]*1//
+var _camAdjustY = 0 - surface_get_height(skillTreeSurf)/2 + _resolutionArray[Y]/2 + _displaceY - (interpolateZoomFill)*skillTreeSurfSize[Y]/2 //+ camera_get_view_height(view_camera[0])/2//camera_get_view_y(view_camera[0])//-interpolateFill[Y]*1//
+
+var surfaceScale = 1+(interpolateZoomFill)
 
 
-draw_surface_ext(skillTreeSurf,_camAdjustX,_camAdjustY,1,1,0,c_white,1)
+draw_surface_ext(skillTreeSurf,_camAdjustX,_camAdjustY,surfaceScale,surfaceScale,0,c_white,1*interpolateCurvePosition)
 
-var _arrowSquish = image_yscale+image_yscale*(1-interpolateCurvePosition)*.5
 
+var _arrowSquish = 1 + (interpolateCurvePosition)*.2
 var _arrowVisible = true
+var _arrowYSway = sin(current_time/240)*6
 /*
 if instance_exists(ObjUIIterator) {
 	if ObjUIIterator.selected == noone {
@@ -26,10 +30,11 @@ if instance_exists(ObjUIIterator) {
 	}
 }*/
 //arrow
-//draw_sprite_ext(spr_passive_skill_arrow,0,baseX*1,baseY*1-60*1+30*1*interpolateCurvePosition,image_xscale,_arrowSquish,0,c_white,interpolateCurvePosition*_arrowVisible)
+
+draw_sprite_ext(spr_passive_skill_arrow,0,_resolutionArray[X]/2+_displaceX,_resolutionArray[Y]/2+_displaceY-30-40+40*interpolateZoomCurvePosition+_arrowYSway,image_xscale,_arrowSquish,0,c_white,interpolateCurvePosition*_arrowVisible)
 
 surface_set_target(skillTreeSurf)
-draw_clear_alpha(c_black,0.5)
+draw_clear_alpha(c_black,0)
 
 
 

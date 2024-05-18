@@ -66,6 +66,7 @@ function generateSkillTree(struct){
 		var _skill = variable_struct_get(skillTree,_skillName)
 		var _i = instance_create_layer(baseX,baseY,layer,obj_skilltree_skill)
 		_i.structName = _skillName
+		_i.name = _skill.name
 		_i.sprite_index = _skill.sprite
 		_i.baseXOffset = _skill.position[X]
 		_i.baseYOffset = _skill.position[Y]
@@ -75,31 +76,46 @@ function generateSkillTree(struct){
     }
 }
 
-skillTreeSurfSize = [2000,2000]
+skillTreeSurfSize = [960*3,540*3]
 skillTreeSurf = surface_create(skillTreeSurfSize[X],skillTreeSurfSize[Y]);
 
 generateSkillTree(skillTree)
 
 //ANIMATION VARIABLES
 //pan
-interpolateFill = [0,0]
-interpolateFillTarget = [0,0]
-interpolateFillStart = [0,0]
+function resetAnimations() {
+	interpolateFill = [0,0]
+	interpolateFillTarget = [0,0]
+	interpolateFillStart = [0,0]
 
-interpolateCurveStruct = animcurve_get(AC_EaseOut)
-interpolateChannel = animcurve_get_channel(interpolateCurveStruct,0)
+	interpolateCurveStruct = animcurve_get(AC_EaseOut)
+	interpolateChannel = animcurve_get_channel(interpolateCurveStruct,0)
 
-interpolateCurvePosition = 0
-interpolateCurveSpeed = 0.05
+	interpolateCurvePosition = 0
+	interpolateCurveSpeed = 0.05
 
-//zoom
-//ANIMATION VARIABLES
-interpolateZoomFill = 0
-interpolateZoomFillTarget = 1
-interpolateZoomFillStart = 0
+	//zoom
+	//ANIMATION VARIABLES
+	interpolateZoomFill = 0
+	interpolateZoomFillTarget = 1
+	interpolateZoomFillStart = 0
 
-interpolateZoomCurveStruct = animcurve_get(AC_EaseOut)
-interpolateZoomChannel = animcurve_get_channel(interpolateZoomCurveStruct,0)
+	interpolateZoomCurveStruct = animcurve_get(AC_EaseIn)
+	interpolateZoomChannel = animcurve_get_channel(interpolateZoomCurveStruct,0)
 
-interpolateZoomCurvePosition = 0
-interpolateZoomCurveSpeed = 0.05
+	interpolateZoomCurvePosition = 0
+	interpolateZoomCurveSpeed = 0.05
+}
+
+resetAnimations()
+
+/*
+	USE FOR SMOOTH TARGETING INTERPOLATION EFFECT
+	var _pos = variable_struct_get(ObjPlayerHandler.skillTree,selected.target.structName).position
+	if (ObjSkillTreeGenerator.interpolateFillTarget != _pos) {
+				
+		ObjSkillTreeGenerator.interpolateFillStart = [array_get(ObjSkillTreeGenerator.interpolateFill,0),array_get(ObjSkillTreeGenerator.interpolateFill,1)]
+		ObjSkillTreeGenerator.interpolateCurvePosition = 0
+		ObjSkillTreeGenerator.interpolateFillTarget = _pos
+		selectedSkillCardFlag = true // trigger selected button function
+	}

@@ -6,7 +6,7 @@ if sprite_exists(pauseScreen) {
 	//shader_set(sha);
 	//shader_set_uniform_f(shader_get_uniform(sha,"size"), 0.3); // can be a variable or even put in the shader instead of a uniform
 
-	draw_sprite_ext(pauseScreen,0,0,0,1,1,0,c_white,1)
+	draw_sprite_ext(pauseScreen,0,0,0,1,1,0,c_dkgray,1)
 	
 	//var alpha = .1
 	gpu_set_blendmode(bm_add)

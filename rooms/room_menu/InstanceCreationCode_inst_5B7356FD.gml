@@ -1,6 +1,6 @@
 text = "Core"
-selected = obj_file_handler.getProgress().blade.core
 setSelection(obj_file_handler.getCoreUnlocks())
+selected = array_get_index(selection,obj_file_handler.getProgress().blade.core)
 
 function click() {
 	obj_player.updatePlayerCore(getSelection())

@@ -40,7 +40,7 @@ function createGame(gameModeType) {
 			killCounter = instance_create_layer(x,y,layerEntities,obj_killCounter)
 			upgradeHandler = instance_create_layer(x,y,layerEntities,obj_upgrade_handler)
 			
-			skilltree = instance_create_layer(x,y,layerPause,obj_skilltree_generator)
+			skills = instance_create_layer(x,y,layerPause,obj_skillsystem_init)
 			instance_deactivate_layer(layerPause)
 			
 			audio_play_sound(snd_music, 1, true)

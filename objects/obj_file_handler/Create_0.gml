@@ -1,30 +1,72 @@
 event_inherited()
 #region // UNLOCKS
 
-//later add connection to player unlocks
+function getAllUnlocks() {
+	var accountLevelUnlocks = []
+	
+	//ORDER DETERMINES WHICH LEVEL EACH IS UNLOCKED
+	array_push(accountLevelUnlocks, {type: "CORE", partEnum : BLADE_CORE.RED})
+	array_push(accountLevelUnlocks, {type: "CORE", partEnum : BLADE_CORE.GREEN})
+	array_push(accountLevelUnlocks, {type: "CORE", partEnum : BLADE_CORE.ORANGE})
+	array_push(accountLevelUnlocks, {type: "HULL", partEnum : BLADE_HULL.HURRICANE})
+	array_push(accountLevelUnlocks, {type: "HULL", partEnum : BLADE_HULL.BLOSSOM})
+	
+	//TODO CHANGE THIS VAR RIGHT HERE TO BE CURRENT ACCOUNT LEVEL
+	var currentAccountLevel = array_length(accountLevelUnlocks)
+	
+	var currentUnlocks = []
+	array_copy(currentUnlocks,0,accountLevelUnlocks,0,currentAccountLevel)
+
+	return currentUnlocks
+}
+
 function getCoreUnlocks() {
 	var unlocks = []
-	array_push(unlocks,BLADE_CORE.BLUE)
-	array_push(unlocks,BLADE_CORE.RED)
-	array_push(unlocks,BLADE_CORE.GREEN)
-	array_push(unlocks,BLADE_CORE.ORANGE)
+	array_push(unlocks,BLADE_CORE.BLUE) // base unlock
+	
+	//add unlocks from progression
+	var accountLevelUnlocks = getAllUnlocks()
+	
+	for (var i = 0; i < array_length(accountLevelUnlocks); i++) {
+		if accountLevelUnlocks[i].type == "CORE" {
+			array_push(unlocks,accountLevelUnlocks[i].partEnum)
+		}
+	}
+	
 	return unlocks
-}
+} 
 
 function getHullUnlocks() {
 	var unlocks = []
-	array_push(unlocks,BLADE_HULL.BALANCE)
-	array_push(unlocks,BLADE_HULL.HURRICANE)
-	array_push(unlocks,BLADE_HULL.BLOSSOM)
+	array_push(unlocks,BLADE_HULL.BALANCE) // base unlock
+	
+	//add unlocks from progression
+	var accountLevelUnlocks = getAllUnlocks()
+	
+	for (var i = 0; i < array_length(accountLevelUnlocks); i++) {
+		if accountLevelUnlocks[i].type == "HULL" {
+			array_push(unlocks,accountLevelUnlocks[i].partEnum)
+		}
+	}
 
 	return unlocks
 }
 
 function getAnchorUnlocks() {
 	var unlocks = []
-	array_push(unlocks,BLADE_ANCHOR.PELLET)
+	array_push(unlocks,BLADE_ANCHOR.PELLET) // base unlock
+	
+	//add unlocks from progression
+	var accountLevelUnlocks = getAllUnlocks()
+	
+	for (var i = 0; i < array_length(accountLevelUnlocks); i++) {
+		if accountLevelUnlocks[i].type == "ANCHOR" {
+			array_push(unlocks,accountLevelUnlocks[i].partEnum)
+		}
+	}
 	return unlocks
 }
+
 #endregion
 #region // GAME PROGRESS
 

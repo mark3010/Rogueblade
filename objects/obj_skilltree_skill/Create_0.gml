@@ -10,7 +10,7 @@ forcedActive = false
 //level = 0
 description = "missing description"
 structName = noone
-
+name = "none"
 parents=[]
 
 //execute = [scripts.UPGRADE]

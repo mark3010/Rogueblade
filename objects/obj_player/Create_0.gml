@@ -34,7 +34,7 @@ function healFull() {
 	currentTriggers = stats.maxTriggers
 }
 
-//COMPONENTS
+#region //COMPONENTS LOADING
 function loadPlayer() {
 	var playerBuilder = instance_create_layer(x,y,layer,obj_player_builder)
 	var playerSettings = playerBuilder.getPlayerSettings()
@@ -90,22 +90,11 @@ function updatePlayerAnchor(coreEnum) {
 	
 	instance_destroy(playerBuilder)
 }
-
-//BASE PLAYER STATS
-	//override
-	//stats.maxLife = 40
-	//stats.lifeRegen = 0.3 //per second
-	//stats.maxTriggers = 2
-	//stats.maxTriggersCooldown = 60*4 //seconds 
-	//stats.triggersCooldownRegen = 1
-	//combat
-	//stats.collisionDamage = 10
-	//kinetics
-	//stats.acc = .3
+#endregion
 
 refreshCurrents()
 
-//EXP variables
+#region //EXP variables
 level = 1
 EXP = 0
 	
@@ -116,7 +105,9 @@ var maxLevel = 50
 for (var i = 0; i < maxLevel-1; i++) {
 	EXPCapList[i] = round(EXPBaseCap * power(EXPBaseExponential,i))
 }
+#endregion
 
+#region // DASH
 function executeDash() {
 		//calculate direction
 	dirX = dash_right_dir-dash_left_dir
@@ -151,6 +142,39 @@ function executeDash() {
 	var groundPunt = instance_create_layer(x,y,layer,obj_ground_punt)
 	groundPunt.direction = dir+180
 	groundPunt.image_angle = dir+180
+}
+#endregion
+
+ramp = 0
+
+function attack(_direction,_angle=0) {
+	//shoot animation
+			
+	var shootDir = _direction
+	var shootPointX = x + lengthdir_x(22,shootDir)
+	var shootPointY = y + lengthdir_y(22,shootDir)
+			
+	var shootAnim = instance_create_layer(shootPointX,shootPointY,layer,obj_shot_flare)
+	shootAnim.lightColor = lightColor
+	shootAnim.energyColor = energyColor
+	shootAnim.zPosition = zPosition +10
+	//bullet
+	
+	repeat (stats.maxProjectiles) {
+		
+		var bulletDir = shootDir +  irandom(stats.projectileSpread) - stats.projectileSpread/2
+		
+		var bullet = instance_create_layer(x,y,layer,obj_bullet)
+		bullet.ownerId = id
+		bullet.zPosition = zPosition +10
+		bullet.lightColor = lightColor
+		bullet.energyColor = energyColor
+		bullet.direction =	bulletDir + _angle
+		bullet.image_angle = bullet.direction
+	}
+	//recoil
+	vel[X] += lengthdir_x(stats.recoil, shootDir+180)
+	vel[Y] += lengthdir_y(stats.recoil, shootDir+180)
 }
 
 //other

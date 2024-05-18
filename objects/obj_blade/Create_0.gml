@@ -38,6 +38,8 @@ stats = {
 	dashResistance : 80,		//% damage resistance
 	//weapon
 	attacksPerSecond : 6,
+	maxProjectiles : 1,
+	projectileSpread : 10,		//measured in degrees
 	recoil :	.16				//measured in 1/100 of velocity
 }
 
@@ -357,11 +359,16 @@ function die() {
 	deathFlag = true
 }
 
+shieldDamageTakenMemory = 0 //stores memory of how many hits have been taken in this frame
+lifeDamageTakenMemory = 0 //stores memory of how many hits have been taken in this frame
+shieldDamageTakenMemoryPrevious = 0 //stores memory of how many hits have been taken in last frame
+lifeDamageTakenMemoryPrevious = 0 //stores memory of how many hits have been taken in last frame
 function takeDamage(damage,damageDirection,ally) {
 	var damageTaken = 0
+	
 	//damage calculation
 	if currentTriggers > 0 {
-		
+		shieldDamageTakenMemory += 1
 		damageTaken = 1
 		
 		currentTriggers--
@@ -369,7 +376,7 @@ function takeDamage(damage,damageDirection,ally) {
 		hitFlash = 1
 		hitFlashColorMerge = 1
 	} else {
-		
+		lifeDamageTakenMemory += 1
 		damageTaken = damage * (1-ally*.95) // .8 is same team damage resistance
 		
 		currentLife -= damageTaken
@@ -391,7 +398,7 @@ function takeDamage(damage,damageDirection,ally) {
 	
 	//animation calculation
 	hitDistortion = 1
-	hitDistortionDirection = damageDirection
+	hitDistortionDirection = damageDirection+180
 	
 	//damage number
 	if team == TEAM.ENEMY {

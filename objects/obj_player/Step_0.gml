@@ -76,32 +76,6 @@ if isDashing && (dash_right_release + dash_left_release + dash_up_release + dash
 	executeDash()
 }
 
-
-//dir = point_direction(0,0,dirX,dirY)
-
-/*
-if (dash_right || dash_left) {
-		if dashPower < 100 {dashPower++}
-} else {
-	//carry momentum
-	if sign(vel[@ X]) != sign(lengthdir_x(15,dir)) {
-		velAdd[@ X] = 0//-vel[@ X]
-	}
-	//add dash
-	velAdd[@ X] += lengthdir_x(15*dashPower,dir)
-}
-
-if (dash_up || dash_down) {
-	if dashPower < 100 {dashPower++}
-} else {
-		//carry momentum
-		if sign(velAdd[@ Y]) != sign(lengthdir_x(15,dir)) {
-			velAdd[@ Y] = 0//-vel[@ Y]
-		}
-		//add dash
-		velAdd[@ Y] += lengthdir_y(15*dashPower,dir)
-}*/
-
 event_inherited()
 
 //LEVEL UP
@@ -121,46 +95,111 @@ if EXP >= EXPCapList[level-1] {
 }
 
 //ATTACKS
-if currentTriggers != stats.maxTriggers {		//condition
-	
-	isAttacking = 1
-	
-	if attackCooldown >= 60 / stats.attacksPerSecond {	//attack pattern
-		attackCooldown = 0
-		
-		var target = scr_instance_nearest_other(obj_blade)
-		
-		if instance_exists(target) {
-			//shoot animation
-			
-			var shootDir = point_direction(x,y,target.x,target.y)
-			var shootPointX = x + lengthdir_x(22,shootDir)
-			var shootPointY = y + lengthdir_y(22,shootDir)
-			
-			var shootAnim = instance_create_layer(shootPointX,shootPointY,layer,obj_shot_flare)
-			shootAnim.lightColor = lightColor
-			shootAnim.energyColor = energyColor
-			shootAnim.zPosition = zPosition +10
-			//bullet
-			
-			var bullet = instance_create_layer(x,y,layer,obj_bullet)
-			bullet.ownerId = id
-			bullet.zPosition = zPosition +10
-			bullet.lightColor = lightColor
-			bullet.energyColor = energyColor
-			bullet.direction = point_direction(x,y,target.x,target.y) + irandom(100)/100 * 10 - 5
-			bullet.image_angle = bullet.direction
-			
-			//recoil
-			vel[X] += lengthdir_x(stats.recoil, shootDir+180)
-			vel[Y] += lengthdir_y(stats.recoil, shootDir+180)
+var atkPattern = core.partEnum
+switch (atkPattern) {
+	case BLADE_CORE.BLUE:
+		if shieldDamageTakenMemory > shieldDamageTakenMemoryPrevious {
+			isAttacking = 1	
 		}
 		
-	}
-} else {
-	attackCooldown = 0
-	isAttacking -= .025
-	if isAttacking < 0 {isAttacking = 0}
+		if attackCooldown >= 60 / stats.attacksPerSecond && isAttacking > 0 {
+			attackCooldown = 0
+			var target = scr_instance_nearest_other(obj_blade)
+		
+			if instance_exists(target) {
+				var atkDir = point_direction(x,y,target.x,target.y)
+				attack(atkDir)
+			}
+		}
+		
+		isAttacking -= 1 / (60 * 2.5) //2.5 is seconds of duration
+		if isAttacking < 0 {isAttacking = 0}
+	break;
+		case BLADE_CORE.RED:
+		if shieldDamageTakenMemory > shieldDamageTakenMemoryPrevious {
+			isAttacking = 1	
+			
+			var atkQueue = shieldDamageTakenMemory - shieldDamageTakenMemoryPrevious
+			
+			repeat (atkQueue){
+				attack(hitDistortionDirection)
+			}
+		}
+		
+		isAttacking -= .1 //2.5 is seconds of duration
+		if isAttacking < 0 {isAttacking = 0}
+	break;
+	case BLADE_CORE.ORANGE: 
+		if currentTriggers != stats.maxTriggers {		//condition
+			isAttacking = ramp
+			
+			var rampSpeed = 1/60 / 5 //ramps over 5 seconds
+			var target = scr_instance_nearest_other(obj_blade)
+			
+			if attackCooldown >= 60 / (stats.attacksPerSecond * (0.5 + ramp * 1)) {	//attack pattern
+				attackCooldown = 0
+		
+				if instance_exists(target) {
+					var atkDir = point_direction(x,y,target.x,target.y)
+					attack(atkDir)
+				} 
+			}
+			
+			if instance_exists(target) {
+				if ramp < 1 && ramp >= 0 {ramp += rampSpeed}
+			} else {
+				ramp -= rampSpeed/2
+				if ramp < 0 {ramp = 0}
+			}
+		} else {
+			attackCooldown = 0
+			ramp = 0
+			isAttacking -= .1
+			if isAttacking < 0 {isAttacking = 0}
+		}
+	break;
+	case BLADE_CORE.GREEN:
+		if shieldDamageTakenMemory > shieldDamageTakenMemoryPrevious {
+			isAttacking = 1	
+			
+			var atkQueue = shieldDamageTakenMemory - shieldDamageTakenMemoryPrevious
+			
+			repeat (atkQueue){
+				var target = scr_instance_nearest_other(obj_blade)
+				var angleDiff = 180 / stats.attacksPerSecond
+				if instance_exists(target) {
+					
+					var queue1 = []
+					var queue2 = []
+					
+					for (var i = 0; i < stats.attacksPerSecond; i++) {					
+						var atkDir1 = hitDistortionDirection + 90 + angleDiff*i
+						array_push(queue1,{attackDirection : atkDir1})
+						var atkDir2 = hitDistortionDirection - 90 + angleDiff*i
+						array_push(queue2,{attackDirection : atkDir2})
+					}
+					
+					var atkPattern = instance_create_layer(x,y,layer,obj_attack_pattern)
+					atkPattern.setTarget(obj_player)
+					atkPattern.setQueue(queue1)
+					atkPattern.setAngle(10)
+					var atkPattern = instance_create_layer(x,y,layer,obj_attack_pattern)
+					atkPattern.setTarget(obj_player)
+					atkPattern.setQueue(queue2)
+					atkPattern.setAngle(10)
+				}
+			}
+		}
+		
+		
+		isAttacking -= .1 //2.5 is seconds of duration
+		if isAttacking < 0 {isAttacking = 0}
+	break;
+	default:
+	break;
 }
 
-if isAttacking {attackCooldown++}
+lifeDamageTakenMemoryPrevious = lifeDamageTakenMemory
+shieldDamageTakenMemoryPrevious = shieldDamageTakenMemory
+
+if isAttacking > 0 {attackCooldown++}

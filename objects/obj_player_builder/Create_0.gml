@@ -11,17 +11,27 @@ function getPlayerSettings() {
 		hull: getHull(bladePartEnumHull),
 		anchor: getAnchor(bladePartEnumAnchor),
 	}
+	variable_struct_set(bladeData.core,"partEnum",bladePartEnumCore)
+	variable_struct_set(bladeData.hull,"partEnum",bladePartEnumHull)
+	variable_struct_set(bladeData.anchor,"partEnum",bladePartEnumAnchor)
+
 	return bladeData
 }
 
 function getCore(bladePartEnum) {
-	return obj_item_database.getCore(bladePartEnum)
+	var part = obj_item_database.getCore(bladePartEnum)
+	variable_struct_set(part,"partEnum",bladePartEnum)
+	return part
 }
 
 function getHull(bladePartEnum) {
-	return obj_item_database.getHull(bladePartEnum)
+	var part = obj_item_database.getHull(bladePartEnum)
+	variable_struct_set(part,"partEnum",bladePartEnum)
+	return part
 }
 
 function getAnchor(bladePartEnum) {
-	return obj_item_database.getAnchor(bladePartEnum)
+	var part = obj_item_database.getAnchor(bladePartEnum)
+	variable_struct_set(part,"partEnum",bladePartEnum)
+	return part
 }

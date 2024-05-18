@@ -22,6 +22,11 @@ surface_set_target(skillTreeSurf)
 
 //BASE NODE
 draw_sprite_ext(spr_passive_skill_base,image_index,skillTreeSurfSize[X]/2,skillTreeSurfSize[Y]/2,1,1,0,c_white,1)
+draw_set_color(c_white)
+
+var text = -1
+if instance_exists(obj_ui_selector.selected) {text = obj_ui_selector.selected.structName}
+draw_text(skillTreeSurfSize[X]/2,skillTreeSurfSize[Y]/2+30,text)
 
 surface_reset_target()
 

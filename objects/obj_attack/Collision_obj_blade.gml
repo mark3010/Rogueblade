@@ -1,8 +1,13 @@
 /// @description Insert description here
 // You can write your code in this editor
-var collision = scr_isBetweenIncluding(zPosition,other.zPosition,other.zPosition+20)
+var collision = scr_isBetweenIncluding(zPosition,other.zPosition-40,other.zPosition+40)
 
-if other.id != ownerId && collision {
+//each step:
+// makes sure attack cant collide with owner
+// makes sure attack is within zHeight range of target
+// makes sure enemy is not already dead - so they dont absorb the attack
+// makes sure self is still alive - so attack cant collide with multiple enemies in 1 frame
+if other.id != ownerId && collision && other.deathFlag != true && deathFlag == false{
 	
 	reflectionVector = point_direction(x,y,other.x,other.y) +180
 	//collision power

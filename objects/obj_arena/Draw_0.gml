@@ -1,12 +1,6 @@
 event_inherited()
 
-var colFlat = merge_color($66564D,c_white,.25)
-var colSlant1 = merge_color($66564D,c_white,.22)
-var colSlant2 = merge_color($66564D,c_white,.17)
-var colSlant3 = merge_color($66564D,c_white,.11)
-var colSlant4 = merge_color($66564D,c_white,.05)
-var colSides = #3A4351
-var colSidesBot = c_black
+
 draw_set_alpha(1)
 // z-depth of arena
 

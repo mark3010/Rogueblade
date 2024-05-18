@@ -11,6 +11,7 @@ function formatStats(stats) {
 	if array_contains(s,"lifeRegen") {f += "> Life regeneration: "+string(stats.lifeRegen)+"\n"}
 	if array_contains(s,"maxTriggers") {f += "> Shield triggers: "+string(stats.maxTriggers)+"\n"}
 	if array_contains(s,"maxTriggersCooldown") {f += "> Shield trigger cooldown: "+string(stats.maxTriggersCooldown/60)+" s.\n"}
+	if array_contains(s,"maxProjectiles") {f += "additional projectiles: +"+string(stats.maxProjectiles)+"\n"}
 	
 	/*
 	//movement

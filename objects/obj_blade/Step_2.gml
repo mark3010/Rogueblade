@@ -1,3 +1,4 @@
+
 if deathFlag {
 	ds_map_destroy(cooldownMap) //cleanup
 	if instance_exists(obj_killCounter) {obj_killCounter.countKill(id,groupId)} // count death

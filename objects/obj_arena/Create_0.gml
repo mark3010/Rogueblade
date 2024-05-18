@@ -9,6 +9,15 @@ gameModeText = "-1"
 gameModeTextY = 6
 gameModeCurrent = noone
 data = obj_file_handler.getProgress()
+
+colFlat = merge_color($66564D,c_white,.25)
+colSlant1 = merge_color($66564D,c_white,.22)
+colSlant2 = merge_color($66564D,c_white,.17)
+colSlant3 = merge_color($66564D,c_white,.11)
+colSlant4 = merge_color($66564D,c_white,.05)
+colSides = #3A4351
+colSidesBot = c_black
+
 arenas = {
 	normal : {
 		flatWidth	: 80,
@@ -24,6 +33,10 @@ arenas = {
 	}
 	
 }
+
+//WATER LAYER - EXPERIMENTAL -
+//layerWater = layer_create(-999,"lay_water")
+//instance_create_layer(x,y+200,layerWater,obj_water)
 
 function init(gameMode) {
 	//var data = obj_file_handler.getProgress()
