@@ -63,7 +63,7 @@ function getCore(bladePartEnum) {
 			name: "RED",
 			description: "On trigger: attack once from 1 point\ntarget: nearest enemy\nMod: adds many projectiles" ,
 			targeting: "Nearest enemy." ,
-			behavior: "Attack once from 1 port. Adds many projectiles." ,
+			behavior: "Attack one single time from 1 port." ,
 			stats: {
 				maxTriggers : 1,
 				maxTriggersCooldown : 150,
@@ -253,7 +253,8 @@ function getHull(bladePartEnum) {
 			name: "BALANCE",
 			description: "MISSING" ,
 			stats: {
-				lifeRegen : 0.5
+				maxLife : 35,
+				lifeRegen : 1
 			},
 			model: "NaN",
 			manifacturer: "NaN"
@@ -266,6 +267,7 @@ function getHull(bladePartEnum) {
 			name: "HURRICANE",
 			description: "MISSING" ,
 			stats: {
+				maxLife : 30,
 				lifeRegen : 0.5
 			},
 			model: "NaN",
@@ -279,7 +281,8 @@ function getHull(bladePartEnum) {
 			name: "BLOSSOM",
 			description: "MISSING" ,
 			stats: {
-				lifeRegen : 0.5
+				maxLife : 40,
+				lifeRegen : 1.3
 			},
 			model: "NaN",
 			manifacturer: "NaN"
@@ -292,6 +295,7 @@ function getHull(bladePartEnum) {
 			name: "CONSTRUCT",
 			description: "MISSING" ,
 			stats: {
+				maxLife : 25,
 				lifeRegen : 0.5
 			},
 			model: "NaN",
@@ -309,7 +313,9 @@ function getAnchor(bladePartEnum) {
 			type: "ANCHOR",
 			name: "GATTLER",
 			description: "MISSING" ,
-			stats: {},
+			stats: {
+				weaponType : BLADE_ANCHOR.PELLET
+			},
 			model: "NaN",
 			manifacturer: "NaN"
 			}
@@ -320,7 +326,9 @@ function getAnchor(bladePartEnum) {
 			type: "ANCHOR",
 			name: "EXPLODER",
 			description: "MISSING" ,
-			stats: {},
+			stats: {
+				weaponType : BLADE_ANCHOR.EXPLOSION
+			},
 			model: "NaN",
 			manifacturer: "NaN"
 			}

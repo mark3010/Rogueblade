@@ -11,13 +11,17 @@ function scr_draw_list(argument0,argument1=false){
 	var boxLength = 0
 	if drawBackdrop {
 		//calculate length
-		
 		for (var i = 0; i< array_length(draw_list);i++) {
 			draw_set_halign(fa_left)
 			draw_set_font(font_opensans)
 			boxLength += lineDist
-			//boxLength += string_height_ext(draw_list[i].title,lineDist,descriptionWidth)
-			boxLength += string_height_ext(draw_list[i].body,lineDist,descriptionWidth)
+			
+			var descItems = draw_list[i].body
+	        for (j = 0; j < array_length(descItems); j ++) {
+				boxLength += string_height_ext(descItems[j].text,lineDist,descriptionWidth)
+	        }
+			
+			//boxLength += string_height_ext(draw_list[i].body,lineDist,descriptionWidth)
 			boxLength += lineDist
 		}
 		//draw backdrop
@@ -33,25 +37,35 @@ function scr_draw_list(argument0,argument1=false){
 	
 		var strWidth = string_width(draw_list[i].title)
 		var lineStartX = strWidth/2+12
-		var titleStartY = line
+		//var titleStartY = line
 	
 		//title
 		draw_set_halign(fa_center)
 		draw_set_color(color)
 		draw_set_font(font_opensans)
-		draw_text_ext(x,y+titleStartY-6,draw_list[i].title,lineDist,descriptionWidth)
+		draw_text_ext(x,y+line-6,draw_list[i].title,lineDist,descriptionWidth)
 		//draw_text_scribble_ext(x,y+titleStartY-6,draw_list[i].title,lineDist,descriptionWidth)
-		draw_line(x+lineStartX,y+titleStartY,x+descriptionWidth/2,y+titleStartY)
-		draw_line(x-lineStartX,y+titleStartY,x-descriptionWidth/2,y+titleStartY)
+		draw_line(x+lineStartX,y+line,x+descriptionWidth/2,y+line)
+		draw_line(x-lineStartX,y+line,x-descriptionWidth/2,y+line)
 		line += lineDist //newline
 	
 		//text body
-		var descriptionStartY = line //strHeight/2+2 + 
+		//var descriptionStartY = line //strHeight/2+2 + 
 		draw_set_halign(fa_left)
 		draw_set_color(descriptionColor)
 		draw_set_font(font_opensans)
-		draw_text_ext(x-descriptionWidth/2,y+descriptionStartY,draw_list[i].body,lineDist,descriptionWidth)
-		line += string_height_ext(draw_list[i].body,lineDist,descriptionWidth)
+		
+		var descItems = draw_list[i].body
+        for (j = 0; j < array_length(descItems); j ++) {
+			draw_set_color(descItems[j].color)
+			draw_text_ext(x-descriptionWidth/2,y+line,descItems[j].text,lineDist,descriptionWidth)
+			line += string_height_ext(descItems[j].text,lineDist,descriptionWidth)
+			
+        }
 		line += lineDist
+		
+		//draw_text_ext(x-descriptionWidth/2,y+descriptionStartY,draw_list[i].body,lineDist,descriptionWidth)
+		//line += string_height_ext(draw_list[i].body,lineDist,descriptionWidth)
+		//line += lineDist
 	}
 }

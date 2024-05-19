@@ -9,6 +9,8 @@ if isSelected {
 	if left || right {
 		var iterate = right - left
 	
+		var temp = getSelection() //used for checking if menu option is new or the same
+		
 		selected += iterate
 		
 		if iterate > 0 {
@@ -17,9 +19,12 @@ if isSelected {
 		if iterate < 0 {
 			shiftLeftAnim = 1
 		}
-		if iterate != 0 {
-			click()
-			pop()
+		
+		if temp != getSelection() {
+			if iterate != 0 {
+				click()
+				pop()
+			}
 		}
 	}
 }

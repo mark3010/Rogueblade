@@ -90,6 +90,11 @@ function updatePlayerAnchor(coreEnum) {
 	
 	instance_destroy(playerBuilder)
 }
+
+function updateStats(_stats,_mode) {
+	stats = scr_structs_combine(stats,_stats,_mode)
+}
+
 #endregion
 
 refreshCurrents()

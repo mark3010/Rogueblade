@@ -28,7 +28,9 @@ function updateSelection() {
 	
 		//ADD SKILL IF NO PARENTS
 		if array_length(_skill.parents) == 0 {
-			_availableFlag = true
+			if _skill.level == 0 {
+				_availableFlag = true
+			}
 		} else {
 		//ADD SKILL IF ONE OR MORE PARENTS ASSIGNED
 			for (var n = array_length(_skill.parents)-1; n >= 0; --n) {
@@ -36,7 +38,9 @@ function updateSelection() {
 				var _skillTarget = variable_struct_get(obj_skilltree_generator.skillTree,_skill.parents[n])
 			
 				if (_skillTarget.level > 0) {
-					_availableFlag = true
+					if _skill.level == 0 {
+						_availableFlag = true
+					}
 				}
 			}
 		}
@@ -73,13 +77,16 @@ function updateSelection() {
 	instances = []
 	//generate choices
 	for (var k = 0; k < array_length(upgrades); k++) {
-		var upgradeInstance = instance_create_layer(x-200,y+20+k*20,layer,obj_ui_selectable)
+		var upgradeInstance = instance_create_layer(x-200,y+20+k*20,layer,obj_ui_selectable_upgrade)
 		upgradeInstance.text = upgrades[k].name
 		upgradeInstance.structName = upgrades[k].structName
 		array_push(instances,upgradeInstance)
 	}
+	
+	obj_ui_selector.findStarterMenuOption()
 }
 
 updateSelection()
+obj_ui_selector.forget()
 
 randomize()

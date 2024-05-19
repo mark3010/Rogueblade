@@ -2,7 +2,7 @@
 // You can write your code in this editor
 
 
-text = 
+part = 
 	{description: "no target for description found. make sure ui selector is targeting a ui_shift object",
 	stats: "-",
 	model: "NaN",

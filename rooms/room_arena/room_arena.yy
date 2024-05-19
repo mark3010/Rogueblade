@@ -7,7 +7,6 @@
   "inheritLayers":false,
   "instanceCreationOrder":[
     {"name":"inst_6172B092","path":"rooms/room_arena/room_arena.yy",},
-    {"name":"inst_3A640F16","path":"rooms/room_arena/room_arena.yy",},
     {"name":"inst_7212128B","path":"rooms/room_arena/room_arena.yy",},
   ],
   "isDnd":false,
@@ -22,7 +21,6 @@
       ],"layers":[],"name":"lay_pause","properties":[],"resourceType":"GMRInstanceLayer","resourceVersion":"2.0","userdefinedDepth":false,"visible":true,},
     {"$GMRInstanceLayer":"","%Name":"lay_instances","depth":200,"effectEnabled":true,"effectType":null,"gridX":8,"gridY":8,"hierarchyFrozen":false,"inheritLayerDepth":false,"inheritLayerSettings":false,"inheritSubLayers":true,"inheritVisibility":true,"instances":[
         {"$GMRInstance":"","%Name":"inst_6172B092","colour":4294967295,"frozen":false,"hasCreationCode":true,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_6172B092","objectId":{"name":"obj_gameinit","path":"objects/obj_gameinit/obj_gameinit.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":416.0,"y":256.0,},
-        {"$GMRInstance":"","%Name":"inst_3A640F16","colour":4294967295,"frozen":false,"hasCreationCode":true,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_3A640F16","objectId":{"name":"obj_text_element","path":"objects/obj_text_element/obj_text_element.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":8.0,"y":8.0,},
       ],"layers":[],"name":"lay_instances","properties":[],"resourceType":"GMRInstanceLayer","resourceVersion":"2.0","userdefinedDepth":false,"visible":true,},
     {"$GMREffectLayer":"","%Name":"Effect_3","depth":300,"effectEnabled":true,"effectType":"_effect_windblown_particles","gridX":16,"gridY":16,"hierarchyFrozen":false,"inheritLayerDepth":false,"inheritLayerSettings":false,"inheritSubLayers":true,"inheritVisibility":true,"layers":[],"name":"Effect_3","properties":[
         {"name":"param_sprite","type":2,"value":"spr_empty",},

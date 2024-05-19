@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"scr_structs_merge",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_structs_merge",
+  "parent":{
+    "name":"structs",
+    "path":"folders/Scripts/structs.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

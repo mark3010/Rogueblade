@@ -19,42 +19,46 @@ skillPoints = 0
 //adding skills to skilltree
 variable_struct_set(skillTree,"HeavyArtillery",
 {
-position: [-120,0],
+position: [-40,0],
 name:"Heavy Artillery",
 description:"adds bullet damage but reduces shot speed",
 sprite: spr_passive_skill_test,
 level: 0,
-parents: []
+parents: [],
+stats: {maxLife : 1}
 }) 
 
 variable_struct_set(skillTree,"ExplosiveRounds",
 {
-position: [-240,60],
+position: [-90,20],
 name:"Explosive Rounds",
 description:"bullets explode",
 sprite: spr_passive_skill_test,
 level: 0,
-parents: ["HeavyArtillery"]
+parents: ["HeavyArtillery"],
+stats: {maxLife : 1}
 }) 
 
 variable_struct_set(skillTree,"ShotCaller",
 {
-position: [-240,-60],
+position: [-90,-20],
 name:"Shot Caller",
 description:"something something",
 sprite: spr_passive_skill_test,
 level: 0,
-parents: ["HeavyArtillery"]
+parents: ["HeavyArtillery"],
+stats: {maxLife : 1}
 }) 
 
 variable_struct_set(skillTree,"EnhancedBooster",
 {
-position: [120,0],
+position: [40,0],
 name:"Enhanced Booster",
 description:"more daashesss",
 sprite: spr_passive_skill_test,
 level: 0,
-parents: []
+parents: [],
+stats: {maxLife : 1}
 }) 
 
 //generate skill tree
@@ -88,11 +92,11 @@ function resetAnimations() {
 	interpolateFillTarget = [0,0]
 	interpolateFillStart = [0,0]
 
-	interpolateCurveStruct = animcurve_get(AC_EaseOut)
+	interpolateCurveStruct = animcurve_get(AC_EaseIn2)
 	interpolateChannel = animcurve_get_channel(interpolateCurveStruct,0)
 
 	interpolateCurvePosition = 0
-	interpolateCurveSpeed = 0.05
+	interpolateCurveSpeed = 0.02
 
 	//zoom
 	//ANIMATION VARIABLES
@@ -108,6 +112,17 @@ function resetAnimations() {
 }
 
 resetAnimations()
+
+function refocus(structName) {
+	_pos = variable_struct_get(skillTree,structName).position
+	
+	if (interpolateFillTarget != _pos) {
+				
+		interpolateFillStart = [array_get(interpolateFill,0),array_get(interpolateFill,1)]
+		interpolateCurvePosition = 0
+		interpolateFillTarget = _pos
+	}
+}
 
 /*
 	USE FOR SMOOTH TARGETING INTERPOLATION EFFECT

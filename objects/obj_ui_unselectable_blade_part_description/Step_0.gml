@@ -4,9 +4,11 @@
 if keyboard_check_pressed(triggerKey) {
 	click()
 }
+
 var currentSelection = obj_ui_selector.selected
 if currentSelection.object_index == obj_ui_selectable_shift {
-	text = currentSelection.getDetails()
+	part = currentSelection.getDetails()
+	//show_debug_message(part)
 }
 
 alpha = lerp(alpha,1,global.uiFadeSpeed)

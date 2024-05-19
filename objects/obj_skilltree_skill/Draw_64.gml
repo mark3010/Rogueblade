@@ -36,16 +36,16 @@ if surface_exists(obj_skilltree_generator.skillTreeSurf) {
 	//drawing
 	if !_parentsAssigned {
 		//shader_set(ShdGreyScale)
-		draw_sprite_ext(sprite_index,1,_xTreeBase+baseXOffset/2,_yTreeBase+baseYOffset/2,1,1,0,_baseCol,1)
+		//draw_sprite_ext(sprite_index,0,_xTreeBase+baseXOffset,_yTreeBase+baseYOffset,1,1,0,_baseCol,1)
 		//shader_reset()
 	}
 
-	draw_sprite_ext(sprite_index,0,_xTreeBase+baseXOffset/2,_yTreeBase+baseYOffset/2,1,1,0,_baseCol,_parentsAssigned)
+	draw_sprite_ext(sprite_index,_assigned,_xTreeBase+baseXOffset,_yTreeBase+baseYOffset,1,1,0,_baseCol,1)
 	
-	if _me.level > 0 {
-		scr_textStyle1(_xTreeBase+baseXOffset/2,_yTreeBase+baseYOffset/2+16,_me.level,font_opensans,fa_center,c_white,1,1)
+	//if _me.level > 0 {
+		//scr_textStyle1(_xTreeBase+baseXOffset,_yTreeBase+baseYOffset/+16,"baseX: "+string(baseXOffset)+" baseY: "+string(baseYOffset),font_opensans,fa_center,c_white,1,1)
 
-	}
+	//}
 	
 
 	

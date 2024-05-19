@@ -24,9 +24,9 @@ surface_set_target(skillTreeSurf)
 draw_sprite_ext(spr_passive_skill_base,image_index,skillTreeSurfSize[X]/2,skillTreeSurfSize[Y]/2,1,1,0,c_white,1)
 draw_set_color(c_white)
 
-var text = -1
-if instance_exists(obj_ui_selector.selected) {text = obj_ui_selector.selected.structName}
-draw_text(skillTreeSurfSize[X]/2,skillTreeSurfSize[Y]/2+30,text)
+//var text = -1
+//if instance_exists(obj_ui_selector.selected) {text = interpolateFill}
+//draw_text(skillTreeSurfSize[X]/2,skillTreeSurfSize[Y]/2+30,text)
 
 surface_reset_target()
 
@@ -43,10 +43,10 @@ for (var i = array_length(keys)-1; i >= 0; --i) {
 	
 	//DRAW LINKS FROM BASE TO FIRST NODES
 	if array_length(_skill.parents) == 0 {
-		var _drawPosXCorrectBase = (baseX+_skill.position[X])*1
-		var _drawPosYCorrectBase = (baseY+_skill.position[Y])*1
-		var _drawPosXCorrectTarget = (baseX)*1
-		var _drawPosYCorrectTarget = (baseY)*1
+		var _drawPosXCorrectBase = (baseX+_skill.position[X])
+		var _drawPosYCorrectBase = (baseY+_skill.position[Y])
+		var _drawPosXCorrectTarget = (baseX)
+		var _drawPosYCorrectTarget = (baseY)
 		
 		var _dist = point_distance(_drawPosXCorrectBase,_drawPosYCorrectBase,_drawPosXCorrectTarget,_drawPosYCorrectTarget)
 		var _direction = point_direction(_drawPosXCorrectBase,_drawPosYCorrectBase,_drawPosXCorrectTarget,_drawPosYCorrectTarget)
@@ -58,10 +58,10 @@ for (var i = array_length(keys)-1; i >= 0; --i) {
 		for (var n = array_length(_skill.parents)-1; n >= 0; --n) {
 			var _skillTarget = variable_struct_get(skillTree,_skill.parents[n])
 		
-			var _drawPosXCorrectBase = (baseX+_skill.position[X])*1
-			var _drawPosYCorrectBase = (baseY+_skill.position[Y])*1
-			var _drawPosXCorrectTarget = (baseX+_skillTarget.position[X])*1
-			var _drawPosYCorrectTarget = (baseY+_skillTarget.position[Y])*1
+			var _drawPosXCorrectBase = (baseX+_skill.position[X])
+			var _drawPosYCorrectBase = (baseY+_skill.position[Y])
+			var _drawPosXCorrectTarget = (baseX+_skillTarget.position[X])
+			var _drawPosYCorrectTarget = (baseY+_skillTarget.position[Y])
 		
 			var _dist = point_distance(_drawPosXCorrectBase,_drawPosYCorrectBase,_drawPosXCorrectTarget,_drawPosYCorrectTarget)
 			var _direction = point_direction(_drawPosXCorrectBase,_drawPosYCorrectBase,_drawPosXCorrectTarget,_drawPosYCorrectTarget)
@@ -74,7 +74,7 @@ for (var i = array_length(keys)-1; i >= 0; --i) {
 //BASE NODE
 draw_sprite_ext(spr_passive_skill_base,image_index,x,y,image_xscale,image_yscale,0,c_blue,1)
 
-draw_text(x,y,"interpolatezoomcurvepos "+ string(interpolateZoomCurvePosition))
-draw_text(x,y+10,"interpolatefill " +string(interpolateFill))
-draw_text(x,y+20,"interpolatefilltarget " +string(interpolateFillTarget))
-draw_text(x,y+30,"interpolatefillstart " +string(interpolateFillStart))
+draw_text(x,y+150,"interpolatecurvepos "+ string(interpolateCurvePosition))
+draw_text(x,y+10+150,"interpolatefill " +string(interpolateFill))
+draw_text(x,y+20+150,"interpolatefilltarget " +string(interpolateFillTarget))
+draw_text(x,y+30+150,"interpolatefillstart " +string(interpolateFillStart))

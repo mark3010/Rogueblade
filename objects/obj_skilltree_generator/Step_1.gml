@@ -12,7 +12,7 @@ interpolateCurveSpeedAdjusted = interpolateCurveSpeed * _speedAdjustment
 interpolateZoomCurveSpeedAdjusted = interpolateZoomCurveSpeed * _speedAdjustment
 //INTERPOLATION
 //skilltree pan
-if (interpolateCurvePosition < 1) {
+if (interpolateCurvePosition <= 1) {
 	var _value = animcurve_channel_evaluate(interpolateChannel,interpolateCurvePosition)
 	
 	var _diffX = interpolateFillTarget[0] - array_get(interpolateFillStart,0)

@@ -3,16 +3,16 @@
 
 
 //DESCRIPTION
-var summaryText = ""
-
-summaryText += "Maximum health: " + string(statsheet.maxLife) + "\n"
-summaryText += "Maximum triggershields: " + string(statsheet.maxTriggers) + "\n"
-summaryText += "Triggershield cooldown: " + string(statsheet.maxTriggersCooldown/60) + " s. \n"
+var summaryStats = {}
+summaryStats = scr_structs_merge(variable_clone(core.stats),variable_clone(hull.stats))
+summaryStats = scr_structs_merge(summaryStats,variable_clone(anchor.stats))
 
 var draw_list = [
-	{title:"Blade build", body : string(core.name) + " | " + string(hull.name) + " | " + string(anchor.name)},
-	{title: "Summary",body : summaryText}
+	{title:"Blade build", body : [ 
+		{text : (string(core.name) + " | " + string(hull.name) + " | " + string(anchor.name)),
+		color : descriptionColor}
+		]},
+	{title: "Summary",body : obj_text_formatter.formatStats(summaryStats)}
 	]
 
 scr_draw_list(draw_list)
-
