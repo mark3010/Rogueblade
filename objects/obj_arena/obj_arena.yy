@@ -9,10 +9,13 @@
   "name":"obj_arena",
   "overriddenProperties":[],
   "parent":{
-    "name":"entities",
-    "path":"folders/Objects/entities.yy",
+    "name":"doodads",
+    "path":"folders/Objects/entities/doodads.yy",
   },
-  "parentObjectId":null,
+  "parentObjectId":{
+    "name":"obj_entity_depth",
+    "path":"objects/obj_entity_depth/obj_entity_depth.yy",
+  },
   "persistent":false,
   "physicsAngularDamping":0.1,
   "physicsDensity":0.5,

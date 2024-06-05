@@ -2,6 +2,8 @@ event_inherited()
 global.font=font_silver
 global.fontDebug=font_silkscreen
 global.version="RogueBlade - v0.01"
+global.gameFirstLoad = true //used to show first screen animation
+
 gameMode = gameModeType.PRACTICE
 pauseScreen = -1
 pauseScreenLight = -1

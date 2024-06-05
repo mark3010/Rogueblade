@@ -1,6 +1,7 @@
 // PRECALC
 cooldownsCalculate()
 lifeCalculate()
+DQSaveCalculate()
 triggersCalculate()
 animationsCalculate()
 scr_bladeArenaSync()
@@ -29,16 +30,33 @@ vel[Z] += gravityVec
 
 //bounce on floor
 if zPosition <= 0 {
-	zPosition = 0
+	//check if out of bounds
+	if !(outOfBounds) && !(knockedOut) {
+		zPosition = 0
 	
-	if vel[Z] < -3 {
-		vel[Z] = -vel[Z] * stats.zBounciness / 100
-	
-		//apply underlying force
-		vel[@ X] -= sign(lengthdir_x(dist,dir)) * slantH * 3
-		vel[@ Y] -= sign(lengthdir_y(dist,dir)) * slantV * 3
+		if vel[Z] < -3 {
+			var landingAnim = instance_create_layer(x,y,layer,obj_ground_land)
+			landingAnim.strength = abs(vel[Z])
+			landingAnim.image_alpha = clamp(landingAnim.strength,0,10)/10
+			vel[Z] = -vel[Z] * stats.zBounciness / 100
+
+			//apply underlying force
+			vel[@ X] -= sign(lengthdir_x(dist,dir)) * slantH * 3
+			vel[@ Y] -= sign(lengthdir_y(dist,dir)) * slantV * 3
+		} else {
+			vel[Z] = 0
+		}
 	} else {
-		vel[Z] = 0
+		knockedOut = true
+		
+		if zPosition <= -300 {
+			if currentDQSaves > 0 {
+				respawn()
+				currentDQSaves--
+			} else {
+				die()
+			}
+		}
 	}
 } 
 
@@ -65,13 +83,14 @@ dashKineticModifierDuration--
 if dashKineticModifierDuration < 0 {dashKineticModifierDuration = 0}
 
 //CORRECT POSITION TO INSIDE ARENA
+/*
 if (x > arenaSlopedBorderX || x < arenaSlopedBorderX) {
 	x = arenaSlopedBorderX
 }
 
 if (y > arenaSlopedBorderY || y < arenaSlopedBorderY) {
 	y = arenaSlopedBorderY
-}
+}*/
 
 //DRAG
 //drag only applies to the speed of the blade above the velMax threshold

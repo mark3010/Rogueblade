@@ -2,8 +2,8 @@
 // You can write your code in this editor
 event_inherited()
 
-image_xscale = image_xscale * .8
-image_yscale = image_yscale * .8
+image_xscale = image_xscale * .85
+image_yscale = image_yscale * .85
 image_angle = direction
 
 if image_xscale <= 0 {

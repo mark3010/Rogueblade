@@ -45,6 +45,7 @@ if room == room_arena {
 			var transition = instance_create_layer(x,y,layer,obj_room_transition)
 			transition.targetRoom = room_menu
 			if instance_exists(obj_cam) {obj_cam.zoomOut()}
+			global.inputHighjack = true
 			
 		} else {
 			unpause()
@@ -54,6 +55,11 @@ if room == room_arena {
 	if keyboard_check_pressed(vk_backspace) && instance_exists(obj_player) && global.debugMode {
 		obj_gameinit.player.deathFlag = true
 	}
+	
+	if keyboard_check_pressed(vk_tab) && instance_exists(obj_player) {
+		obj_player.EXP = obj_player.EXPCapList[obj_player.level-1]
+	}
+	
 	
 	if keyboard_check_pressed(ord("E")) {
 		if instance_exists(obj_player) {

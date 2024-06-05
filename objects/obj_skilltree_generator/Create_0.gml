@@ -25,7 +25,7 @@ description:"adds bullet damage but reduces shot speed",
 sprite: spr_passive_skill_test,
 level: 0,
 parents: [],
-stats: {maxLife : 1}
+stats: {maxTriggers : 1}
 }) 
 
 variable_struct_set(skillTree,"ExplosiveRounds",

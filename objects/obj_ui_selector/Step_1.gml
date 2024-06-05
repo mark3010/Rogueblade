@@ -16,11 +16,11 @@ if keyboard_check_pressed(vk_space) || keyboard_check_pressed(vk_enter) {
 }
 
 //HIGHJACK PLAYER CONTROL IF MENU OPTIONS EXIST
-if selected != noone {
-	global.inputHighjack = true
-} else {
-	global.inputHighjack = false
-}
+//if selected != noone {
+	//global.inputHighjack = true
+//} else {
+//	global.inputHighjack = false
+//}
 
 //FIND NEXT MENU OPTION
 if keyboard_check_pressed(vk_down) || keyboard_check_pressed(vk_up) {

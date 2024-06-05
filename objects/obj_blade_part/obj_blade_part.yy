@@ -10,8 +10,8 @@
   "name":"obj_blade_part",
   "overriddenProperties":[],
   "parent":{
-    "name":"entities",
-    "path":"folders/Objects/entities.yy",
+    "name":"doodads",
+    "path":"folders/Objects/entities/doodads.yy",
   },
   "parentObjectId":{
     "name":"obj_entity_depth",

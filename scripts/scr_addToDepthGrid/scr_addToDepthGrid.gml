@@ -11,7 +11,7 @@ function scr_addToDepthGrid(){
 			ds_depthgrid[# 0,0] = other;
 
 			//add its Y value to the grid
-			ds_depthgrid[# 1,0] = other.y;
+			ds_depthgrid[# 1,0] = other.y + other.zPosition;
 		} else {
 	
 			//resize the current grid (increment +1)
@@ -22,7 +22,7 @@ function scr_addToDepthGrid(){
 			ds_depthgrid[# 0,heightOfGrid] = other;
 		
 			//add our Y value
-			ds_depthgrid[# 1,heightOfGrid] = other.y;
+			ds_depthgrid[# 1,heightOfGrid] = other.y + other.zPosition;
 		}
 	}
 }

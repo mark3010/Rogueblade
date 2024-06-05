@@ -9,8 +9,8 @@
   "name":"obj_water",
   "overriddenProperties":[],
   "parent":{
-    "name":"entities",
-    "path":"folders/Objects/entities.yy",
+    "name":"doodads",
+    "path":"folders/Objects/entities/doodads.yy",
   },
   "parentObjectId":null,
   "persistent":false,

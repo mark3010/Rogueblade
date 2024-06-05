@@ -1,4 +1,7 @@
 global.guiTestEnable = false
+global.txtColHighlight = #E3F1F1
+global.txtColDark = #4F5E5E
+
 bottomMargin = 25
 sideMargin = 25
 #region TIMER
@@ -15,7 +18,7 @@ timerPosY = 540-bottomMargin
 	healthHeight = sprite_get_height(spr_health_bar)
 	healthAlpha = 1
 	healthNumberYOffset = 2
-	healthAnimSpeed = .05 // [0..1]
+	healthAnimSpeed = .15 // [0..1]
 	healthAnim = 0
 //triggers
 	triggersCooldownPosX = healthPosX
@@ -27,6 +30,8 @@ timerPosY = 540-bottomMargin
 //indicators
 	playerIsAttacking = 0
 	playerIsDashing = 0
+	playerDQSavesPrevious = 1
+	
 #endregion
 
 #region WAVELIST

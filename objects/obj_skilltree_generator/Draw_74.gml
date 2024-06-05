@@ -9,7 +9,7 @@ if !surface_exists(skillTreeSurf) {
 
 //DRAW SKILL TREE AND EFFECTS
 var _resolutionArray = [960,540]
-var _displaceX = 180
+var _displaceX = 200
 var _displaceY = 0
 
 //ORDER:             displace surface so center is screen center	displace middle on screen		displace for zoom in animation				displace for node focus

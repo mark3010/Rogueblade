@@ -102,6 +102,10 @@ if cooldownInstanceExists(other.instanceId) == undefined && collision {
 		collisionParticle.energyColor = col
 		collisionParticle.image_xscale = collisionParticle.image_xscale * (0.6 + 0.4 * (sparkAmount)/5)
 		collisionParticle.image_yscale = collisionParticle.image_yscale * (0.6 + 0.4 * (sparkAmount)/5)
+		
+		var collisionShard = instance_create_layer(x+midX,y+midY-heightCorrection,layer,obj_blade_shard)
+		collisionShard.direction = irandom(360)
+		
 	}
 
 

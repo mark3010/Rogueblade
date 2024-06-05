@@ -14,8 +14,8 @@
     "path":"folders/Objects/effects/ingame.yy",
   },
   "parentObjectId":{
-    "name":"obj_effect",
-    "path":"objects/obj_effect/obj_effect.yy",
+    "name":"obj_effect_depth",
+    "path":"objects/obj_effect_depth/obj_effect_depth.yy",
   },
   "persistent":false,
   "physicsAngularDamping":0.1,

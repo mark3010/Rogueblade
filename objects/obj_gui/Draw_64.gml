@@ -14,11 +14,27 @@ if room == room_arena {
 	draw_clear(c_black)
 	draw_sprite_stretched(spr_exp_bar,1,0,0,expWidth*playerXPScale,expHeight)
 	surface_reset_target()
-	scr_textStyle1(960/2,15,playerLevel,global.font,fa_center,c_white,1,1)
-	draw_surface(expSurf,960/2-expWidth/2,35)
+	scr_textStyle1(960/2,10,playerLevel,global.font,fa_center,global.txtColHighlight,1,1)
+	draw_surface(expSurf,960/2-expWidth/2,26)
+	
+	var txt = ""
+	if instance_exists(obj_skilltree_upgrade_tracker) {
+		var unspentSkillPoints = obj_skilltree_upgrade_tracker.skillPoints
+		var unspentSkillBlockers = obj_skilltree_upgrade_tracker.skillBlockers
+		
+		if unspentSkillPoints > 0 {
+			txt += string(unspentSkillPoints)+" skill points available"
+		}
+		
+		if unspentSkillBlockers && unspentSkillPoints {txt += "  |  "}
+		
+		if unspentSkillBlockers > 0 {
+			txt += string(unspentSkillBlockers)+" skill blockers available"
+		}
+		scr_textStyle1(960/2,34,txt,font_silkscreen,fa_center,#E3F1F1,1,1)
+		if unspentSkillBlockers || unspentSkillPoints {scr_textStyle1(960/2,34+10,"press \"E\" to spend",font_silkscreen,fa_center,#E3F1F1,0.5 + abs(sin(current_time/100))*.5,1)}
+	}
 }
-
-
 #endregion
 
 #region UPGRADE DISPLAY
@@ -35,17 +51,15 @@ if instance_exists(obj_timer) {
 	//format time
 	var timeFormatted = obj_text_formatter.gameTimeFormatted(obj_timer.gameTime)
 
-	scr_textStyle1(timerPosX,timerPosY-50,timeFormatted,global.font,fa_left,c_white,1,2)
-	scr_textStyle1(timerPosX,timerPosY-20,"Time Elapsed",global.font,fa_left,c_white,1,1)
+	scr_textStyle1(timerPosX,timerPosY-50,timeFormatted,global.font,fa_left,global.txtColHighlight,1,2)
+	scr_textStyle1(timerPosX,timerPosY-20,"Time Elapsed",global.font,fa_left,global.txtColHighlight,1,1)
 }
-
-
 
 #endregion
 #region KILLCOUNTER
 if instance_exists(obj_killCounter) {
-	scr_textStyle1(timerPosX+18,timerPosY,string(obj_killCounter.kills),global.font,fa_left,c_white,1,1)
-	//scr_textStyle1(timerPosX,timerPosY,"Kills: " +string(obj_killCounter.kills),global.font,fa_left,c_white,1,1)
+	scr_textStyle1(timerPosX+18,timerPosY,string(obj_killCounter.kills),global.font,fa_left,global.txtColHighlight,1,1)
+	//scr_textStyle1(timerPosX,timerPosY,"Kills: " +string(obj_killCounter.kills),global.font,fa_left,global.txtColHighlight,1,1)
 	draw_sprite(spr_skull,0,timerPosX,timerPosY)
 }
 
@@ -62,8 +76,6 @@ if instance_exists(obj_player) {
 	} else {
 		healthAnim -= healthAnimSpeed
 	}
-
-
 	
 	playerLifeScale = (obj_player.currentLife / obj_player.stats.maxLife)
 	playerLifeScaleAnim = (healthAnim / obj_player.stats.maxLife)
@@ -80,11 +92,15 @@ if instance_exists(obj_player) {
 	playerEnergyColor = obj_player.energyColor
 	
 	//indicators
+	//playerDQSaveCooldown = lerp(obj_player.currentDQSaveCooldown,ceil(obj_player.currentDQSaveCooldown),.5)
+	playerDQSaveCooldown = obj_player.currentDQSaveCooldown / obj_player.stats.DQSaveCooldown
+	playerDQSaveMax = obj_player.stats.DQSaveMax
+	playerDQSaveCurrent = obj_player.currentDQSaves
+	if playerDQSavesPrevious != playerDQSaveCurrent {playerDQSaveExpended = true} else {playerDQSaveExpended = false}
+	playerDQSavesPrevious = obj_player.currentDQSaves
 	
-	playerIsAttacking = lerp(playerIsAttacking,ceil(obj_player.isAttacking),.5)
-	playerAttackScale = obj_player.isAttacking
-	playerIsDashing = lerp(playerIsDashing,obj_player.isDashing,.5)
-	playerDashScale = obj_player.dashPower
+	//playerIsDashing = lerp(playerIsDashing,obj_player.isDashing,.5)
+	//playerDashScale = obj_player.dashPower
 	
 
 	
@@ -121,27 +137,25 @@ if room == room_arena || global.guiTestEnable {
 		//healthcontainer
 		surface_set_target(healthSurf)
 		draw_sprite_stretched(spr_health_bar,2,0,0,healthWidth,healthHeight)
-		draw_sprite_ext(spr_health_bar,0,healthWidth,0,-1,1,0,c_white,healthAlpha)
+		draw_sprite_ext(spr_health_bar,0,healthWidth,0,-1,1,0,global.txtColHighlight,healthAlpha)
 
 		//red part
 		draw_set_alpha(1)
 		gpu_set_colorwriteenable(1,1,1,0)
-		
 		draw_sprite_stretched(spr_health_bar,4,0,0,(healthWidth+8)*playerLifeScaleAnim,healthHeight)
 		draw_surface(healthFillSurf,0,0)
-		//draw_sprite_stretched(spr_health_bar,4,0,0,(healthWidth+8)*playerLifeScaleAnim,healthHeight)
-		//draw_sprite_stretched(spr_health_bar,3,0,0,(healthWidth+8)*playerLifeScale,healthHeight)
 		gpu_set_colorwriteenable(1,1,1,1)
 
 		//side detail
-		draw_sprite_ext(spr_health_bar,1,healthWidth,0,-1,1,0,c_white,healthAlpha)
+		draw_sprite_ext(spr_health_bar,1,healthWidth,0,-1,1,0,global.txtColHighlight,healthAlpha)
 
 		surface_reset_target();
 
 		//draw on screen
-		draw_surface(healthSurf,healthPosX,healthPosY)
-		draw_surface_ext(healthSurf,healthPosX,healthPosY,-1,1,0,c_white,1)
-		scr_textStyle1(healthPosX,healthPosY+healthNumberYOffset,string(playerCurrentLife)+"/"+string(playerMaxLife),global.font,fa_center,c_white,1,1)
+		
+		draw_surface_ext(healthSurf,healthPosX,healthPosY,1,1,0,global.txtColHighlight,1)
+		draw_surface_ext(healthSurf,healthPosX,healthPosY,-1,1,0,global.txtColHighlight,1)
+		//scr_textStyle1(healthPosX,healthPosY+healthNumberYOffset,string(playerCurrentLife)+"/"+string(playerMaxLife),global.font,fa_center,global.txtColHighlight,1,1)
 	
 	//trigger
 		surface_set_target(triggersCooldownSurf)
@@ -172,22 +186,53 @@ if room == room_arena || global.guiTestEnable {
 			triggerDisplaceBarX += triggerWidth + triggerPadding
 		}
 
-		//scr_textStyle1(triggersCooldownPosX,triggersCooldownPosY-12,string(playerCurrentTriggers)+"/"+string(playerMaxTriggers),global.font,fa_center,c_white,1,1)
+		//scr_textStyle1(triggersCooldownPosX,triggersCooldownPosY-12,string(playerCurrentTriggers)+"/"+string(playerMaxTriggers),global.font,fa_center,global.txtColHighlight,1,1)
 	
-	//shooting indicator
+	//DQ SAVES INDICATOR
+	
+		//draw saves
+		var DQSaveSprite = spr_DQSaves
+		var DQSavePadding = 2
+		var DQSaveWidth = sprite_get_width(DQSaveSprite)
+		var DQSaveHeight = sprite_get_height(DQSaveSprite)
+		var DQSaveBaseX = triggersCooldownPosX //- DQSaveWidth*playerDQSaveMax*0.5// + DQSavePadding
+		var DQSaveBaseY = triggersCooldownPosY - 12 //+ sin(current_time/1000) * 1
+		var DQSaveDisplaceBarXBase = - (playerDQSaveMax-1) * (DQSaveWidth + DQSavePadding) / 2
+		
+		var DQSaveDisplaceBarXBack = DQSaveDisplaceBarXBase
+		repeat(playerDQSaveMax) {
+			draw_sprite(spr_DQSaves,0,DQSaveBaseX + DQSaveDisplaceBarXBack,DQSaveBaseY)
+			DQSaveDisplaceBarXBack += DQSaveWidth + DQSavePadding
+		}
+		
+
+		var DQSaveDisplaceBarXHighlight = DQSaveDisplaceBarXBase
+		repeat(playerDQSaveCurrent) {
+			draw_sprite(spr_DQSaves,1,DQSaveBaseX + DQSaveDisplaceBarXHighlight,DQSaveBaseY)
+			DQSaveDisplaceBarXHighlight += DQSaveWidth + DQSavePadding
+		}
+		
+		if playerDQSaveMax != playerDQSaveCurrent {
+			if playerDQSaveExpended {instance_create_layer(DQSaveBaseX + DQSaveDisplaceBarXHighlight,DQSaveBaseY,layer,obj_ui_trigger_expended)}
+			
+			var cooldownSpriteNumber = playerDQSaveCooldown * sprite_get_number(spr_DQSaves_cooldown)
+			draw_sprite(spr_DQSaves_cooldown,cooldownSpriteNumber,DQSaveBaseX + DQSaveDisplaceBarXHighlight,DQSaveBaseY)
+		}
+	
+	/*
 		var indicatorXOffset = triggersCooldownWidth/2+16
 		
 		var shootCol = merge_color(c_yellow,c_ltgray,.5)
 		draw_sprite_ext(spr_shooting_toggle,0,triggersCooldownPosX + indicatorXOffset,triggersCooldownPosY-8,1,1,0,shootCol,1)
 		draw_sprite_ext(spr_shooting_toggle,1,triggersCooldownPosX + indicatorXOffset,triggersCooldownPosY-8,1,1,0,shootCol,playerIsAttacking)
-		draw_sprite_ext(spr_toggle_bar,floor(playerAttackScale*sprite_get_number(spr_toggle_bar))-1,triggersCooldownPosX + indicatorXOffset,triggersCooldownPosY-8,1,1,0,c_white,playerIsAttacking)
+		draw_sprite_ext(spr_toggle_bar,floor(playerAttackScale*sprite_get_number(spr_toggle_bar))-1,triggersCooldownPosX + indicatorXOffset,triggersCooldownPosY-8,1,1,0,global.txtColHighlight,playerIsAttacking)
 	
 		//dash indicator
 		var dashCol = merge_color(c_orange,c_ltgray,.5)
 		draw_sprite_ext(spr_dashing_toggle,0,triggersCooldownPosX - indicatorXOffset,triggersCooldownPosY-8,1,1,0,dashCol,1)
 		draw_sprite_ext(spr_dashing_toggle,1,triggersCooldownPosX - indicatorXOffset,triggersCooldownPosY-8,1,1,0,dashCol,playerIsDashing)
-		draw_sprite_ext(spr_toggle_bar,floor(playerDashScale/100*sprite_get_number(spr_toggle_bar))-1,triggersCooldownPosX - indicatorXOffset,triggersCooldownPosY-8,1,1,0,c_white,playerIsDashing)
-	
+		draw_sprite_ext(spr_toggle_bar,floor(playerDashScale/100*sprite_get_number(spr_toggle_bar))-1,triggersCooldownPosX - indicatorXOffset,triggersCooldownPosY-8,1,1,0,global.txtColHighlight,playerIsDashing)
+		*/	
 }
 #endregion
 
@@ -202,9 +247,9 @@ if instance_exists(obj_wave_director) {
 		var waveDisplayDirection = "Direction: "+string(waveTypeNames[obj_wave_director.waveList[i].waveDirection])
 		
 		//top part
-		scr_textStyle1(waveListPosX,waveListPosY-yWaveListOffset-50,waveDisplayName,global.font,fa_right,c_white,1,2)
+		scr_textStyle1(waveListPosX,waveListPosY-yWaveListOffset-50,waveDisplayName,global.font,fa_right,global.txtColHighlight,1,2)
 		//bottom part
-		scr_textStyle1(waveListPosX,waveListPosY-yWaveListOffset-20,waveDisplayDirection,global.font,fa_right,c_white,1,1)
+		scr_textStyle1(waveListPosX,waveListPosY-yWaveListOffset-20,waveDisplayDirection,global.font,fa_right,global.txtColHighlight,1,1)
 
 		if !surface_exists(waveTimerSurf) {
 			waveTimerSurf = surface_create(waveTimerWidth,waveTimerHeight);
@@ -214,7 +259,7 @@ if instance_exists(obj_wave_director) {
 			//timer
 		surface_set_target(waveTimerSurf)
 		draw_clear(c_black)
-		draw_rectangle_color(1,1,waveTimerWidth-2,waveTimerHeight-2,c_white,c_white,c_white,c_white,true)
+		draw_rectangle_color(1,1,waveTimerWidth-2,waveTimerHeight-2,global.txtColHighlight,global.txtColHighlight,global.txtColHighlight,global.txtColHighlight,true)
 		
 		var waveTimePassed = obj_wave_director.waveList[i].timer
 		var waveMaxTimer = obj_wave_director.waveList[i].maxTimer
@@ -227,10 +272,10 @@ if instance_exists(obj_wave_director) {
 		
 			//current wave kill count
 		var paddingX = 10
-		scr_textStyle1(waveListPosX-waveTimerWidth-paddingX,waveListPosY-yWaveListOffset,"|",global.font,fa_right,c_white,1,1)
+		scr_textStyle1(waveListPosX-waveTimerWidth-paddingX,waveListPosY-yWaveListOffset,"|",global.font,fa_right,global.txtColHighlight,1,1)
 		
 		var waveKillCount = string(obj_wave_director.currentWaveKills) + "/" + string(obj_wave_director.currentWaveEntityTotal)
-		scr_textStyle1(waveListPosX-waveTimerWidth-paddingX*3,waveListPosY-yWaveListOffset,waveKillCount,global.font,fa_center,c_white,1,1)
+		scr_textStyle1(waveListPosX-waveTimerWidth-paddingX*3,waveListPosY-yWaveListOffset,waveKillCount,global.font,fa_center,global.txtColHighlight,1,1)
 		string_width(waveKillCount)
 		draw_sprite(spr_skull,1,waveListPosX-waveTimerWidth-paddingX*3-string_width(waveKillCount)-10,waveListPosY-yWaveListOffset)
 			

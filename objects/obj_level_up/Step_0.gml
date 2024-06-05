@@ -4,3 +4,4 @@ event_inherited()
 
 x = target.x
 y = target.y
+zPosition = target.zPosition

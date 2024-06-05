@@ -39,7 +39,7 @@
   "origin":4,
   "parent":{
     "name":"core",
-    "path":"folders/Sprites/blade/parts/core.yy",
+    "path":"folders/Sprites/blade/parts/player/core.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",

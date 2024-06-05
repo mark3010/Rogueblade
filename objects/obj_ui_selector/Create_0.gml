@@ -12,7 +12,7 @@ constructor {
 event_inherited()
 
 selected = noone
-global.inputHighjack = false
+global.inputHighjack = true
 
 function findStarterMenuOption() {
 	var topButton = noone

@@ -2,7 +2,7 @@
 // You can write your code in this editor
 
 //style
-var listColor = c_ltgray
+var listColor = global.txtColHighlight
 var highlightColor = c_green
 
 //displacement

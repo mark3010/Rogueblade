@@ -2,15 +2,17 @@
 if deathFlag {
 	ds_map_destroy(cooldownMap) //cleanup
 	if instance_exists(obj_killCounter) {obj_killCounter.countKill(id,groupId)} // count death
-	if instance_exists(obj_cam) {obj_cam.screenshake(2,1,0.1)} // shake screen
+	//if instance_exists(obj_cam) {obj_cam.screenshake(2,1,0.1)} // shake screen
+	if instance_exists(obj_cam) {obj_cam.screenshake(3,2,0.5)} // shake screen
 	
 	var deathPosX = x
-	var deathPosY = y-zPosition
+	var deathPosY = y
 	
 	//CREATE DEATH EFFECTS
 	var popStrength = (130+irandom(100))/100
 	var popRotation = (irandom(400))/100 - 2
 	var deathExplosion = instance_create_layer(x,y,layer,obj_death_explosion)
+	deathExplosion.zPosition = zPosition
 	
 	/*
 	repeat(5) {
@@ -36,6 +38,7 @@ if deathFlag {
 	var hullPart = instance_create_layer(deathPosX,deathPosY,layer,obj_blade_part)
 	hullPart.model = hull
 	hullPart.animationTilt = animationTilt
+	hullPart.zPosition = zPosition
     array_copy(hullPart.vel, 0, vel, 0, array_length(vel))
 
 	hullPart.rotationBaseSpeed = rotationBaseSpeed
@@ -54,6 +57,7 @@ if deathFlag {
 	var corePart = instance_create_layer(deathPosX,deathPosY,layer,obj_blade_part)
 	corePart.model = core
 	corePart.animationTilt = animationTilt
+	corePart.zPosition = zPosition
 	array_copy(corePart.vel, 0, vel, 0, array_length(vel))
 	corePart.rotationBaseSpeed = rotationBaseSpeed
 	corePart.stats = stats 

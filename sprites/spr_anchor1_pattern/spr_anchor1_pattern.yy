@@ -43,7 +43,7 @@
   "origin":4,
   "parent":{
     "name":"anchor",
-    "path":"folders/Sprites/blade/parts/anchor.yy",
+    "path":"folders/Sprites/blade/parts/player/anchor.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",

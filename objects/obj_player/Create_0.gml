@@ -32,6 +32,7 @@ dash_right_release = 0
 function healFull() {
 	currentLife = stats.maxLife
 	currentTriggers = stats.maxTriggers
+	currentDQSaves = stats.DQSaveMax
 }
 
 #region //COMPONENTS LOADING
@@ -180,6 +181,48 @@ function attack(_direction,_angle=0) {
 	//recoil
 	vel[X] += lengthdir_x(stats.recoil, shootDir+180)
 	vel[Y] += lengthdir_y(stats.recoil, shootDir+180)
+}
+
+function levelUp() {
+	//refresh player
+	EXP -= EXPCapList[level-1]
+	level++
+	obj_skilltree_upgrade_tracker.skillPoints++
+	currentLife = stats.maxLife
+	
+	//kinetics
+	enemies = ds_list_create();
+	
+	with(obj_blade) {
+		if id != other.id {
+		    if(distance_to_point(other.x, other.y) <= 120) {
+				ds_list_add(other.enemies, id);
+			}
+		}
+	}
+
+	//show_debug_message(string(ds_list_size(enemies)) + " THIS IS ENEMY LIST SIZE")
+	if(!ds_list_empty(enemies)) {
+	    for(var i=0; i<ds_list_size(enemies); i++) {
+			var enemy = ds_list_find_value(enemies, i);
+			//show_debug_message(string(enemy) + " THIS IS ENEMY")
+			var directionPointing = point_direction(x,y,enemy.x,enemy.y)
+			var directionLength = point_distance(x,y,enemy.x,enemy.y)
+			enemy.vel[X] += lengthdir_x(directionLength/10,directionPointing)
+			enemy.vel[Y] += lengthdir_y(directionLength/10,directionPointing)
+	    }
+	}
+
+	//now get rid of the list
+	ds_list_destroy(enemies);
+	
+	//visual and audio effects
+	var levelUpEffect = instance_create_layer(x,y,layer,obj_level_up)
+	levelUpEffect.target = id
+	spawnAnim = 1
+	audio_play_sound(snd_level_up, 2, false);
+	
+	
 }
 
 //other

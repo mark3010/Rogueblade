@@ -20,6 +20,8 @@ yTo = y
 
 smoothStrength = 25 // higher is more smooth
 
+
+zoomAnim = 1
 //zoom
 zoomLevel = 1
 interpolateFill = 0

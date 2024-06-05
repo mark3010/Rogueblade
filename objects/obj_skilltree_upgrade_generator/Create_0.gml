@@ -2,11 +2,29 @@
 // You can write your code in this editor
 upgrades = []
 instances = []
-
+lineDist = 32
 updateFlag = false
+
+upgradesTitleX = -200
+upgradesTitleY = 0
+
+upgradesOptionsX = upgradesTitleX
+upgradesOptionsY = upgradesTitleY+lineDist
 
 //GET 3 RANDOM AVAILABLE PASSIVESKILLS
 function updateSelection() {
+	
+	//HANDLE OPTIONS
+	//clean old options
+	for (var k = 0; k < array_length(instances); k++) {
+		instance_destroy(instances[k])
+	}
+	instances = []
+
+	title = instance_create_layer(x+upgradesTitleX,y+upgradesTitleY,layer,obj_ui_unselectable_menu_title)
+	title.text = "Select an upgrade"
+	array_push(instances,title)
+	
 	upgrades = []
 	var _nodes = []
 	for (var i = 0; i < instance_number(obj_skilltree_skill); ++i;)
@@ -68,22 +86,28 @@ function updateSelection() {
 	
 	}
 	
-	//HANDLE OPTIONS
-	//clean old options
-	for (var k = 0; k < array_length(instances); k++) {
-		instance_destroy(instances[k])
-	}
-	
-	instances = []
+	//instances = []
 	//generate choices
 	for (var k = 0; k < array_length(upgrades); k++) {
-		var upgradeInstance = instance_create_layer(x-200,y+20+k*20,layer,obj_ui_selectable_upgrade)
+		var upgradeInstance = instance_create_layer(x+upgradesOptionsX,y+upgradesOptionsY+k*lineDist,layer,obj_ui_selectable_upgrade)
 		upgradeInstance.text = upgrades[k].name
 		upgradeInstance.structName = upgrades[k].structName
 		array_push(instances,upgradeInstance)
 	}
 	
 	obj_ui_selector.findStarterMenuOption()
+	
+	upgradesDescriptionX = upgradesOptionsX
+	upgradesDescriptionY = upgradesOptionsY+k*lineDist+lineDist
+	
+	passiveDescription = instance_create_layer(x+upgradesDescriptionX,y+upgradesDescriptionY,layer,obj_ui_unselectable_blade_skill_description)
+	array_push(instances,passiveDescription)
+	
+	displaceY = (array_length(upgrades)*lineDist+lineDist) / 2 //displace ui in y to center
+	
+	for (var k = 0; k < array_length(instances); k++) {
+		instances[k].y -= displaceY
+	}
 }
 
 updateSelection()

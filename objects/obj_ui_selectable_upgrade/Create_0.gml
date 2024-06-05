@@ -8,13 +8,17 @@ function pop() {
 }
 
 function click() {
-	var _me = variable_struct_get(obj_skilltree_generator.skillTree,structName)
-	variable_struct_set(_me,"level",1)
+	if obj_skilltree_upgrade_tracker.skillPoints > 0 {
+		obj_skilltree_upgrade_tracker.skillPoints--
+		
+		var _me = variable_struct_get(obj_skilltree_generator.skillTree,structName)
+		variable_struct_set(_me,"level",1)
 	
-	obj_skilltree_upgrade_generator.updateSelection()
+		obj_skilltree_upgrade_generator.updateSelection()
 	
-	//update player
-	instance_activate_object(obj_player)
-	obj_player.updateStats(_me.stats,"add")
-	instance_deactivate_object(obj_player)
+		//update player
+		instance_activate_object(obj_player)
+		obj_player.updateStats(_me.stats,"add")
+		instance_deactivate_object(obj_player)
+	}
 }

@@ -4,7 +4,7 @@
 
 text = "no text set"
 align = fa_center
-color = #E3F1F1
+color = global.txtColHighlight
 alpha = 0
 size = 1
 font = global.font

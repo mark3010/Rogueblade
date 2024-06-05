@@ -10,10 +10,16 @@ function scr_bladePositionCheck(argument0,argument1,argument2,argument3,argument
 	}
 	
 	//check if blade on arena border
-	if (point_distance(argument1,argument2,argument5,argument6) + 1 >= argument0.baseWidth) {
+	if (point_distance(argument1,argument2,argument5,argument6) + 1 >= argument0.baseRadius) {
 		onBorder = true
 	} else {
 		onBorder = false
 	}
-
+	
+	//check if blade on arena border
+	if (point_distance(argument1,argument2,argument5,argument6) + 1 > argument0.baseRadius) {
+		outOfBounds = true
+	} else {
+		outOfBounds = false
+	}
 }

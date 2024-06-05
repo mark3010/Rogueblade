@@ -36,6 +36,10 @@ stats = {
 	dashStrength : 1,
 	dashChargeRate : 1,			
 	dashResistance : 80,		//% damage resistance
+	DQSaveCooldown : 12*60,
+	DQSaveMax : 0,
+	DQSaveCooldownRegen : 1,
+	
 	//weapon
 	attacksPerSecond : 6,
 	maxProjectiles : 1,
@@ -47,6 +51,9 @@ attackCooldown = 0
 isAttacking = false
 isDashing = false
 dashPower = 0
+knockedOut = false
+currentDQSaves = stats.DQSaveMax
+currentDQSaveCooldown = 0
 
 dashKineticModifier = 0			//influence from kinetics during dash 1 == 100%
 dashKineticModifierDuration = 0
@@ -61,6 +68,17 @@ function lifeCalculate() {
 
 	if currentLife > stats.maxLife {
 		currentLife = stats.maxLife
+	}
+}
+
+function DQSaveCalculate() {
+	currentDQSaveCooldown += stats.DQSaveCooldownRegen
+	if room = room_menu {currentDQSaveCooldown += stats.DQSaveCooldownRegen*29}
+	
+	if currentDQSaves == stats.DQSaveMax { currentDQSaveCooldown = 0 }
+	
+	if currentDQSaveCooldown == stats.DQSaveCooldown {
+		currentDQSaves = stats.DQSaveMax
 	}
 }
 
@@ -126,7 +144,7 @@ slopeAngleStrengthY = 1.3		//tilt effect, higher => more tilt
 slopeAngleStrengthX = 1.3		//tilt effect, higher => more tilt
 baseTiltY = 1.5					//higher than 0 means more tilted towards north, 
 rotationBaseSpeed = 8			//base animation speed for rotating blade
-hitDistortionStrength = .25
+hitDistortionStrength = .45
 spawnAnim = 8 // used for white recolor at spawn, when 0 blade is 0% white
 spinDownDuration = 60
 
@@ -229,23 +247,27 @@ function draw_me(sliceSurf, effectSurf, targetSurf) {
 	
 	layerNumber = 0
 	
-	#region DRAW SHADOW
-	var shadowX = x -(obj_arena.x - x) * 0.03
-	var shadowY = y -(obj_arena.y - y) * 0.03
 	
-	var yTiltSkew = ( baseTiltY / 100 + slantVAnim - 0.8) / ( 1 + zPosition / 50 )
-	var xTiltSkew = 1 / ( 1 + zPosition / 30 )
-	
-	//draw underlight
+	// DRAW UNDERLIGHT
 	if core.lightColor != -1 {
-		var underlightAlpha = (.7 * 1/(1+(zPosition / 5)) + (.3 * dashPower/100) )* sign(currentTriggers)
+		var underlightAlpha = (.6 * 1/(1+(zPosition / 5)) + (.25 * dashPower/100) )* sign(currentTriggers)
 		var underlightScale = (.2 + (.1 * dashPower/100))*1.3
 		gpu_set_blendmode(bm_eq_add)
-		draw_sprite_ext(spr_light,0,x,y,underlightScale,underlightScale,0,core.energyColor,underlightAlpha)
+		draw_sprite_ext(spr_light,0,x,y,underlightScale,underlightScale*.7,0,core.energyColor,underlightAlpha)
 		gpu_set_blendmode(bm_normal)
 	}
-	//draw shadow
-	draw_sprite_ext(spr_blade_base_shadow,0,shadowX,shadowY,xTiltSkew,yTiltSkew,0,c_white,.15)
+	
+	#region DRAW SHADOW
+	if !(outOfBounds) {
+		var shadowX = x -(obj_arena.x - x) * 0.03
+		var shadowY = y -(obj_arena.y - y) * 0.03
+	
+		var yTiltSkew = ( baseTiltY / 100 + slantVAnim - 0.8) / ( 1 + zPosition / 50 )
+		var xTiltSkew = 1 / ( 1 + zPosition / 30 )
+	
+		//draw shadow
+		draw_sprite_ext(spr_blade_base_shadow,0,shadowX,shadowY,xTiltSkew,yTiltSkew,0,c_white,.15)
+	}
 	
 	//draw charge indicator
 	var dashFullyCharged = (dashPower == 100)
@@ -278,6 +300,7 @@ function draw_me(sliceSurf, effectSurf, targetSurf) {
 	if currentTriggers > 0 || stats.maxTriggers == 0 {
 		coreShine = c_white
 	}
+	
 	//generate model to target surface
 	if anchor.anchor	!= -1	{scr_render3d_v2(anchor.anchor,targetSurf,sliceSurf,effectSurf,c_white,animationTilt)}
 	if hull.hull		!= -1	{scr_render3d_hull(hull.hull,targetSurf,sliceSurf,effectSurf,hitCol,animationTilt,hitFlash)}
@@ -312,7 +335,7 @@ function draw_me(sliceSurf, effectSurf, targetSurf) {
 	if spawnAnim > 0 {
 		shader_set(shd_flash)
 		gpu_set_blendmode(bm_add)
-		draw_surface_ext(targetSurf,-surface_get_width(targetSurf)/2,-surface_get_height(targetSurf)/2,1,1,0,c_white,spawnAnim)
+		draw_surface_ext(targetSurf,-surface_get_width(targetSurf)/2,-surface_get_height(targetSurf)/2,1,1,0,#FFF899,spawnAnim)
 		gpu_set_blendmode(bm_normal)
 		shader_reset()
 	}
@@ -363,6 +386,7 @@ shieldDamageTakenMemory = 0 //stores memory of how many hits have been taken in 
 lifeDamageTakenMemory = 0 //stores memory of how many hits have been taken in this frame
 shieldDamageTakenMemoryPrevious = 0 //stores memory of how many hits have been taken in last frame
 lifeDamageTakenMemoryPrevious = 0 //stores memory of how many hits have been taken in last frame
+
 function takeDamage(damage,damageDirection,ally) {
 	var damageTaken = 0
 	
@@ -375,6 +399,10 @@ function takeDamage(damage,damageDirection,ally) {
 		hitFlashType = DAMAGE_TYPE.SHIELD
 		hitFlash = 1
 		hitFlashColorMerge = 1
+		var triggerExpended = instance_create_layer(x,y,layer,obj_trigger_expended)
+		triggerExpended.target = id
+		triggerExpended.lightColor = core.lightColor
+		triggerExpended.energyColor = core.energyColor
 	} else {
 		lifeDamageTakenMemory += 1
 		damageTaken = damage * (1-ally*.95) // .8 is same team damage resistance
@@ -409,6 +437,19 @@ function takeDamage(damage,damageDirection,ally) {
 }
 
 
+spawnPoint = [x,y,zPosition]
+
+function respawn() {
+	
+	spawn()
+	spawnAnim = 1
+	x = spawnPoint[X]
+	y = spawnPoint[Y]
+	zPosition = spawnPoint[Z]
+	vel = [0,0,0]
+	knockedOut = false
+}
+
 #endregion
 
 #region COLLISION DETECTION
@@ -433,8 +474,12 @@ function cooldownsCalculate() {
 #endregion
 
 //spawn anim
-var spawnParticle = instance_create_layer(x,y,layer,obj_death_explosion)
-spawnParticle.zPosition = zPosition
+function spawn() {
+	var spawnParticle = instance_create_layer(x,y,layer,obj_death_explosion)
+	spawnParticle.zPosition = zPosition
+}
+
+spawn()
 
 //DEBUG
 if global.debugMode {instance_create_layer(x,y,layer,obj_spawn_point_debug)}

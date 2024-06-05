@@ -2,9 +2,7 @@
   "$GMObject":"",
   "%Name":"obj_text_logo",
   "eventList":[
-    {"$GMEvent":"","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-    {"$GMEvent":"","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":3,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-    {"$GMEvent":"","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":8,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
+    {"$GMEvent":"","%Name":"","collisionObjectId":null,"eventNum":75,"eventType":8,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
   ],
   "managed":true,
   "name":"obj_text_logo",
@@ -14,8 +12,8 @@
     "path":"folders/Objects/ui/unselectable.yy",
   },
   "parentObjectId":{
-    "name":"obj_light",
-    "path":"objects/obj_light/obj_light.yy",
+    "name":"obj_ui_unselectable",
+    "path":"objects/obj_ui_unselectable/obj_ui_unselectable.yy",
   },
   "persistent":false,
   "physicsAngularDamping":0.1,

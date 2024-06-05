@@ -1,6 +1,7 @@
 /// @description Insert description here
 // You can write your code in this editor
-
+global.inputHighjack = true
+color = #E3F1F1
 //SAVE DATA
 //data file structure
 var dataImprint = {
@@ -16,10 +17,18 @@ saveFile = instance_create_depth(x,y,depth,obj_save_score_snapshot)
 saveFile.data = dataImprint
 
 //END GAME SEQUENCE
-alarm_set(0,360) // alarm 0 is go to highscore room
-alarm_set(1,60) // alarm 1 is to show overlay
-alarm_set(2,90) // alarm 2 is to show overlay1 text
-alarm_set(3,120) // alarm 3 is to show overlay2 text
+timer = 0
+delay = 60
+
+function popUp1() {overlayFlag = true}
+function popUp2() {overlayText1Flag = true}
+function popUp3() {overlayText2Flag = true}
+function popUp4() {overlayText3Flag = true}
+
+queue = [popUp1,popUp2,popUp3,popUp4]
+queue = array_reverse(queue)
+
+
 
 //ANIMATION
 overlayAlpha = 0
@@ -30,3 +39,6 @@ overlayText1Flag = false
 
 overlayText2Alpha = 0
 overlayText2Flag = false
+
+overlayText3Alpha = 0
+overlayText3Flag = false

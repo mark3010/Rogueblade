@@ -80,18 +80,7 @@ event_inherited()
 
 //LEVEL UP
 if EXP >= EXPCapList[level-1] {
-	//obj_upgrade_handler.getUpgrade(self)
-	
-	//refresh player
-	EXP -= EXPCapList[level-1]
-	level++
-	currentLife = stats.maxLife
-	
-	//effects
-	var levelUpEffect = instance_create_layer(x,y,layer,obj_level_up)
-	levelUpEffect.target = id
-	
-	audio_play_sound(snd_level_up, 2, false);
+	levelUp()
 }
 
 //ATTACKS
@@ -166,7 +155,7 @@ switch (atkPattern) {
 			
 			repeat (atkQueue){
 				var target = scr_instance_nearest_other(obj_blade)
-				var angleDiff = 180 / stats.attacksPerSecond
+				var angleDiff = 180 / (stats.attacksPerSecond)
 				if instance_exists(target) {
 					
 					var queue1 = []

@@ -30,7 +30,7 @@
   "origin":4,
   "parent":{
     "name":"hull",
-    "path":"folders/Sprites/blade/parts/hull.yy",
+    "path":"folders/Sprites/blade/parts/player/hull.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",

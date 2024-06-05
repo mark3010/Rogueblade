@@ -1,8 +1,15 @@
-//draw_set_color(c_white)
-//draw_text(x,y+10,deathFlag)
-//draw_line(x,y,x+lengthdir_x(20,hitDistortionDirection),y+lengthdir_y(20,hitDistortionDirection))
+
+// to help with arena calculations 
 /*
+draw_set_color(c_red)
+draw_circle(arenaSlopedBorderX,arenaSlopedBorderY,10,true)
+draw_circle(arenaFlatBorderX,arenaFlatBorderY,20,true)
+draw_circle(arenaBaseX,arenaBaseY,30,true)
 draw_set_color(c_white)
-if onBorder {draw_circle(x,y,20,true)}
-if onGround {draw_circle(x,y,10,true)}
-if dashKineticModifierDuration > 0 {draw_rectangle(x,y,x+30,y+30,true)}
+draw_text(x,y,"outOfBounds: "+ string(outOfBounds))
+draw_text(x,y+10,"onGround: "+ string(onGround))
+draw_text(x,y+20,"onBorder: "+ string(onBorder))
+draw_text(x,y+30,"distanceVar: "+ string(point_distance(arenaBaseX,arenaBaseY,arenaSlopedBorderX,arenaSlopedBorderY)))
+draw_text(x,y+40,"distanceCheck: "+ string(obj_arena.baseWidth))
+
+

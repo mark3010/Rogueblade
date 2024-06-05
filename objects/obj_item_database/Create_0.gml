@@ -254,7 +254,8 @@ function getHull(bladePartEnum) {
 			description: "MISSING" ,
 			stats: {
 				maxLife : 35,
-				lifeRegen : 1
+				lifeRegen : 1,
+				DQSaveMax: 1
 			},
 			model: "NaN",
 			manifacturer: "NaN"
@@ -268,7 +269,8 @@ function getHull(bladePartEnum) {
 			description: "MISSING" ,
 			stats: {
 				maxLife : 30,
-				lifeRegen : 0.5
+				lifeRegen : 0.5,
+				DQSaveMax: 1
 			},
 			model: "NaN",
 			manifacturer: "NaN"
@@ -282,7 +284,8 @@ function getHull(bladePartEnum) {
 			description: "MISSING" ,
 			stats: {
 				maxLife : 40,
-				lifeRegen : 1.3
+				lifeRegen : 1.3,
+				DQSaveMax: 1
 			},
 			model: "NaN",
 			manifacturer: "NaN"
@@ -296,7 +299,8 @@ function getHull(bladePartEnum) {
 			description: "MISSING" ,
 			stats: {
 				maxLife : 25,
-				lifeRegen : 0.5
+				lifeRegen : 0.5,
+				DQSaveMax: 1
 			},
 			model: "NaN",
 			manifacturer: "NaN"
