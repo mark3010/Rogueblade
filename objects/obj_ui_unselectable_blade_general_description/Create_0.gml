@@ -5,8 +5,9 @@
 statsheet = {}
 	
 align = fa_center
-color = global.txtColHighlight
-descriptionColor = global.txtColDark
+color = global.txtColDark
+descriptionColor = global.txtColDescription
+inactiveColor = global.txtColDark
 alpha = 0
 size = 1
 font = global.font

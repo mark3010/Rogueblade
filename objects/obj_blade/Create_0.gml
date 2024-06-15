@@ -115,7 +115,7 @@ velAdd = [0,0,0]		// holds temporary vector to add to velocity
 zPosition = 110 + irandom(20)
 
 //add some spawn z speed
-vel[Z] = 2+irandom(10)/10
+//vel[Z] = 2+irandom(10)/10
 
 velVector = 0
 dragVector = 0
@@ -249,8 +249,10 @@ function draw_me(sliceSurf, effectSurf, targetSurf) {
 	
 	
 	// DRAW UNDERLIGHT
-	if core.lightColor != -1 {
-		var underlightAlpha = (.6 * 1/(1+(zPosition / 5)) + (.25 * dashPower/100) )* sign(currentTriggers)
+	if core.lightColor != -1 && !outOfBounds {
+		//var underlightAlpha = (.6 * 1/(1+(zPosition / 5)) + (.25 * dashPower/100) )* sign(currentTriggers)
+		var underlightAlpha = (.6 + .25 * dashPower/100) * 1/(1+(zPosition / 6)) * sign(currentTriggers)
+		//var underlightAlpha = (.6 + (.25 * dashPower/100) )* sign(currentTriggers)
 		var underlightScale = (.2 + (.1 * dashPower/100))*1.3
 		gpu_set_blendmode(bm_eq_add)
 		draw_sprite_ext(spr_light,0,x,y,underlightScale,underlightScale*.7,0,core.energyColor,underlightAlpha)
@@ -258,7 +260,7 @@ function draw_me(sliceSurf, effectSurf, targetSurf) {
 	}
 	
 	#region DRAW SHADOW
-	if !(outOfBounds) {
+	if !(outOfBounds) && !(knockedOut){
 		var shadowX = x -(obj_arena.x - x) * 0.03
 		var shadowY = y -(obj_arena.y - y) * 0.03
 	
@@ -273,22 +275,26 @@ function draw_me(sliceSurf, effectSurf, targetSurf) {
 	var dashFullyCharged = (dashPower == 100)
 	
 	if ceil(dashPower/100)  == 1 {
-	//gpu_set_blendmode(bm_eq_add)
-	var dashDir = point_direction(0,0,dash_right_dir-dash_left_dir,dash_down_dir-dash_up_dir)
-	var dashIndicatorDrawLength = 30
-	var dashIndicatorX = x+lengthdir_x(dashIndicatorDrawLength,dashDir)
-	var dashIndicatorY = y+lengthdir_y(dashIndicatorDrawLength,dashDir)
-	var dashIndicatorAlpha = dashPower/100
-	var dashIndicatorScale = .5+.5*dashPower/100
-	draw_sprite_ext(spr_dash_indicator,dashFullyCharged,dashIndicatorX,dashIndicatorY,dashIndicatorScale,dashIndicatorScale,dashDir,core.lightColor,dashIndicatorAlpha)
-	draw_set_alpha(dashIndicatorAlpha)
-	draw_circle_color(x,y,dashIndicatorScale*14,core.lightColor,core.lightColor,true)
-	draw_set_alpha(1)
+		var dashDir = point_direction(0,0,dash_right_dir-dash_left_dir,dash_down_dir-dash_up_dir)
+		var dashIndicatorDrawLength = 30
+		var dashIndicatorX = x+lengthdir_x(dashIndicatorDrawLength,dashDir)
+		var dashIndicatorY = y+lengthdir_y(dashIndicatorDrawLength,dashDir)-zPosition
+		var dashIndicatorAlpha = dashPower/100
+		var dashIndicatorScale = .5+.5*dashPower/100
+		//arrow
+		draw_sprite_ext(spr_dash_indicator,dashFullyCharged,dashIndicatorX,dashIndicatorY,dashIndicatorScale,dashIndicatorScale,dashDir,core.lightColor,dashIndicatorAlpha)
+		//ground circle
+		if !(outOfBounds) {
+			draw_set_alpha(dashIndicatorAlpha)
+			draw_circle_color(x,y,dashIndicatorScale*14,core.lightColor,core.lightColor,true)
+			draw_set_alpha(1)
+		}
 	}
 	
 	if dashFullyCharged {
-		
-		draw_circle_color(x,y,16,core.lightColor,core.lightColor,true)
+		if !(outOfBounds) {
+			draw_circle_color(x,y,16,core.lightColor,core.lightColor,true)
+		}
 	}
 	
 	#endregion
@@ -441,11 +447,12 @@ spawnPoint = [x,y,zPosition]
 
 function respawn() {
 	
-	spawn()
+	
 	spawnAnim = 1
 	x = spawnPoint[X]
 	y = spawnPoint[Y]
 	zPosition = spawnPoint[Z]
+	spawn()
 	vel = [0,0,0]
 	knockedOut = false
 }
@@ -475,11 +482,17 @@ function cooldownsCalculate() {
 
 //spawn anim
 function spawn() {
-	var spawnParticle = instance_create_layer(x,y,layer,obj_death_explosion)
+	var spawnParticle =  instance_create_layer(x,y,layer,obj_energy_ball)
 	spawnParticle.zPosition = zPosition
+	if core.energyColor != c_white {
+		spawnParticle.bladeCol = core.energyColor
+	}
+	spawnParticle.target = id
+	if object_index != obj_player {
+		spawnParticle.deathTrigger = 20
+	}
+	visible = false
 }
-
-spawn()
 
 //DEBUG
 if global.debugMode {instance_create_layer(x,y,layer,obj_spawn_point_debug)}

@@ -11,7 +11,7 @@ part =
 	
 align = fa_center
 color = global.txtColDark
-descriptionColor = global.txtColHighlight
+descriptionColor = global.txtColDescription
 alpha = 0
 size = 1
 font = global.font

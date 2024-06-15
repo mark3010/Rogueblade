@@ -1,4 +1,4 @@
-
+if !visible {exit}
 if deathFlag {
 	ds_map_destroy(cooldownMap) //cleanup
 	if instance_exists(obj_killCounter) {obj_killCounter.countKill(id,groupId)} // count death
@@ -9,10 +9,17 @@ if deathFlag {
 	var deathPosY = y
 	
 	//CREATE DEATH EFFECTS
+	
 	var popStrength = (130+irandom(100))/100
 	var popRotation = (irandom(400))/100 - 2
-	var deathExplosion = instance_create_layer(x,y,layer,obj_death_explosion)
-	deathExplosion.zPosition = zPosition
+		
+	if zPosition < -100 {
+		
+	} else {
+		var deathExplosion = instance_create_layer(x,y,layer,obj_death_explosion)
+		deathExplosion.zPosition = zPosition
+	}
+
 	
 	/*
 	repeat(5) {

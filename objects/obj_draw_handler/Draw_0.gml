@@ -17,7 +17,7 @@ if(ds_exists(ds_depthgrid, ds_type_grid)){
 				draw_me(obj_draw_handler.renderSlice,obj_draw_handler.renderEffect,obj_draw_handler.renderTarget)
 				
 			} catch(_exception) {
-				//do fuck all
+				show_debug_message(_exception)
 			}
 		}
 	}

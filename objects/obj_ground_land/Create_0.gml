@@ -10,7 +10,10 @@ sizeMod = 1
 strength = 1
 lifetime= 0
 deathTrigger=6
+color = c_white
 
 function draw_me(a,b,c) {
-	draw_self()
+	gpu_set_blendmode(bm_eq_add)
+	draw_sprite_ext(sprite_index,0,x,y,image_xscale,image_yscale,0,color,image_alpha)
+	gpu_set_blendmode(bm_normal)
 }

@@ -1,8 +1,8 @@
 /// @description Insert description here
 // You can write your code in this editor
-descriptionColor = #E3F1F1
-positiveColor = #ACD473
-negativeColor = #FFA3A3
+descriptionColor = global.txtColDescription
+positiveColor = global.txtColPositive
+negativeColor = global.txtColNegative
 
 //STATS
 function formatStats(stats) {

@@ -1,7 +1,3 @@
-global.guiTestEnable = false
-global.txtColHighlight = #E3F1F1
-global.txtColDark = #4F5E5E
-
 bottomMargin = 25
 sideMargin = 25
 #region TIMER

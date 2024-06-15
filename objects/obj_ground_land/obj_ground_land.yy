@@ -9,8 +9,8 @@
   "name":"obj_ground_land",
   "overriddenProperties":[],
   "parent":{
-    "name":"particles",
-    "path":"folders/Objects/effects/ingame/particles.yy",
+    "name":"movement",
+    "path":"folders/Objects/effects/ingame/particles/movement.yy",
   },
   "parentObjectId":{
     "name":"obj_effect_depth",

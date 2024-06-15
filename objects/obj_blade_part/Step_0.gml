@@ -1,6 +1,8 @@
 /// @description Insert description here
 // You can write your code in this editor
 animationsCalculate()
+scr_bladeArenaSync()
+
 velocity = point_distance(x,y,x+vel[X],y+vel[Y])
 zRot += zRotSpeed
 //z axis

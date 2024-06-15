@@ -23,7 +23,7 @@ if (y > arenaSlopedBorderY || y < arenaSlopedBorderY) {
 function draw_me(sliceSurf, effectSurf, targetSurf) {
 
 	gpu_set_blendmode(bm_eq_add)
-	draw_sprite_ext(spr_spawn_warning_boss1,image_index,x,y,animationScale,animationScale,0,c_white,3-animationScale)
-	draw_sprite_ext(spr_spawn_warning_boss1_frame,image_index,x,y,power(animationScale,1.5),power(animationScale,1.5),0,c_white,3-animationScale)
+	draw_sprite_ext(spr_spawn_warning,image_index,x,y,animationScale,animationScale,0,c_white,3-animationScale)
+	draw_sprite_ext(spr_spawn_warning_frame,image_index,x,y,power(animationScale,1.5),power(animationScale,1.5),0,c_white,3-animationScale)
 	gpu_set_blendmode(bm_normal)
 }

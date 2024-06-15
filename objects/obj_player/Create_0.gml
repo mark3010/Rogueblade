@@ -135,7 +135,7 @@ function executeDash() {
 	//add dash
 	velAdd[@ X] += lengthdir_x(dashSpeed,dir)
 	velAdd[@ Y] += lengthdir_y(dashSpeed,dir)
-	velAdd[@ Z] -= 7*dashPower/100
+	velAdd[@ Z] += 4*dashPower/100
 	hitDistortion = -1*dashPower/100
 	hitDistortionDirection = dir
 	dashKineticModifierDuration = dashKineticModifierDurationMax
@@ -148,6 +148,10 @@ function executeDash() {
 	var groundPunt = instance_create_layer(x,y,layer,obj_ground_punt)
 	groundPunt.direction = dir+180
 	groundPunt.image_angle = dir+180
+	
+	var groundPunt = instance_create_layer(x,y,layer,obj_dash_lines)
+	groundPunt.direction = dir
+	groundPunt.image_angle = dir
 }
 #endregion
 

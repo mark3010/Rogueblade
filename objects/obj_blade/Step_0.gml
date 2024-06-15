@@ -1,3 +1,4 @@
+if !visible {exit}
 // PRECALC
 cooldownsCalculate()
 lifeCalculate()
@@ -50,6 +51,11 @@ if zPosition <= 0 {
 		knockedOut = true
 		
 		if zPosition <= -300 {
+			
+			var dqExplosion = instance_create_layer(x,y,layer,obj_dq)
+			dqExplosion.zPosition = zPosition
+			dqExplosion.direction = point_direction(x,y,x-vel[X],y+vel[Z])
+			
 			if currentDQSaves > 0 {
 				respawn()
 				currentDQSaves--

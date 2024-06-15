@@ -1,4 +1,4 @@
-//run parent code
+if !visible {exit}
 if !global.inputHighjack {
 	//MOVEMENT
 	move_up    = keyboard_check(global.key_up)

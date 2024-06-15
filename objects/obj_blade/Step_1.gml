@@ -1,4 +1,4 @@
-
+if !visible {exit}
 //APPLY MOVEMENT VECTORS
 x += vel[@ X]
 y += vel[@ Y]

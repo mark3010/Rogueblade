@@ -43,7 +43,6 @@ arenas = {
 
 function init(gameMode) {
 	//var data = obj_file_handler.getProgress()
-	show_debug_message(data)
 	switch (gameMode) {
 		case gameModeType.NORMAL:
 			flatWidth	= arenas.normal.flatWidth

@@ -35,6 +35,7 @@ function createGame(gameModeType) {
 			gui = instance_create_layer(x,y,layerEntities,obj_gui)
 			camera = instance_create_layer(arena.x,arena.y,layerEntities,obj_cam)
 			player = instance_create_layer(playerXSpawn,playerYSpawn,layerEntities,obj_player)
+			player.spawn()
 			waveDirector = instance_create_layer(x,y,layerEntities,obj_wave_director)
 			timer = instance_create_layer(x,y,layerEntities,obj_timer)
 			killCounter = instance_create_layer(x,y,layerEntities,obj_killCounter)
@@ -49,6 +50,7 @@ function createGame(gameModeType) {
 			gui = instance_create_layer(x,y,layerEntities,obj_gui)
 			camera = instance_create_layer(arena.x,arena.y,layerEntities,obj_cam)
 			player = instance_create_layer(playerXSpawn,playerYSpawn,layerEntities,obj_player)
+			player.spawn()
 			arenaLight.lightXScale= .45
 			arenaLight.lightYScale= .45
 			arenaLightShaft.lightXScale= .45

@@ -1,5 +1,7 @@
 queue = []
+spawnDelay = 20
 delay = 0
+
 function updateSpawner() {
 	//position to spawn
 	switch (spawnerType) {

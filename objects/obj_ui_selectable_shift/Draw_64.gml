@@ -14,9 +14,12 @@ var selectedTextDisplay = name(getSelection())
 if isSelected {
 	//TITLE
 	scr_textStyle1(x,y+lineStartY-6,text,font,align,color,alpha,size)
+	draw_set_color(c_black)
+	draw_line_width(x+lineStartX,y+lineStartY+1,x+descriptionWidth,y+lineStartY+1,1)
+	draw_line_width(x-lineStartX,y+lineStartY+1,x-descriptionWidth,y+lineStartY+1,1)
 	draw_set_color(color)
-	draw_line(x+lineStartX,y+lineStartY,x+descriptionWidth,y+lineStartY)
-	draw_line(x-lineStartX,y+lineStartY,x-descriptionWidth,y+lineStartY)
+	draw_line_width(x+lineStartX,y+lineStartY,x+descriptionWidth,y+lineStartY,1)
+	draw_line_width(x-lineStartX,y+lineStartY,x-descriptionWidth,y+lineStartY,1)
 	
 	var shiftLeftAnimMod = 1 + shiftLeftAnim * .2
 	var shiftRightAnimMod = 1 + shiftRightAnim * .2
@@ -32,9 +35,12 @@ if isSelected {
 	//scr_textStyle1(x,y+strHeight,selectedTextDisplay,font,align,selectedColor,alpha,size)
 } else {
 	scr_textStyle1(x,y+lineStartY-6,text,font,align,color,alpha,size)
+	draw_set_color(c_black)
+	draw_line_width(x+lineStartX,y+lineStartY+1,x+descriptionWidth,y+lineStartY+1,1)
+	draw_line_width(x-lineStartX,y+lineStartY+1,x-descriptionWidth,y+lineStartY+1,1)
 	draw_set_color(color)
-	draw_line(x+lineStartX,y+lineStartY,x+descriptionWidth,y+lineStartY)
-	draw_line(x-lineStartX,y+lineStartY,x-descriptionWidth,y+lineStartY)
+	draw_line_width(x+lineStartX,y+lineStartY,x+descriptionWidth,y+lineStartY,1)
+	draw_line_width(x-lineStartX,y+lineStartY,x-descriptionWidth,y+lineStartY,1)
 	
 	draw_sprite_ext(spr_shift_arrow,0,x+arrowDisplaceX,y+strHeight+arrowDisplaceY,1,1,0,color,alpha)
 	draw_sprite_ext(spr_shift_arrow,0,x-arrowDisplaceX,y+strHeight+arrowDisplaceY,-1,1,0,color,alpha)
