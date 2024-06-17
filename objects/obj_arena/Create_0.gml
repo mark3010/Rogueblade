@@ -79,7 +79,8 @@ function draw_me(bullshit1,bullshit2,bullshit3) {
 	draw_set_alpha(1)
 	// z-depth of arena
 
-	draw_rectangle_color(x-baseWidth-baseRadius,y,x+baseWidth+baseRadius,y+baseRadius*5,colSides,colSides,colSidesBot,colSidesBot,false)
+	draw_rectangle_color(x-baseWidth-baseRadius,y,x+baseWidth+baseRadius,y+820,colSidesBot,colSidesBot,colSidesBot,colSidesBot,false)
+	draw_rectangle_color(x-baseWidth-baseRadius,y,x+baseWidth+baseRadius,y+380,colSides,colSides,colSidesBot,colSidesBot,false)
 
 	// top sloped area of arena
 

@@ -36,7 +36,7 @@ velXSurplus = 0
 velYSurplus = 0
 onGround = false
 shd_texel_handle = shader_get_uniform(shd_outline,"in_Texel")
-
+outOfBounds = false
 stats = 0
 
 function animationsCalculate() {

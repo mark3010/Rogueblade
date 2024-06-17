@@ -1,5 +1,29 @@
 /// @description Insert description here
 // You can write your code in this editor
+
+if delay1 < 20 && quickVersion == false {
+	delay1++
+	exit
+}
+
+
+if delay2 == 1 || delay2 == 9 {
+	if respawning {
+		var test = instance_create_layer(x,y,layer,obj_phase_in)
+		test.zPosition = zPosition
+		test.bladeCol = bladeCol
+		if quickVersion {test.scale = .6}
+	}
+}
+
+ if quickVersion == false {
+	if delay2 < 30 {
+		delay2++
+		exit
+	}
+} else {
+
+}
 lifetime++
 
 if lifetime == deathTrigger {
@@ -9,16 +33,11 @@ if lifetime == deathTrigger {
 			instance.groupId = groupId
 		}
 	}
-	/*
-	var randomDir = irandom(359)
-	var spinParticle1 = instance_create_layer(x,y,layer,obj_spiral_spark)
-	spinParticle1.direction = randomDir
+
+	var spinParticle1 = instance_create_layer(x,y,layer,obj_ellipse_explosion)
 	spinParticle1.zPosition = zPosition
-	spinParticle1.energyColor = bladeCol
-	var spinParticle2 = instance_create_layer(x,y,layer,obj_spiral_spark)
-	spinParticle2.direction = randomDir + 180
-	spinParticle2.zPosition = zPosition
-	spinParticle2.energyColor = bladeCol*/
+	spinParticle1.bladeCol = bladeCol
+	if quickVersion {spinParticle1.scale = .7}
 	
 	instance_destroy()	
 }
@@ -30,7 +49,7 @@ if lifetime mod (1+round(particlesMod / ((lifetime+1)/deathTrigger))) == 0 {
 	//repeat 3 {
 		var spawnDir = irandom(359)
 		var spawnDistVariance =  - particleDist/4 + irandom(particleDist/4)
-		var spawnDist = particleDist + spawnDistVariance
+		var spawnDist = (particleDist + spawnDistVariance) * (1-quickVersion*.4)
 	
 		var spawnX = x+lengthdir_x(spawnDist,spawnDir)
 		var spawnY = y+lengthdir_y(spawnDist,spawnDir)

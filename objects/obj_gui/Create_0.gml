@@ -1,5 +1,7 @@
 bottomMargin = 25
 sideMargin = 25
+uiAlpha = .7
+
 #region TIMER
 timerPosX = sideMargin
 timerPosY = 540-bottomMargin

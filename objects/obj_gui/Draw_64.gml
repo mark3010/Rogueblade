@@ -14,7 +14,7 @@ if room == room_arena {
 	draw_clear(c_black)
 	draw_sprite_stretched(spr_exp_bar,1,0,0,expWidth*playerXPScale,expHeight)
 	surface_reset_target()
-	scr_textStyle1(960/2,10,playerLevel,global.font,fa_center,global.txtColHighlight,1,1)
+	scr_textStyle1(960/2,10,playerLevel,global.font,fa_center,global.txtColHighlight,uiAlpha,1)
 	draw_surface(expSurf,960/2-expWidth/2,26)
 	
 	var txt = ""
@@ -31,8 +31,8 @@ if room == room_arena {
 		if unspentSkillBlockers > 0 {
 			txt += string(unspentSkillBlockers)+" skill blockers available"
 		}
-		scr_textStyle1(960/2,34,txt,font_silkscreen,fa_center,#E3F1F1,1,1)
-		if unspentSkillBlockers || unspentSkillPoints {scr_textStyle1(960/2,34+10,"press \"E\" to spend",font_silkscreen,fa_center,#E3F1F1,0.5 + abs(sin(current_time/100))*.5,1)}
+		scr_textStyle1(960/2,34,txt,font_silkscreen,fa_center,#E3F1F1,uiAlpha,1)
+		if unspentSkillBlockers || unspentSkillPoints {scr_textStyle1(960/2,34+10,"press \"E\" to spend",font_silkscreen,fa_center,#E3F1F1,0.5*uiAlpha + abs(sin(current_time/100))*.5,1)}
 	}
 }
 #endregion
@@ -40,7 +40,7 @@ if room == room_arena {
 #region UPGRADE DISPLAY
 if room == room_arena {
 	if currentUpgradeTimer < currentUpgradeTimerMax {
-		scr_textStyle1(960/2,65,currentUpgradeText,global.font,fa_center,c_yellow,1,1)
+		scr_textStyle1(960/2,65,currentUpgradeText,global.font,fa_center,c_yellow,uiAlpha,1)
 	}
 }
 
@@ -51,14 +51,15 @@ if instance_exists(obj_timer) {
 	//format time
 	var timeFormatted = obj_text_formatter.gameTimeFormatted(obj_timer.gameTime)
 
-	scr_textStyle1(timerPosX,timerPosY-50,timeFormatted,global.font,fa_left,global.txtColHighlight,1,2)
-	scr_textStyle1(timerPosX,timerPosY-20,"Time Elapsed",global.font,fa_left,global.txtColHighlight,1,1)
+	scr_textStyle1(timerPosX,timerPosY-50,timeFormatted,global.font,fa_left,global.txtColHighlight,uiAlpha,2)
+	scr_textStyle1(timerPosX,timerPosY-20,"Time Elapsed",global.font,fa_left,global.txtColHighlight,uiAlpha,1)
 }
+
 
 #endregion
 #region KILLCOUNTER
 if instance_exists(obj_killCounter) {
-	scr_textStyle1(timerPosX+18,timerPosY,string(obj_killCounter.kills),global.font,fa_left,global.txtColHighlight,1,1)
+	scr_textStyle1(timerPosX+18,timerPosY,string(obj_killCounter.kills),global.font,fa_left,global.txtColHighlight,uiAlpha,1)
 	//scr_textStyle1(timerPosX,timerPosY,"Kills: " +string(obj_killCounter.kills),global.font,fa_left,global.txtColHighlight,1,1)
 	draw_sprite(spr_skull,0,timerPosX,timerPosY)
 }
@@ -247,9 +248,9 @@ if instance_exists(obj_wave_director) {
 		var waveDisplayDirection = "Direction: "+string(waveTypeNames[obj_wave_director.waveList[i].waveDirection])
 		
 		//top part
-		scr_textStyle1(waveListPosX,waveListPosY-yWaveListOffset-50,waveDisplayName,global.font,fa_right,global.txtColHighlight,1,2)
+		scr_textStyle1(waveListPosX,waveListPosY-yWaveListOffset-50,waveDisplayName,global.font,fa_right,global.txtColHighlight,uiAlpha,2)
 		//bottom part
-		scr_textStyle1(waveListPosX,waveListPosY-yWaveListOffset-20,waveDisplayDirection,global.font,fa_right,global.txtColHighlight,1,1)
+		scr_textStyle1(waveListPosX,waveListPosY-yWaveListOffset-20,waveDisplayDirection,global.font,fa_right,global.txtColHighlight,uiAlpha,1)
 
 		if !surface_exists(waveTimerSurf) {
 			waveTimerSurf = surface_create(waveTimerWidth,waveTimerHeight);
@@ -272,10 +273,10 @@ if instance_exists(obj_wave_director) {
 		
 			//current wave kill count
 		var paddingX = 10
-		scr_textStyle1(waveListPosX-waveTimerWidth-paddingX,waveListPosY-yWaveListOffset,"|",global.font,fa_right,global.txtColHighlight,1,1)
+		scr_textStyle1(waveListPosX-waveTimerWidth-paddingX,waveListPosY-yWaveListOffset,"|",global.font,fa_right,global.txtColHighlight,uiAlpha,1)
 		
 		var waveKillCount = string(obj_wave_director.currentWaveKills) + "/" + string(obj_wave_director.currentWaveEntityTotal)
-		scr_textStyle1(waveListPosX-waveTimerWidth-paddingX*3,waveListPosY-yWaveListOffset,waveKillCount,global.font,fa_center,global.txtColHighlight,1,1)
+		scr_textStyle1(waveListPosX-waveTimerWidth-paddingX*3,waveListPosY-yWaveListOffset,waveKillCount,global.font,fa_center,global.txtColHighlight,uiAlpha,1)
 		string_width(waveKillCount)
 		draw_sprite(spr_skull,1,waveListPosX-waveTimerWidth-paddingX*3-string_width(waveKillCount)-10,waveListPosY-yWaveListOffset)
 			

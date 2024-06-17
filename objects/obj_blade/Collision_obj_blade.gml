@@ -93,7 +93,10 @@ if cooldownInstanceExists(other.instanceId) == undefined && collision {
 		}
 		
 		//collision particles
+		
 		var collisionParticle = instance_create_layer(x+midX,y+midY-heightCorrection,layer,obj_collision_spark)
+		collisionParticle.energyColor = col
+		
 		collisionParticle.direction = -reflectionVector+90
 		collisionParticle.energyColor = col
 		collisionParticle.image_xscale = collisionParticle.image_xscale * (0.6 + 0.4 * (sparkAmount)/5)

@@ -5,7 +5,7 @@ event_inherited()
 deathTrigger = 10
 image_xscale = 1
 image_yscale = 1
-particlesMod = 2 // particles at max strength, just before death
+particlesMod = 3 // particles at max strength, just before death
 color = c_black
 bladeCol = c_orange
 spawnDir = 90
@@ -14,7 +14,7 @@ width = 28
 function draw_me() {
 	//var col = merge_color(c_yellow,bladeCol,image_xscale/1.5)
 	gpu_set_blendmode(bm_eq_add)
-	draw_sprite_ext(sprite_index,0,x,y-zPosition,image_xscale,image_yscale,0,color,1)
+	//draw_sprite_ext(sprite_index,0,x,y-zPosition,image_xscale,image_yscale,0,color,1)
 	draw_sprite_ext(spr_light,0,x,y-zPosition,image_xscale,image_yscale,direction,bladeCol,.3)
 	
 	gpu_set_blendmode(bm_normal)

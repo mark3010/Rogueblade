@@ -446,14 +446,13 @@ function takeDamage(damage,damageDirection,ally) {
 spawnPoint = [x,y,zPosition]
 
 function respawn() {
-	
-	
 	spawnAnim = 1
 	x = spawnPoint[X]
 	y = spawnPoint[Y]
 	zPosition = spawnPoint[Z]
-	spawn()
+	spawn(true)
 	vel = [0,0,0]
+	currentLife = currentLife/2
 	knockedOut = false
 }
 
@@ -481,7 +480,7 @@ function cooldownsCalculate() {
 #endregion
 
 //spawn anim
-function spawn() {
+function spawn(respawning, startVel) {
 	var spawnParticle =  instance_create_layer(x,y,layer,obj_energy_ball)
 	spawnParticle.zPosition = zPosition
 	if core.energyColor != c_white {
@@ -489,9 +488,15 @@ function spawn() {
 	}
 	spawnParticle.target = id
 	if object_index != obj_player {
-		spawnParticle.deathTrigger = 20
+		spawnParticle.deathTrigger = 1
+		spawnParticle.quickVersion = true
 	}
 	visible = false
+	if respawning {spawnParticle.respawning = true}
+	
+	if startVel != noone {
+		//DO SOMETHING PLEASE SOMEONE 
+	}
 }
 
 //DEBUG

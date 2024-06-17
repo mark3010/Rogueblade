@@ -38,6 +38,7 @@ if zPosition <= 0 {
 		if vel[Z] < -3 {
 			var landingAnim = instance_create_layer(x,y,layer,obj_ground_land)
 			landingAnim.strength = abs(vel[Z])
+			landingAnim.zPosition = 0
 			landingAnim.image_alpha = clamp(landingAnim.strength,0,10)/10
 			vel[Z] = -vel[Z] * stats.zBounciness / 100
 
@@ -54,11 +55,17 @@ if zPosition <= 0 {
 			
 			var dqExplosion = instance_create_layer(x,y,layer,obj_dq)
 			dqExplosion.zPosition = zPosition
+			if core.energyColor != c_white {dqExplosion.bladeCol = core.energyColor}
 			dqExplosion.direction = point_direction(x,y,x-vel[X],y+vel[Z])
 			
 			if currentDQSaves > 0 {
 				respawn()
 				currentDQSaves--
+				var dqAngel = instance_create_layer(x,y,layer,obj_dq_angel)
+				dqAngel.zPosition = zPosition - 36
+				dqAngel.x = spawnPoint[X]
+				dqAngel.y = spawnPoint[Y]
+				if core.energyColor != c_white {dqAngel.bladeCol = core.energyColor}
 			} else {
 				die()
 			}

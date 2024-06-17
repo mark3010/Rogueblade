@@ -13,3 +13,5 @@ draw_text(x,y+30,"distanceVar: "+ string(point_distance(arenaBaseX,arenaBaseY,ar
 draw_text(x,y+40,"distanceCheck: "+ string(obj_arena.baseWidth))
 
 
+*/
+

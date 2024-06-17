@@ -83,8 +83,7 @@ spawnerList = []
 var arenaTopX = arena.x
 var arenaTopY = arena.y - arena.baseWidth
 top = instance_create_layer(arenaTopX,arenaTopY,layer,obj_wave_spawner_horisontal)
-top.image_xscale = (arena.baseWidth + arena.baseRadius)  / 16 * 2
-top.image_yscale = 1
+top.image_xscale = (arena.baseWidth + arena.baseRadius)  / 16 * 1.8
 top.updateSpawner()
 array_insert(spawnerList,0,top)
 
@@ -93,7 +92,7 @@ array_insert(spawnerList,0,top)
 var arenaBottomX = arena.x
 var arenaBottomY = arena.y + arena.baseWidth
 bottom = instance_create_layer(arenaBottomX,arenaBottomY,layer,obj_wave_spawner_horisontal)
-bottom.image_xscale = (arena.baseWidth + arena.baseRadius)  / 16 * 2
+bottom.image_xscale = (arena.baseWidth + arena.baseRadius)  / 16 * 1.8
 bottom.image_yscale = 1
 bottom.updateSpawner()
 array_insert(spawnerList,1,bottom)
@@ -103,7 +102,7 @@ var arenaRightX = arena.x + (arena.baseWidth + arena.baseRadius)
 var arenaRightY = arena.y
 right = instance_create_layer(arenaRightX,arenaRightY,layer,obj_wave_spawner_vertical)
 right.image_xscale = 1
-right.image_yscale = arena.baseWidth / 16 * 2
+right.image_yscale = arena.baseWidth / 16 * 1.8
 right.updateSpawner()
 array_insert(spawnerList,2,right)
 
@@ -112,7 +111,7 @@ var arenaLeftX = arena.x - (arena.baseWidth + arena.baseRadius)
 var arenaLeftY = arena.y
 left = instance_create_layer(arenaLeftX,arenaLeftY,layer,obj_wave_spawner_vertical)
 left.image_xscale = 1
-left.image_yscale = arena.baseWidth / 16 * 2
+left.image_yscale = arena.baseWidth / 16 * 1.8
 left.updateSpawner()
 array_insert(spawnerList,3,left)
 
