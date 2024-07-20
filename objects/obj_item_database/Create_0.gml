@@ -67,6 +67,7 @@ function getCore(bladePartEnum) {
 			stats: {
 				maxTriggers : 1,
 				maxTriggersCooldown : 150,
+				triggersResistance : 50,
 				maxProjectiles : 8,
 				projectileSpread : 60
 			},
@@ -86,6 +87,7 @@ function getCore(bladePartEnum) {
 			behavior: "Attack continuously from 1 port. Attack duration 2.5 s.",
 			stats: {
 				maxTriggers : 2,
+				triggersResistance : 50,
 				maxTriggersCooldown : 240
 			},
 			model: "ADAM",
@@ -104,6 +106,7 @@ function getCore(bladePartEnum) {
 			behavior: "Fire one burst of attacks of from 2 ports. Attacks are equals to (attacks per second) * 2.",
 			stats: {
 				maxTriggers : 4,
+				triggersResistance : 50,
 				maxTriggersCooldown : 240
 			},
 			model: "Star series MK4",
@@ -122,6 +125,7 @@ function getCore(bladePartEnum) {
 			behavior: "Attack from 1 port continuously while shield trigger cooldown is active. starts at 50% effective attack speed and ramps to 150% over 5 seconds while firing.",
 			stats: {
 				maxTriggers : 2,
+				triggersResistance : 50,
 				maxTriggersCooldown : 240
 			} ,
 			model: "NaN",
@@ -138,6 +142,7 @@ function getCore(bladePartEnum) {
 			description: "MISSING" ,
 			stats: {
 				maxTriggers : 2,
+				triggersResistance : 50,
 				maxTriggersCooldown : 240
 			},
 			model: "NaN",
@@ -154,6 +159,7 @@ function getCore(bladePartEnum) {
 			description: "MISSING",
 			stats: {
 				maxTriggers : 2,
+				triggersResistance : 50,
 				maxTriggersCooldown : 240
 			} ,
 			model: "NaN",
@@ -170,6 +176,7 @@ function getCore(bladePartEnum) {
 			description: "MISSING" ,
 			stats: {
 				maxTriggers : 2,
+				triggersResistance : 50,
 				maxTriggersCooldown : 240
 			},
 			model: "NaN",
@@ -186,6 +193,7 @@ function getCore(bladePartEnum) {
 			description: "MISSING" ,
 			stats: {
 				maxTriggers : 2,
+				triggersResistance : 50,
 				maxTriggersCooldown : 240
 			},
 			model: "NaN",
@@ -202,6 +210,7 @@ function getCore(bladePartEnum) {
 			description: "MISSING",
 			stats: {
 				maxTriggers : 2,
+				triggersResistance : 50,
 				maxTriggersCooldown : 240
 			} ,
 			model: "NaN",
@@ -218,6 +227,7 @@ function getCore(bladePartEnum) {
 			description: "MISSING",
 			stats: {
 				maxTriggers : 2,
+				triggersResistance : 50,
 				maxTriggersCooldown : 240
 			} ,
 			model: "NaN",
@@ -233,8 +243,8 @@ function getCore(bladePartEnum) {
 			name: "ACID",
 			description: "MISSING" ,
 			stats: {
-				maxLife: 3,
 				maxTriggers : 2,
+				triggersResistance : 50,
 				maxTriggersCooldown : 240
 			},
 			model: "NaN",
@@ -253,7 +263,7 @@ function getHull(bladePartEnum) {
 			name: "BALANCE",
 			description: "MISSING" ,
 			stats: {
-				maxLife : 35,
+				maxLife : 25,
 				lifeRegen : 1,
 				DQSaveMax: 1
 			},
@@ -268,7 +278,7 @@ function getHull(bladePartEnum) {
 			name: "HURRICANE",
 			description: "MISSING" ,
 			stats: {
-				maxLife : 30,
+				maxLife : 20,
 				lifeRegen : 0.5,
 				DQSaveMax: 1
 			},
@@ -283,7 +293,7 @@ function getHull(bladePartEnum) {
 			name: "BLOSSOM",
 			description: "MISSING" ,
 			stats: {
-				maxLife : 40,
+				maxLife : 30,
 				lifeRegen : 1.3,
 				DQSaveMax: 1
 			},
@@ -298,7 +308,7 @@ function getHull(bladePartEnum) {
 			name: "CONSTRUCT",
 			description: "MISSING" ,
 			stats: {
-				maxLife : 25,
+				maxLife : 20,
 				lifeRegen : 0.5,
 				DQSaveMax: 1
 			},

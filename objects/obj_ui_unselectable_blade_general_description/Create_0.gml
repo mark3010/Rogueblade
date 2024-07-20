@@ -5,7 +5,7 @@
 statsheet = {}
 	
 align = fa_center
-color = global.txtColDark
+color = global.txtColHighlight
 descriptionColor = global.txtColDescription
 inactiveColor = global.txtColDark
 alpha = 0
@@ -14,6 +14,6 @@ font = global.font
 triggerKey = noone
 
 
-core = obj_player.core
-hull = obj_player.hull
-anchor = obj_player.anchor
+core = -1//obj_player.core
+hull = -1//obj_player.hull
+anchor = -1//obj_player.anchor

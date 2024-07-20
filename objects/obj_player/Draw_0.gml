@@ -2,7 +2,7 @@
 // You can write your code in this editor
 event_inherited()
 draw_set_color(c_white)
-//draw_text(x,y+10,ramp)
+
 //DEBUG STUFF
 if global.debugMode {
 	//arena breakpoints

@@ -69,7 +69,7 @@ function updateSelection() {
 
 	available = _nodesAvailable
 	//CHOOSE RANDOM 3 UPGRADES AVAILABLE
-	var maxUpgradeAmount = 4
+	var maxUpgradeAmount = 3
 	var availableUpgradeAmount = array_length(available)
 	var totalUpgrades = min(maxUpgradeAmount,availableUpgradeAmount)
 	

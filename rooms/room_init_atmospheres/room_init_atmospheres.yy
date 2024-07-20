@@ -1,5 +1,5 @@
 {
-  "$GMRoom":"",
+  "$GMRoom":"v1",
   "%Name":"room_init_atmospheres",
   "creationCodeFile":"",
   "inheritCode":false,

@@ -18,3 +18,7 @@ if animation > .7 {
 }
 
 animation = lerp(animation,1,.1)
+zPosition -= velAdd[Z]*.8
+velAdd[Z] = velAdd[Z] * 0.8
+image_angle = velAdd[X]*8 * sign(-velAdd[Z])
+//image_yscale = 1 + velAdd[Y]/3

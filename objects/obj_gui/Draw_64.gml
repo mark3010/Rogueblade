@@ -1,21 +1,35 @@
 
+//fade player ui in
+if instance_exists(obj_player) {
+	playerUIAlpha = lerp(playerUIAlpha,1,0.05)
+}
+//fade arena ui in
+if instance_exists(obj_wave_director) {
+	arenaUIAlpha = lerp(arenaUIAlpha,1,0.05)
+}
+
 #region LEVEL
 if room == room_arena {
 	if instance_exists(obj_player) {
 		playerXPScale = lerp(playerXPScale,(obj_player.EXP / obj_player.EXPCapList[obj_player.level-1]),.1)
 		playerLevel = "LEVEL: " + string(obj_player.level)
+		playerLevelPop = lerp(playerLevelPop,obj_player.level,.1)
+		playerLevelAnim = (obj_player.level-playerLevelPop)
 	}
 	
 	if !surface_exists(expSurf) {
 		expSurf = surface_create(expWidth,expHeight);
-	}	
+	}
 	
 	surface_set_target(expSurf)
 	draw_clear(c_black)
 	draw_sprite_stretched(spr_exp_bar,1,0,0,expWidth*playerXPScale,expHeight)
 	surface_reset_target()
-	scr_textStyle1(960/2,10,playerLevel,global.font,fa_center,global.txtColHighlight,uiAlpha,1)
-	draw_surface(expSurf,960/2-expWidth/2,26)
+	
+	draw_surface_ext(expSurf,960/2-expWidth/2,26,1,1,0,c_white,playerUIAlpha)
+	
+	scr_textStyle1(960/2,10,playerLevel,global.font,fa_center,merge_color(global.txtColHighlight,c_white,playerLevelAnim),uiAlpha*playerUIAlpha,1+playerLevelAnim*.5)
+	
 	
 	var txt = ""
 	if instance_exists(obj_skilltree_upgrade_tracker) {
@@ -23,16 +37,16 @@ if room == room_arena {
 		var unspentSkillBlockers = obj_skilltree_upgrade_tracker.skillBlockers
 		
 		if unspentSkillPoints > 0 {
-			txt += string(unspentSkillPoints)+" skill points available"
+			txt += "> "+string(unspentSkillPoints)+" skill points available"
 		}
 		
 		if unspentSkillBlockers && unspentSkillPoints {txt += "  |  "}
 		
 		if unspentSkillBlockers > 0 {
-			txt += string(unspentSkillBlockers)+" skill blockers available"
+			txt += "> "+string(unspentSkillBlockers)+" skill blockers available"
 		}
-		scr_textStyle1(960/2,34,txt,font_silkscreen,fa_center,#E3F1F1,uiAlpha,1)
-		if unspentSkillBlockers || unspentSkillPoints {scr_textStyle1(960/2,34+10,"press \"E\" to spend",font_silkscreen,fa_center,#E3F1F1,0.5*uiAlpha + abs(sin(current_time/100))*.5,1)}
+		scr_textStyle1(960/2,34,txt,font_silkscreen,fa_center,#E3F1F1,(uiAlpha*.5 +  + abs(sin(current_time/400))*.5)*playerUIAlpha,1)
+		if unspentSkillBlockers || unspentSkillPoints {scr_textStyle1(960/2,healthPosY-50,"press \"E\" to spend skill points",font_opensans,fa_center,#E3F1F1,(uiAlpha*.5 +  + abs(sin(current_time/400))*.5)*playerUIAlpha,1)}
 	}
 }
 #endregion
@@ -40,7 +54,7 @@ if room == room_arena {
 #region UPGRADE DISPLAY
 if room == room_arena {
 	if currentUpgradeTimer < currentUpgradeTimerMax {
-		scr_textStyle1(960/2,65,currentUpgradeText,global.font,fa_center,c_yellow,uiAlpha,1)
+		scr_textStyle1(960/2,65,currentUpgradeText,global.font,fa_center,c_yellow,uiAlpha*playerUIAlpha,1)
 	}
 }
 
@@ -51,17 +65,17 @@ if instance_exists(obj_timer) {
 	//format time
 	var timeFormatted = obj_text_formatter.gameTimeFormatted(obj_timer.gameTime)
 
-	scr_textStyle1(timerPosX,timerPosY-50,timeFormatted,global.font,fa_left,global.txtColHighlight,uiAlpha,2)
-	scr_textStyle1(timerPosX,timerPosY-20,"Time Elapsed",global.font,fa_left,global.txtColHighlight,uiAlpha,1)
+	scr_textStyle1(timerPosX,timerPosY-50,timeFormatted,global.font,fa_left,global.txtColHighlight,uiAlpha*arenaUIAlpha,2)
+	scr_textStyle1(timerPosX,timerPosY-20,"Time Elapsed",global.font,fa_left,global.txtColHighlight,uiAlpha*arenaUIAlpha,1)
 }
 
 
 #endregion
 #region KILLCOUNTER
 if instance_exists(obj_killCounter) {
-	scr_textStyle1(timerPosX+18,timerPosY,string(obj_killCounter.kills),global.font,fa_left,global.txtColHighlight,uiAlpha,1)
+	scr_textStyle1(timerPosX+18,timerPosY,string(obj_killCounter.kills),global.font,fa_left,global.txtColHighlight,uiAlpha*arenaUIAlpha,1)
 	//scr_textStyle1(timerPosX,timerPosY,"Kills: " +string(obj_killCounter.kills),global.font,fa_left,global.txtColHighlight,1,1)
-	draw_sprite(spr_skull,0,timerPosX,timerPosY)
+	draw_sprite_ext(spr_skull,0,timerPosX,timerPosY,1,1,0,c_white,arenaUIAlpha)
 }
 
 
@@ -154,8 +168,8 @@ if room == room_arena || global.guiTestEnable {
 
 		//draw on screen
 		
-		draw_surface_ext(healthSurf,healthPosX,healthPosY,1,1,0,global.txtColHighlight,1)
-		draw_surface_ext(healthSurf,healthPosX,healthPosY,-1,1,0,global.txtColHighlight,1)
+		draw_surface_ext(healthSurf,healthPosX,healthPosY,1,1,0,global.txtColHighlight,playerUIAlpha)
+		draw_surface_ext(healthSurf,healthPosX,healthPosY,-1,1,0,global.txtColHighlight,playerUIAlpha)
 		//scr_textStyle1(healthPosX,healthPosY+healthNumberYOffset,string(playerCurrentLife)+"/"+string(playerMaxLife),global.font,fa_center,global.txtColHighlight,1,1)
 	
 	//trigger
@@ -169,7 +183,7 @@ if room == room_arena || global.guiTestEnable {
 		surface_reset_target();
 
 		//draw on screen
-		draw_surface(triggersCooldownSurf,triggersCooldownPosX-triggersCooldownWidth/2,triggersCooldownPosY)
+		draw_surface_ext(triggersCooldownSurf,triggersCooldownPosX-triggersCooldownWidth/2,triggersCooldownPosY,1,1,0,c_white,playerUIAlpha)
 		
 		//draw triggers
 		var triggerSprite = spr_trigger_bar
@@ -183,7 +197,7 @@ if room == room_arena || global.guiTestEnable {
 		//draw_rectangle_color()
 
 		repeat(playerCurrentTriggers) {
-			draw_sprite_stretched_ext(spr_trigger_bar,1,triggerBaseX+triggerDisplaceBarX,triggerBaseY,triggerWidth,triggerHeight,playerEnergyColor,1)
+			draw_sprite_stretched_ext(spr_trigger_bar,1,triggerBaseX+triggerDisplaceBarX,triggerBaseY,triggerWidth,triggerHeight,playerEnergyColor,playerUIAlpha)
 			triggerDisplaceBarX += triggerWidth + triggerPadding
 		}
 
@@ -202,14 +216,14 @@ if room == room_arena || global.guiTestEnable {
 		
 		var DQSaveDisplaceBarXBack = DQSaveDisplaceBarXBase
 		repeat(playerDQSaveMax) {
-			draw_sprite(spr_DQSaves,0,DQSaveBaseX + DQSaveDisplaceBarXBack,DQSaveBaseY)
+			draw_sprite_ext(spr_DQSaves,0,DQSaveBaseX + DQSaveDisplaceBarXBack,DQSaveBaseY,1,1,0,c_white,playerUIAlpha)
 			DQSaveDisplaceBarXBack += DQSaveWidth + DQSavePadding
 		}
 		
 
 		var DQSaveDisplaceBarXHighlight = DQSaveDisplaceBarXBase
 		repeat(playerDQSaveCurrent) {
-			draw_sprite(spr_DQSaves,1,DQSaveBaseX + DQSaveDisplaceBarXHighlight,DQSaveBaseY)
+			draw_sprite_ext(spr_DQSaves,1,DQSaveBaseX + DQSaveDisplaceBarXHighlight,DQSaveBaseY,1,1,0,c_white,playerUIAlpha)
 			DQSaveDisplaceBarXHighlight += DQSaveWidth + DQSavePadding
 		}
 		
@@ -217,7 +231,7 @@ if room == room_arena || global.guiTestEnable {
 			if playerDQSaveExpended {instance_create_layer(DQSaveBaseX + DQSaveDisplaceBarXHighlight,DQSaveBaseY,layer,obj_ui_trigger_expended)}
 			
 			var cooldownSpriteNumber = playerDQSaveCooldown * sprite_get_number(spr_DQSaves_cooldown)
-			draw_sprite(spr_DQSaves_cooldown,cooldownSpriteNumber,DQSaveBaseX + DQSaveDisplaceBarXHighlight,DQSaveBaseY)
+			draw_sprite_ext(spr_DQSaves_cooldown,cooldownSpriteNumber,DQSaveBaseX + DQSaveDisplaceBarXHighlight,DQSaveBaseY,1,1,0,c_white,playerUIAlpha)
 		}
 	
 	/*
@@ -248,9 +262,9 @@ if instance_exists(obj_wave_director) {
 		var waveDisplayDirection = "Direction: "+string(waveTypeNames[obj_wave_director.waveList[i].waveDirection])
 		
 		//top part
-		scr_textStyle1(waveListPosX,waveListPosY-yWaveListOffset-50,waveDisplayName,global.font,fa_right,global.txtColHighlight,uiAlpha,2)
+		scr_textStyle1(waveListPosX,waveListPosY-yWaveListOffset-50,waveDisplayName,global.font,fa_right,global.txtColHighlight,uiAlpha*arenaUIAlpha,2)
 		//bottom part
-		scr_textStyle1(waveListPosX,waveListPosY-yWaveListOffset-20,waveDisplayDirection,global.font,fa_right,global.txtColHighlight,uiAlpha,1)
+		scr_textStyle1(waveListPosX,waveListPosY-yWaveListOffset-20,waveDisplayDirection,global.font,fa_right,global.txtColHighlight,uiAlpha*arenaUIAlpha,1)
 
 		if !surface_exists(waveTimerSurf) {
 			waveTimerSurf = surface_create(waveTimerWidth,waveTimerHeight);
@@ -260,6 +274,7 @@ if instance_exists(obj_wave_director) {
 			//timer
 		surface_set_target(waveTimerSurf)
 		draw_clear(c_black)
+		
 		draw_rectangle_color(1,1,waveTimerWidth-2,waveTimerHeight-2,global.txtColHighlight,global.txtColHighlight,global.txtColHighlight,global.txtColHighlight,true)
 		
 		var waveTimePassed = obj_wave_director.waveList[i].timer
@@ -269,16 +284,16 @@ if instance_exists(obj_wave_director) {
 		draw_sprite_stretched(spr_wave_timer_bar, 1, 0, 0, waveTimerWidth * waveTimerScale, waveTimerHeight)
 		surface_reset_target()
 		
-		draw_surface(waveTimerSurf,waveListPosX-waveTimerWidth,waveListPosY)
+		draw_surface_ext(waveTimerSurf,waveListPosX-waveTimerWidth,waveListPosY,1,1,0,c_white,arenaUIAlpha)
 		
 			//current wave kill count
 		var paddingX = 10
-		scr_textStyle1(waveListPosX-waveTimerWidth-paddingX,waveListPosY-yWaveListOffset,"|",global.font,fa_right,global.txtColHighlight,uiAlpha,1)
+		scr_textStyle1(waveListPosX-waveTimerWidth-paddingX,waveListPosY-yWaveListOffset,"|",global.font,fa_right,global.txtColHighlight,uiAlpha*arenaUIAlpha,1)
 		
 		var waveKillCount = string(obj_wave_director.currentWaveKills) + "/" + string(obj_wave_director.currentWaveEntityTotal)
-		scr_textStyle1(waveListPosX-waveTimerWidth-paddingX*3,waveListPosY-yWaveListOffset,waveKillCount,global.font,fa_center,global.txtColHighlight,uiAlpha,1)
+		scr_textStyle1(waveListPosX-waveTimerWidth-paddingX*3,waveListPosY-yWaveListOffset,waveKillCount,global.font,fa_center,global.txtColHighlight,uiAlpha*arenaUIAlpha,1)
 		string_width(waveKillCount)
-		draw_sprite(spr_skull,1,waveListPosX-waveTimerWidth-paddingX*3-string_width(waveKillCount)-10,waveListPosY-yWaveListOffset)
+		draw_sprite_ext(spr_skull,1,waveListPosX-waveTimerWidth-paddingX*3-string_width(waveKillCount)-10,waveListPosY-yWaveListOffset,1,1,0,c_white,arenaUIAlpha)
 			
 	}
 }

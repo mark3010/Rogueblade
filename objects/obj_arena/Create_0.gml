@@ -15,8 +15,8 @@ colSlant1 = merge_color($66564D,c_white,.22)
 colSlant2 = merge_color($66564D,c_white,.17)
 colSlant3 = merge_color($66564D,c_white,.11)
 colSlant4 = merge_color($66564D,c_white,.05)
-colSides = #3A4351
-colSidesBot = c_black
+colSides = #434F60//#56657A//#3A4351
+colSidesBot = #0E1014
 
 
 zPosition = 0
@@ -72,15 +72,17 @@ function draw_light() {
 	}
 }
 
-function draw_me(bullshit1,bullshit2,bullshit3) {
-	event_inherited()
+event_inherited()
 
+function draw_me(bullshit1,bullshit2,bullshit3) {
+	//
+	//shader_set(shd_tint)
 
 	draw_set_alpha(1)
 	// z-depth of arena
 
 	draw_rectangle_color(x-baseWidth-baseRadius,y,x+baseWidth+baseRadius,y+820,colSidesBot,colSidesBot,colSidesBot,colSidesBot,false)
-	draw_rectangle_color(x-baseWidth-baseRadius,y,x+baseWidth+baseRadius,y+380,colSides,colSides,colSidesBot,colSidesBot,false)
+	draw_rectangle_color(x-baseWidth-baseRadius,y,x+baseWidth+baseRadius,y+180+baseRadius*1,colSides,colSides,colSidesBot,colSidesBot,false)
 
 	// top sloped area of arena
 
@@ -127,17 +129,20 @@ function draw_me(bullshit1,bullshit2,bullshit3) {
 	}
 
 	//DRAW ARENA INFO
-	/*
-	draw_set_color(merge_color(c_black,c_gray,.6))
+	
+	draw_set_color(c_white)
+	draw_set_alpha(.8)
+	draw_set_font(font_silver)
+	draw_set_halign(fa_center)
+	draw_text(x,y,"base radius"+string(baseRadius))
+	draw_text(x,y+10,"base width"+string(baseWidth))
+	draw_text(x,y+20,"flat radius"+string(flatRadius))
+	draw_text(x,y+30,"flat width"+string(flatWidth))
+
+
 	draw_set_alpha(1)
-	draw_set_font(font_freefall)
-	draw_set_halign(fa_center)
-	draw_text(x,y+baseRadius+gameModeTextY,tradeMarkText)
-	draw_set_color(merge_color(c_black,c_gray,.3))
-	draw_set_font(font_freefall)
-	draw_set_halign(fa_center)
-	draw_text(x,y+baseRadius+gameModeTextY-1,tradeMarkText)
-	draw_set_alpha(1)*/
+
+
 
 	var inscriptionAlpha = .4
 	draw_set_color(c_white)
@@ -180,7 +185,7 @@ function draw_me(bullshit1,bullshit2,bullshit3) {
 		draw_set_alpha(1)
 	}
 
-
+	//shader_reset()
 
 
 	if global.debugMode {

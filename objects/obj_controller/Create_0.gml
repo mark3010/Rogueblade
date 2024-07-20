@@ -7,6 +7,7 @@ global.gameFirstLoad = true //used to show first screen animation
 gameMode = gameModeType.PRACTICE
 pauseScreen = -1
 pauseScreenLight = -1
+darknessColorVar = 0
 // DEBUG MODE
 global.debugMode = -1
 global.renderMode = -1

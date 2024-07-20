@@ -13,7 +13,7 @@ var selectedTextDisplay = name(getSelection())
 
 if isSelected {
 	//TITLE
-	scr_textStyle1(x,y+lineStartY-6,text,font,align,color,alpha,size)
+	scr_textStyle1(x,y+lineStartY-6,text,font,align,global.txtColHighlight,alpha,size)
 	draw_set_color(c_black)
 	draw_line_width(x+lineStartX,y+lineStartY+1,x+descriptionWidth,y+lineStartY+1,1)
 	draw_line_width(x-lineStartX,y+lineStartY+1,x-descriptionWidth,y+lineStartY+1,1)

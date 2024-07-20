@@ -34,6 +34,7 @@ if instance_exists(ObjUIIterator) {
 //arrow
 
 draw_sprite_ext(spr_passive_skill_arrow,0,_resolutionArray[X]/2+_displaceX,_resolutionArray[Y]/2+_displaceY-30-40+40*interpolateZoomCurvePosition+_arrowYSway,image_xscale,_arrowSquish,0,c_white,interpolateZoomCurvePosition*_arrowVisible)
+scr_textStyle1(_resolutionArray[X]/2+_displaceX,_resolutionArray[Y]+_displaceY-50,skillDescription,font_opensans,fa_center,global.txtColHighlight,interpolateZoomCurvePosition,1)
 
 surface_set_target(skillTreeSurf)
 draw_clear_alpha(c_black,0)

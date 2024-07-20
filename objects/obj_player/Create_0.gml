@@ -39,7 +39,7 @@ function healFull() {
 function loadPlayer() {
 	var playerBuilder = instance_create_layer(x,y,layer,obj_player_builder)
 	var playerSettings = playerBuilder.getPlayerSettings()
-
+	stats.maxLife = 0
 	core = playerSettings.core
 	stats = scr_structs_combine(stats,core.stats,"add")
 
@@ -67,6 +67,7 @@ function updatePlayerCore(coreEnum) {
 	healFull()
 	lightColor = playerBuilder.getCore(coreEnum).lightColor
 	energyColor = playerBuilder.getCore(coreEnum).energyColor
+	spawnAnim = 1
 	instance_destroy(playerBuilder)
 }
 
@@ -77,7 +78,7 @@ function updatePlayerHull(coreEnum) {
 	hull = playerBuilder.getHull(coreEnum)
 	stats = scr_structs_combine(stats,hull.stats,"add")
 	healFull()
-	
+	spawnAnim = 1
 	instance_destroy(playerBuilder)
 }
 
@@ -88,7 +89,7 @@ function updatePlayerAnchor(coreEnum) {
 	anchor = playerBuilder.getAnchor(coreEnum)
 	stats = scr_structs_combine(stats,anchor.stats,"add")
 	healFull()
-	
+	spawnAnim = 1
 	instance_destroy(playerBuilder)
 }
 

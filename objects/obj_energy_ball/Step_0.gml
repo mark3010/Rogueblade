@@ -32,12 +32,14 @@ if lifetime == deathTrigger {
 		if groupId != -1 {
 			instance.groupId = groupId
 		}
+		instance.zPosition -= 15 * sign(velAdd[Z])
 	}
 
-	var spinParticle1 = instance_create_layer(x,y,layer,obj_ellipse_explosion)
-	spinParticle1.zPosition = zPosition
-	spinParticle1.bladeCol = bladeCol
-	if quickVersion {spinParticle1.scale = .7}
+	var ellipse = instance_create_layer(x,y,layer,obj_ellipse_explosion)
+	ellipse.zPosition = zPosition+15 * sign(velAdd[Z])
+	ellipse.bladeCol = bladeCol
+	ellipse.velAdd = velAdd
+	if quickVersion {ellipse.scale = .7}
 	
 	instance_destroy()	
 }

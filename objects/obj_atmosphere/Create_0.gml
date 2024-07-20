@@ -36,25 +36,25 @@ function switchThemeLerp(theme) {
 			backgroundTransition("Background_1")
 		break
 		case (AtmosphereTheme.GREY): 
-			darknessColorTarget = c_dkgray
+			darknessColorTarget = c_gray
 			currentBackdropEffect = targetBackdropEffect
 			targetBackdropEffect = []
 			backgroundTransition("Background_1")
 		break
 		case (AtmosphereTheme.BLUE): 
-			darknessColorTarget = merge_color(c_dkgray,c_aqua,.3)
+			darknessColorTarget = merge_color(c_gray,c_aqua,.3)
 			currentBackdropEffect = targetBackdropEffect
 			targetBackdropEffect = ["Effect_2","Effect_2_1"]
 			backgroundTransition("Background_2")
 		break
 		case (AtmosphereTheme.ORANGE): 
-			darknessColorTarget = merge_color(c_dkgray,c_red,.3)
+			darknessColorTarget = merge_color(c_gray,c_red,.3)
 			currentBackdropEffect = targetBackdropEffect
 			targetBackdropEffect = ["Effect_3","Effect_3_1"]
 			backgroundTransition("Background_3")
 		break
 		case (AtmosphereTheme.GREEN): 
-			darknessColorTarget = merge_color(c_dkgray,c_green,.3)
+			darknessColorTarget = merge_color(c_gray,c_green,.3)
 			currentBackdropEffect = targetBackdropEffect
 			targetBackdropEffect = ["Effect_4","Effect_4_1"]
 			backgroundTransition("Background_4")

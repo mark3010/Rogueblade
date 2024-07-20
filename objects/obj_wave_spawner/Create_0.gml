@@ -1,5 +1,5 @@
 queue = []
-spawnDelay = 20
+spawnDelay = 12
 delay = 0
 
 function updateSpawner() {

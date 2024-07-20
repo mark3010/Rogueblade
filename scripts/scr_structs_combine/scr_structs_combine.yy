@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"scr_structs_combine",
   "isCompatibility":false,
   "isDnD":false,

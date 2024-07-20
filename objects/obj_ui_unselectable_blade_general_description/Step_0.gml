@@ -5,9 +5,12 @@ if keyboard_check_pressed(triggerKey) {
 	click()
 }
 
-statsheet = obj_player.stats
-core = obj_player.core
-hull = obj_player.hull
-anchor = obj_player.anchor
+if instance_exists(obj_player) {
+	statsheet = obj_player.stats
+	core = obj_player.core
+	hull = obj_player.hull
+	anchor = obj_player.anchor
+}
+
 
 alpha = lerp(alpha,1,global.uiFadeSpeed)

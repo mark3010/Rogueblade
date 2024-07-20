@@ -1,6 +1,9 @@
 bottomMargin = 25
 sideMargin = 25
-uiAlpha = .7
+uiAlpha = 1
+
+playerUIAlpha = 0
+arenaUIAlpha = 0
 
 #region TIMER
 timerPosX = sideMargin
@@ -19,6 +22,13 @@ timerPosY = 540-bottomMargin
 	healthAnimSpeed = .15 // [0..1]
 	healthAnim = 0
 //triggers
+	playerTriggersCooldownScale = 0
+	playerMaxTriggers = 0
+	playerCurrentTriggers = 0
+	playerMaxTriggersCooldown = 1
+	playerCurrentTriggersCooldown = 0
+	playerLightColor = c_white
+	playerEnergyColor = c_white
 	triggersCooldownPosX = healthPosX
 	triggersCooldownPosY = healthPosY-5
 
@@ -26,6 +36,11 @@ timerPosY = 540-bottomMargin
 	triggersCooldownHeight = sprite_get_height(spr_triggers_cooldown_bar)
 	triggersCooldownAlpha = 1
 //indicators
+	playerDQSaveCooldown = 0
+	playerDQSaveMax = 0
+	playerDQSaveCurrent = 0
+	playerDQSaveExpended = false
+	playerDQSavesPrevious = false
 	playerIsAttacking = 0
 	playerIsDashing = 0
 	playerDQSavesPrevious = 1
@@ -40,9 +55,15 @@ waveTimerHeight = sprite_get_height(spr_wave_timer_bar)
 #endregion
 
 #region EXP
+playerXPScale = 1
+playerLevel = "LEVEL: -"
+playerLevelPop = 0
+playerLevelAnim = 1
 expWidth = 60
 expHeight = sprite_get_height(spr_exp_bar)
 playerXPScale = 0
+playerLevelPop = 0
+playerLevelAnim = 0
 
 currentUpgradeTimerMax = 4*60
 currentUpgradeTimer = currentUpgradeTimerMax

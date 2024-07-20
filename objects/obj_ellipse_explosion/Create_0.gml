@@ -3,14 +3,16 @@
 event_inherited()
 
 deathTrigger = 60
-image_xscale = 0
-image_yscale = 0
+image_xscale = 1
+image_yscale = 1
 
 color = c_white
 bladeCol = c_orange
 animation = 0
 alpha = 1
 scale = 1
+velAdd = 0
+
 function draw_me(a,b,c) {
 	//surface_set_target(a)
 	//var xOrigin = x
@@ -26,7 +28,7 @@ function draw_me(a,b,c) {
 	draw_set_color(color)
 	//draw_line_
 	
-	draw_sprite_ext(sprite_index,0,x,y-zPosition,animation*scale,animation*scale,image_angle,color,(alpha))
+	draw_sprite_ext(sprite_index,0,x,y-zPosition,animation*scale*image_xscale,animation*scale*image_yscale,image_angle,color,(alpha))
 	//draw_sprite_ext(sprite_index,0,x,y-zPosition,animation,animation,image_angle,color,(alpha))
 	//draw_text(x,y-zPosition-20,"-1 DQ save")
 	

@@ -29,7 +29,8 @@ stats = {
 	deflectionResistance : 100,
 	velMax : 4,					//VELOCITY - max speed before drag is applied
 	maxTriggersCooldown : 0,	//SECONDS 
-	triggersCooldownRegen : 1,	
+	triggersCooldownRegen : 1,
+	triggersResistance : 0,
 	zGravity : 40,				//PIXELS/SECOND
 	zBounciness : 50,			//PERCENTAGE - 100% means bounce with no loss, 0% means no bouncy at all
 	acc : 0.2,					//PIXEL/TICK - acceleration
@@ -112,7 +113,7 @@ refreshCurrents()
 dragStrength = 0.1		// [1..0] where 1 is maximum drag effect, 0.1 allows ~50% speed increase
 vel = [0,0,0]			// holds current velocity
 velAdd = [0,0,0]		// holds temporary vector to add to velocity 
-zPosition = 110 + irandom(20)
+zPosition = 0
 
 //add some spawn z speed
 //vel[Z] = 2+irandom(10)/10
@@ -394,15 +395,16 @@ shieldDamageTakenMemoryPrevious = 0 //stores memory of how many hits have been t
 lifeDamageTakenMemoryPrevious = 0 //stores memory of how many hits have been taken in last frame
 
 function takeDamage(damage,damageDirection,ally) {
-	var damageTaken = 0
 	
 	//damage calculation
 	if currentTriggers > 0 {
 		shieldDamageTakenMemory += 1
-		damageTaken = 1
+		damageTaken = damage * (stats.triggersResistance/100) * (1-ally*.95)
 		
 		currentTriggers--
+		currentLife -= damageTaken
 		hitFlashType = DAMAGE_TYPE.SHIELD
+		
 		hitFlash = 1
 		hitFlashColorMerge = 1
 		var triggerExpended = instance_create_layer(x,y,layer,obj_trigger_expended)
@@ -435,23 +437,24 @@ function takeDamage(damage,damageDirection,ally) {
 	hitDistortionDirection = damageDirection+180
 	
 	//damage number
-	if team == TEAM.ENEMY {
+	//if team == TEAM.ENEMY {
 		var damageNumber = instance_create_depth(other.x,other.y-20-16,depth,obj_damage_number)
 		damageNumber.damage = damageTaken
 		damageNumber.direction = damageDirection
-	}
+	//}
 }
 
 
-spawnPoint = [x,y,zPosition]
+
 
 function respawn() {
 	spawnAnim = 1
 	x = spawnPoint[X]
 	y = spawnPoint[Y]
 	zPosition = spawnPoint[Z]
-	spawn(true)
 	vel = [0,0,0]
+	spawn(true,generateSpawnVelocity(true),zPosition)
+	
 	currentLife = currentLife/2
 	knockedOut = false
 }
@@ -480,24 +483,51 @@ function cooldownsCalculate() {
 #endregion
 
 //spawn anim
-function spawn(respawning, startVel) {
+function spawn(respawning, startVel, zPos) {
+	
+	//set start values before spawn
+	if startVel != noone {
+		velAdd = startVel
+	}
+	
+	if zPos != noone {
+		zPosition = zPos
+	}
+	
+	spawnPoint = [x,y,zPosition]
+	
+	//make spawn animation
 	var spawnParticle =  instance_create_layer(x,y,layer,obj_energy_ball)
 	spawnParticle.zPosition = zPosition
+	spawnParticle.velAdd = startVel
 	if core.energyColor != c_white {
 		spawnParticle.bladeCol = core.energyColor
 	}
+	
 	spawnParticle.target = id
+	
 	if object_index != obj_player {
 		spawnParticle.deathTrigger = 1
 		spawnParticle.quickVersion = true
 	}
-	visible = false
-	if respawning {spawnParticle.respawning = true}
 	
-	if startVel != noone {
-		//DO SOMETHING PLEASE SOMEONE 
-	}
+	visible = false
+	
+	//if respawning {spawnParticle.respawning = true}
+	spawnParticle.respawning = true
+	
+
 }
 
+function generateSpawnVelocity(randomVelocity) {
+	if randomVelocity {
+		return [2*(irandom(100)/100 -.5),2*(irandom(100)/100 -.5),7 + 3*irandom(100)/100]
+	} else {
+		var spawndir = point_direction(x,y,obj_arena.x,obj_arena.y)
+		var xVel = lengthdir_x(1.5,spawndir)
+		var yVel = lengthdir_y(1.5,spawndir)
+		return [xVel,yVel,-4]
+	}
+}
 //DEBUG
 if global.debugMode {instance_create_layer(x,y,layer,obj_spawn_point_debug)}

@@ -15,7 +15,7 @@ if lifetime == deathTrigger {
 		
 		//if instance has spawn animation
 		try {
-			instance.spawn()
+			instance.spawn(false,instance.generateSpawnVelocity(),120)
 		} catch(e) {
 		//do nothing
 		}

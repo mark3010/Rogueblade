@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"scr_bladePositionCheck",
   "isCompatibility":false,
   "isDnD":false,

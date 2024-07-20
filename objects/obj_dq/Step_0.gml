@@ -1,6 +1,11 @@
 /// @description Insert description here
 // You can write your code in this editor
-
+if lifetime == 0 {
+	var light = instance_create_layer(x,y,layer,obj_dq_light)
+	light.bladeCol = bladeCol
+	light.zPosition = zPosition
+	light.direction = direction
+}
 
 if lifetime == 0 ||lifetime == 9 {
 		var particle = instance_create_layer(x,y,layer,obj_phase_out)

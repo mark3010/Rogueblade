@@ -25,30 +25,47 @@ if surface_exists(obj_skilltree_generator.skillTreeSurf) {
 		}
 	}
 
+	//check if part of current selection
+	var _possibleSelection = false
+
+	for (var l = 0; l < array_length(obj_skilltree_upgrade_generator.upgrades);l++) {
+	
+		if _me.name == obj_skilltree_upgrade_generator.upgrades[l].name {
+			_possibleSelection = true
+		}
+	}
+	
 	//color highlighting
-	var _colAmount = 0
+	/*var _colAmount = 0
 	
 	if !_assigned {
-		_colAmount = .5 - image_index/2 //note: when button is selected image index == 1
+		_colAmount = .5 //note: when button is selected image index == 1
 	}
 	var _baseCol = merge_colour(c_white, c_black, _colAmount);
+	*/
 	
-	//drawing
-	if !_parentsAssigned {
-		//shader_set(ShdGreyScale)
-		//draw_sprite_ext(sprite_index,0,_xTreeBase+baseXOffset,_yTreeBase+baseYOffset,1,1,0,_baseCol,1)
-		//shader_reset()
+	if !_assigned && !_possibleSelection {
+		shader_set(shd_greyscale)
+	}
+	
+	draw_sprite_ext(sprite_index,_assigned,_xTreeBase+baseXOffset,_yTreeBase+baseYOffset,1,1,0,c_white,1)
+	
+	if !_assigned && !_possibleSelection {
+		shader_reset()
+	}
+	
+	if !_assigned {
+		shader_set(shd_flash)
+		draw_sprite_ext(sprite_index,_assigned,_xTreeBase+baseXOffset,_yTreeBase+baseYOffset,1,1,0,c_black,.5)
+		shader_reset()
+	}
+	
+	if _possibleSelection {
+		gpu_set_blendmode(bm_eq_add)
+		draw_sprite_ext(spr_passive_skills_highlight,0,_xTreeBase+baseXOffset,_yTreeBase+baseYOffset,1,1,0,c_white,(0.5 + abs(sin(current_time/400))*.5)*.3)
+		gpu_set_blendmode(bm_normal)
 	}
 
-	draw_sprite_ext(sprite_index,_assigned,_xTreeBase+baseXOffset,_yTreeBase+baseYOffset,1,1,0,_baseCol,1)
-	
-	//if _me.level > 0 {
-		//scr_textStyle1(_xTreeBase+baseXOffset,_yTreeBase+baseYOffset/+16,"baseX: "+string(baseXOffset)+" baseY: "+string(baseYOffset),font_opensans,fa_center,c_white,1,1)
-
-	//}
-	
-
-	
 	surface_reset_target()
 }
 

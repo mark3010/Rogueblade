@@ -25,3 +25,4 @@ function draw_me() {
 	////draw_text(x,y-90,deathTrigger)
 	draw_set_alpha(1)
 }
+

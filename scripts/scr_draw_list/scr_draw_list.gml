@@ -51,6 +51,7 @@ function scr_draw_list(argument0,argument1=false){
 		
 		draw_set_color(color)
 		draw_text_ext(x,y+line-6,draw_list[i].title,lineDist,descriptionWidth)
+		draw_set_color(global.txtColDark)
 		draw_line_width(x+lineStartX,y+line,x+descriptionWidth/2,y+line,1)
 		draw_line_width(x-lineStartX,y+line,x-descriptionWidth/2,y+line,1)
 		line += lineDist //newline

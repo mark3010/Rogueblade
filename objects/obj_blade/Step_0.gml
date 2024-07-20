@@ -62,6 +62,7 @@ if zPosition <= 0 {
 				respawn()
 				currentDQSaves--
 				var dqAngel = instance_create_layer(x,y,layer,obj_dq_angel)
+				show_debug_message("zPosition: "+string(zPosition))
 				dqAngel.zPosition = zPosition - 36
 				dqAngel.x = spawnPoint[X]
 				dqAngel.y = spawnPoint[Y]

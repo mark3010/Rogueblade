@@ -69,7 +69,7 @@ function torque(add) {
 }
 
 function zoomIn() {
-	zoomLevel = 2
+	zoomLevel = 2.5
 	interpolateFill = 0
 	interpolateFillTarget = 1
 	interpolateFillStart = 0
@@ -78,11 +78,11 @@ function zoomIn() {
 	interpolateChannel = animcurve_get_channel(interpolateCurveStruct,0)
 
 	interpolateCurvePosition = 0
-	interpolateCurveSpeed = 0.01
+	interpolateCurveSpeed = 0.005
 }
 
 function zoomOut() {
-	zoomLevel = 2
+	zoomLevel = 3
 	interpolateFill = 0
 	interpolateFillTarget = 1
 	interpolateFillStart = 0

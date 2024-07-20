@@ -3,6 +3,7 @@
 event_inherited()
 quickVersion = false
 respawning = false
+velAdd = 0
 deathTrigger = 80
 image_xscale = 0
 image_yscale = 0
