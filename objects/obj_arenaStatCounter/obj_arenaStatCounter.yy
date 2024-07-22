@@ -1,22 +1,17 @@
 {
   "$GMObject":"",
-  "%Name":"obj_text_highscore_list",
+  "%Name":"obj_arenaStatCounter",
   "eventList":[
     {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":75,"eventType":8,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":3,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
   ],
   "managed":true,
-  "name":"obj_text_highscore_list",
+  "name":"obj_arenaStatCounter",
   "overriddenProperties":[],
   "parent":{
-    "name":"unselectable",
-    "path":"folders/Objects/ui/unselectable.yy",
+    "name":"game systems",
+    "path":"folders/Objects/util/game systems.yy",
   },
-  "parentObjectId":{
-    "name":"obj_ui_item",
-    "path":"objects/obj_ui_item/obj_ui_item.yy",
-  },
+  "parentObjectId":null,
   "persistent":false,
   "physicsAngularDamping":0.1,
   "physicsDensity":0.5,
@@ -34,10 +29,7 @@
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
   "solid":false,
-  "spriteId":{
-    "name":"spr_text_element",
-    "path":"sprites/spr_text_element/spr_text_element.yy",
-  },
+  "spriteId":null,
   "spriteMaskId":null,
   "visible":true,
 }

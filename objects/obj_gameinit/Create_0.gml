@@ -1,8 +1,9 @@
 randomize() //set random seed to randomize gameplay
-global.gameStartDelay = true
+global.gameStartDelay = false
 
 function endGame() {
-	gameEnder = instance_create_layer(x,y,layer,obj_game_end_sequence)
+	
+	gameEnder = instance_create_layer(view_wport[0]/2,view_hport[0]/2,layer,obj_game_end_sequence)
 	global.gameActive = false
 	audio_play_sound(snd_player_death, 1, false)
 	audio_stop_sound(snd_music)
@@ -36,8 +37,8 @@ function createGame(gameModeType) {
 			gui = instance_create_layer(x,y,layerEntities,obj_gui)
 			camera = instance_create_layer(arena.x,arena.y+200,layerEntities,obj_cam)
 			camera.focus(arena.id)
-			alarm_set(0,180*global.gameStartDelay) //spawn player
-			alarm_set(1,360*global.gameStartDelay) //spawn arena tools
+			alarm_set(0,1+179*global.gameStartDelay) //spawn player
+			alarm_set(1,1+200+179*global.gameStartDelay) //spawn arena tools
 			skills = instance_create_layer(x,y,layerPause,obj_skillsystem_init)
 			instance_deactivate_layer(layerPause)
 			
@@ -48,7 +49,7 @@ function createGame(gameModeType) {
 			camera = instance_create_layer(arena.x,arena.y+200,layerEntities,obj_cam)
 			camera.focus(arena.id)
 			if global.gameFirstLoad {
-				alarm_set(0,180*global.gameStartDelay) //spawn player
+				alarm_set(0,1+179*global.gameStartDelay) //spawn player
 			} else {
 				alarm_set(0,1) //spawn player
 			}

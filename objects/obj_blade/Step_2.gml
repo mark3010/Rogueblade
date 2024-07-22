@@ -1,7 +1,7 @@
 if !visible {exit}
 if deathFlag {
 	ds_map_destroy(cooldownMap) //cleanup
-	if instance_exists(obj_killCounter) {obj_killCounter.countKill(id,groupId)} // count death
+	if instance_exists(obj_arenaStatCounter) {obj_arenaStatCounter.countKill(id,groupId)} // count death
 	//if instance_exists(obj_cam) {obj_cam.screenshake(2,1,0.1)} // shake screen
 	if instance_exists(obj_cam) {obj_cam.screenshake(3,2,0.5)} // shake screen
 	

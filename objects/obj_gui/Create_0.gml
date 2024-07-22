@@ -12,6 +12,8 @@ timerPosY = 540-bottomMargin
 
 #region PLAYER RESOURCES
 //life
+	playerCurrentLife = 1
+	playerMaxLife = 1
 	healthPosX = 960/2
 	healthPosY = 540-bottomMargin
 

@@ -2,14 +2,23 @@
 // You can write your code in this editor
 global.inputHighjack = true
 color = #E3F1F1
+textDisplay = true
 //SAVE DATA
 //data file structure
 var dataImprint = {
 	timer : {
-		gameTime : obj_timer.gameTime,
+		gameTime : 0,
 		},
-	wave : obj_wave_director.waveList,
-	kills : obj_killCounter.kills
+	wave : 0,
+	kills : 0,
+	killScore : 0
+	
+}
+if instance_exists(obj_timer) {dataImprint.timer.gameTime = obj_timer.gameTime}
+if instance_exists(obj_wave_director) {dataImprint.wave = obj_wave_director.waveList}
+if instance_exists(obj_arenaStatCounter) {
+	dataImprint.kills = obj_arenaStatCounter.kills
+	dataImprint.killScore = obj_arenaStatCounter.killScore
 }
 
 //data file object

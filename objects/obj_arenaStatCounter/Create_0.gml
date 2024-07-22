@@ -1,6 +1,7 @@
 /// @description Insert description here
 // You can write your code in this editor
 kills = 0
+killScore = 0
 
 function countKill(type,groupId) {
 	kills++
@@ -10,4 +11,5 @@ function countKill(type,groupId) {
 			obj_wave_director.currentWaveKills++
 		}
 	}
+	killScore += 10
 }

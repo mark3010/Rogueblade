@@ -11,7 +11,10 @@ if keyboard_check_pressed(vk_space) || keyboard_check_pressed(vk_enter) {
 	timer = delay
 	
 	if array_length(queue) == 0 {
-		room_goto(room_highscore)
+		//from end screen go to highscores
+		instance_create_layer(x,y,layer,obj_text_highscore_list)
+		textDisplay = false
+		//room_goto(room_highscore)
 	}
 }
 
@@ -25,7 +28,7 @@ if timer == delay && array_length(queue) > 0 {
 
 
 if overlayFlag {
-	overlayAlpha = lerp(overlayAlpha,0.4,0.1)
+	overlayAlpha = lerp(overlayAlpha,0.7,0.1)
 }
 
 if overlayText1Flag {

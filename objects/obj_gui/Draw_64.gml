@@ -72,10 +72,10 @@ if instance_exists(obj_timer) {
 
 #endregion
 #region KILLCOUNTER
-if instance_exists(obj_killCounter) {
-	scr_textStyle1(timerPosX+18,timerPosY,string(obj_killCounter.kills),global.font,fa_left,global.txtColHighlight,uiAlpha*arenaUIAlpha,1)
-	//scr_textStyle1(timerPosX,timerPosY,"Kills: " +string(obj_killCounter.kills),global.font,fa_left,global.txtColHighlight,1,1)
-	draw_sprite_ext(spr_skull,0,timerPosX,timerPosY,1,1,0,c_white,arenaUIAlpha)
+if instance_exists(obj_arenaStatCounter) {
+	scr_textStyle1(timerPosX+18,timerPosY,"score : "+string(obj_arenaStatCounter.killScore),global.font,fa_left,global.txtColHighlight,uiAlpha*arenaUIAlpha,1)
+	//scr_textStyle1(timerPosX,timerPosY,"Kills: " +string(obj_arenaStatCounter.kills),global.font,fa_left,global.txtColHighlight,1,1)
+	draw_sprite_ext(spr_star,0,timerPosX,timerPosY,1,1,0,c_white,arenaUIAlpha)
 }
 
 
@@ -170,7 +170,7 @@ if room == room_arena || global.guiTestEnable {
 		
 		draw_surface_ext(healthSurf,healthPosX,healthPosY,1,1,0,global.txtColHighlight,playerUIAlpha)
 		draw_surface_ext(healthSurf,healthPosX,healthPosY,-1,1,0,global.txtColHighlight,playerUIAlpha)
-		//scr_textStyle1(healthPosX,healthPosY+healthNumberYOffset,string(playerCurrentLife)+"/"+string(playerMaxLife),global.font,fa_center,global.txtColHighlight,1,1)
+		scr_textStyle1(healthPosX,healthPosY+healthNumberYOffset,string(playerCurrentLife)+"/"+string(playerMaxLife),global.font,fa_center,global.txtColHighlight,playerUIAlpha,1)
 	
 	//trigger
 		surface_set_target(triggersCooldownSurf)

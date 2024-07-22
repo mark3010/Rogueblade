@@ -3,7 +3,11 @@
 
 //style
 var listColor = global.txtColHighlight
-var highlightColor = c_green
+var highlightColor = global.txtColPositive
+
+//header
+scr_textStyle1(x,y-80,"Highscore",font,fa_center,listColor,alpha,2)
+
 
 //displacement
 var i = 0
