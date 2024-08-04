@@ -1,1 +1,1 @@
-text = "Difficulty modifiers"
+text = "DIFFICULTY"

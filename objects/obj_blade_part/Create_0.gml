@@ -23,7 +23,6 @@ slantV = 0
 animationTilt = [0,0] // variable that controls blade animation tilt axis 
 animationTiltMovement = [0,0]
 animationTiltArena = [0,0]
-rotationAnim = 0
 
 dragStrength = 0.1		// [1..0] where 1 is maximum drag effect, 0.1 allows ~50% speed increase
 vel = [0,0,0]			// holds current velocity

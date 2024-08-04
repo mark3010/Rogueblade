@@ -2,6 +2,7 @@
 // You can write your code in this editor
 kills = 0
 killScore = 0
+ascensionComplete = true
 
 function countKill(type,groupId) {
 	kills++

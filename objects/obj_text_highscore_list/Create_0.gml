@@ -7,3 +7,6 @@ font = global.font
 overlayTextAlpha = 0
 displaceY = -70
 y += displaceY
+timer = 0
+delay = 60
+

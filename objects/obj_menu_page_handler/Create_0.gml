@@ -1,6 +1,7 @@
 /// @description Insert description here
 // You can write your code in this editor
 pages = []
+pageCurrent = noone
 
 function goTo(layerName) {
 	if array_contains(pages,layerName) {
@@ -17,7 +18,7 @@ function goTo(layerName) {
 		
 		layer_set_visible(layerName,true)
 		instance_activate_layer(layerName)
-	
+		pageCurrent = layerName
 	} else {
 		show_debug_log("ERROR: menu page not found: \"" + string(layerName) + "\"")
 	}
@@ -25,5 +26,6 @@ function goTo(layerName) {
 
 function init(layerName) {
 	goTo(layerName)
+	pageCurrent = layerName
 	obj_ui_selector.setBasePage(layerName)
 }

@@ -1,1 +1,1 @@
-text = "Part overview"
+text = "PART OVERVIEW"

@@ -1,4 +1,5 @@
 //DESCRIPTION
+/*
 var summaryText = ""
 
 summaryText += "Ascension 1: " + string("more enemies") + "\n"
@@ -9,5 +10,10 @@ var draw_list = [
 	{title: "Ascension levels",body : summaryText}
 	]
 
-scr_draw_list(draw_list)
+
+
+var draw_list = getAllDifficulties()
+*/
+//show_debug_message(difficultyList)
+scr_draw_list(difficultyList)
 

@@ -5,6 +5,9 @@ uiAlpha = 1
 playerUIAlpha = 0
 arenaUIAlpha = 0
 
+overlayFlag = false
+overlayAlpha = 0
+
 #region TIMER
 timerPosX = sideMargin
 timerPosY = 540-bottomMargin
@@ -44,6 +47,7 @@ timerPosY = 540-bottomMargin
 	playerDQSaveExpended = false
 	playerDQSavesPrevious = false
 	playerIsAttacking = 0
+	playerAttackScale = 0
 	playerIsDashing = 0
 	playerDQSavesPrevious = 1
 	

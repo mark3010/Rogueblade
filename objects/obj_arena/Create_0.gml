@@ -158,14 +158,16 @@ function draw_me(bullshit1,bullshit2,bullshit3) {
 		draw_set_halign(fa_center)
 		var xOffset = -10
 		var yOffset = 0
-		draw_text(x+xOffset,y+baseRadius+gameModeTextY+16,"Ascension cleared:")
+		draw_text(x+xOffset,y+baseRadius+gameModeTextY+16+yOffset,"Career Level: "+string(data.accountLevel))
+		yOffset += 8
+		draw_text(x+xOffset,y+baseRadius+gameModeTextY+16+yOffset,"Ascension cleared:")
 	
-		var amount = 1+data.difficultyLevel
+		var amount = data.difficultyLevel
 		var levelText = 0
-		repeat(amount) {
-			draw_sprite(spr_tiny_checkbox,sign(levelText),x+66+xOffset,y+baseRadius+gameModeTextY+19+12*levelText)
-			draw_text(x+56+xOffset,y+baseRadius+gameModeTextY+16+12*levelText,amount-levelText)
-			yOffset += 8
+		repeat(amount+1) {
+			draw_sprite(spr_tiny_checkbox,sign(levelText),x+66+xOffset,y+baseRadius+gameModeTextY+19+12*levelText+yOffset)
+			draw_text(x+56+xOffset,y+baseRadius+gameModeTextY+16+12*levelText+yOffset,amount-levelText)
+			//yOffset += 8
 			levelText++
 		}
 		draw_set_alpha(1)

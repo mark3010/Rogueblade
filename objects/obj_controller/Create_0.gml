@@ -4,6 +4,7 @@ global.fontDebug=font_silkscreen
 global.version="RogueBlade - v0.01"
 global.gameFirstLoad = true //used to show first screen animation
 
+
 gameMode = gameModeType.PRACTICE
 pauseScreen = -1
 pauseScreenLight = -1
@@ -25,6 +26,15 @@ function startRun() {
 	var transition = instance_create_layer(x,y,layer,obj_room_transition)
 	transition.targetRoom = room_arena
 	if instance_exists(obj_cam) {obj_cam.zoomOut()}
+}
+
+function closeRun() {
+	audio_play_sound(snd_ui_select, 10, false)
+	audio_stop_sound(snd_music)
+	var transition = instance_create_layer(x,y,layer,obj_room_transition)
+	transition.targetRoom = room_menu
+	if instance_exists(obj_cam) {obj_cam.zoomOut()}
+	global.inputHighjack = true
 }
 
 function pause() {

@@ -1,1 +1,1 @@
-text = "Blade selection"
+text = "BLADE SELECTION"

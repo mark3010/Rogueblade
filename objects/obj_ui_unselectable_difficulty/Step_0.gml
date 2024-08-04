@@ -5,9 +5,28 @@ if keyboard_check_pressed(triggerKey) {
 	click()
 }
 
-var currentSelection = -1// obj_ui_selector.selected
+var currentSelection = obj_ui_selector.selected
+
+if instance_exists(obj_ui_selectable_shift) {currentSelection = obj_ui_selectable_shift}
+
 if currentSelection.object_index == obj_ui_selectable_shift {
-	text = currentSelection.getDetails()
+	var currentDiffList = []
+	var allDiffList = obj_file_handler.getAllDifficulties()
+	var textConversion = {title: "Ascension modifiers", body: []}
+	
+	if (currentSelection.getSelection()) > 0 {
+		array_push(textConversion.body,{
+			text: ("Increased score bonus: "+string(currentSelection.getSelection()*10) + "%"),
+			color: global.txtColPositive})
+	}
+	
+	for (var i = 0; i < currentSelection.getSelection();i++) {
+		array_push(textConversion.body,{
+			text: allDiffList[i].description,
+			color: global.txtColNegative})
+	}
+	difficultyList = [textConversion]
+	//text = currentSelection.getDetails()
 }
 
 alpha = lerp(alpha,1,global.uiFadeSpeed)

@@ -34,28 +34,29 @@ function scr_draw_list(argument0,argument1=false){
 	}
 	
 	for (var i = 0; i< array_length(draw_list);i++) {
-	
-		var strWidth = string_width(draw_list[i].title)
-		var lineStartX = strWidth/2+12
-		//var titleStartY = line
-	
-		//title
-		draw_set_halign(fa_center)
 		
-		draw_set_font(font_opensans)
-		
-		draw_set_color(c_black)
-		draw_text_ext(x,y+line-6+1,draw_list[i].title,lineDist,descriptionWidth)
-		draw_line_width(x+lineStartX,y+line+1,x+descriptionWidth/2,y+line+1,1)
-		draw_line_width(x-lineStartX,y+line+1,x-descriptionWidth/2,y+line+1,1)
-		
-		draw_set_color(color)
-		draw_text_ext(x,y+line-6,draw_list[i].title,lineDist,descriptionWidth)
-		draw_set_color(global.txtColDark)
-		draw_line_width(x+lineStartX,y+line,x+descriptionWidth/2,y+line,1)
-		draw_line_width(x-lineStartX,y+line,x-descriptionWidth/2,y+line,1)
-		line += lineDist //newline
+		if variable_instance_exists(draw_list[i],"title") {
+			var strWidth = string_width(draw_list[i].title)
+			var lineStartX = strWidth/2+12
+			//var titleStartY = line
 	
+			//title
+			draw_set_halign(fa_center)
+		
+			draw_set_font(font_opensans)
+		
+			draw_set_color(c_black)
+			draw_text_ext(x,y+line-6+1,draw_list[i].title,lineDist,descriptionWidth)
+			draw_line_width(x+lineStartX,y+line+1,x+descriptionWidth/2,y+line+1,1)
+			draw_line_width(x-lineStartX,y+line+1,x-descriptionWidth/2,y+line+1,1)
+		
+			draw_set_color(color)
+			draw_text_ext(x,y+line-6,draw_list[i].title,lineDist,descriptionWidth)
+			draw_set_color(global.txtColDark)
+			draw_line_width(x+lineStartX,y+line,x+descriptionWidth/2,y+line,1)
+			draw_line_width(x-lineStartX,y+line,x-descriptionWidth/2,y+line,1)
+			line += lineDist //newline
+		}
 		//text body
 		//var descriptionStartY = line //strHeight/2+2 + 
 		draw_set_halign(fa_left)
@@ -63,7 +64,9 @@ function scr_draw_list(argument0,argument1=false){
 		draw_set_font(font_opensans)
 		
 		var descItems = draw_list[i].body
+		//show_debug_message("arraylength "+string(array_length(descItems)))
         for (j = 0; j < array_length(descItems); j ++) {
+			
 			draw_set_color(c_black)
 			draw_text_ext(x-descriptionWidth/2,y+line+1,descItems[j].text,lineDist,descriptionWidth)
 			draw_set_color(descItems[j].color)

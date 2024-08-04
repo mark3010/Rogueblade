@@ -3,7 +3,9 @@ global.gameStartDelay = false
 
 function endGame() {
 	
-	gameEnder = instance_create_layer(view_wport[0]/2,view_hport[0]/2,layer,obj_game_end_sequence)
+	//gameEnder = instance_create_layer(view_wport[0]/2,view_hport[0]/2,layer,obj_game_end_sequence)
+	instance_create_layer(x,y,layer,obj_game_end_darkOverlay)
+	obj_ui_selector.goToPage("lay_menu0")
 	global.gameActive = false
 	audio_play_sound(snd_player_death, 1, false)
 	audio_stop_sound(snd_music)

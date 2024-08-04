@@ -28,5 +28,5 @@ if instance_exists(obj_save_progress_snapshot) {
 	instance_destroy(obj_save_progress_snapshot)
 	
 	//update saveFile
-	saveScores(progress,progressDataFileName)
+	saveProgress(progress,progressDataFileName)
 }

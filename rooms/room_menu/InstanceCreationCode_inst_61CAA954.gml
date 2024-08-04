@@ -1,1 +1,1 @@
-text = "Customize blade"
+text = "CUSTOMIZE YOUR LOADOUT"

@@ -2,10 +2,14 @@
 //fade player ui in
 if instance_exists(obj_player) {
 	playerUIAlpha = lerp(playerUIAlpha,1,0.05)
+} else {
+	playerUIAlpha = lerp(playerUIAlpha,0,0.05)
 }
 //fade arena ui in
-if instance_exists(obj_wave_director) {
+if global.gameActive && instance_exists(obj_wave_director){
 	arenaUIAlpha = lerp(arenaUIAlpha,1,0.05)
+} else {
+	arenaUIAlpha = lerp(arenaUIAlpha,0,0.05)
 }
 
 #region LEVEL
@@ -45,8 +49,15 @@ if room == room_arena {
 		if unspentSkillBlockers > 0 {
 			txt += "> "+string(unspentSkillBlockers)+" skill blockers available"
 		}
-		scr_textStyle1(960/2,34,txt,font_silkscreen,fa_center,#E3F1F1,(uiAlpha*.5 +  + abs(sin(current_time/400))*.5)*playerUIAlpha,1)
-		if unspentSkillBlockers || unspentSkillPoints {scr_textStyle1(960/2,healthPosY-50,"press \"E\" to spend skill points",font_opensans,fa_center,#E3F1F1,(uiAlpha*.5 +  + abs(sin(current_time/400))*.5)*playerUIAlpha,1)}
+		if instance_exists(obj_player) {
+			scr_textStyle1(960/2,34,txt,font_silkscreen,fa_center,#E3F1F1,(uiAlpha*.5 +  + abs(sin(current_time/400))*.5)*playerUIAlpha,1)
+		}
+		
+		if unspentSkillBlockers || unspentSkillPoints {
+			if instance_exists(obj_player) {
+				scr_textStyle1(960/2,healthPosY-50,"press \"E\" to spend skill points",font_opensans,fa_center,#E3F1F1,(uiAlpha*.5 +  + abs(sin(current_time/400))*.5)*playerUIAlpha,1)
+			}
+		}
 	}
 }
 #endregion
@@ -64,18 +75,17 @@ if room == room_arena {
 if instance_exists(obj_timer) {
 	//format time
 	var timeFormatted = obj_text_formatter.gameTimeFormatted(obj_timer.gameTime)
-
-	scr_textStyle1(timerPosX,timerPosY-50,timeFormatted,global.font,fa_left,global.txtColHighlight,uiAlpha*arenaUIAlpha,2)
-	scr_textStyle1(timerPosX,timerPosY-20,"Time Elapsed",global.font,fa_left,global.txtColHighlight,uiAlpha*arenaUIAlpha,1)
+	//scr_textStyle1(timerPosX,timerPosY-50,timeFormatted,global.font,fa_left,global.txtColHighlight,uiAlpha*arenaUIAlpha,1)
+	scr_textStyle1(timerPosX,timerPosY,"Time elapsed: "+timeFormatted,global.font,fa_left,global.txtColHighlight,uiAlpha*arenaUIAlpha,1)
 }
 
 
 #endregion
 #region KILLCOUNTER
 if instance_exists(obj_arenaStatCounter) {
-	scr_textStyle1(timerPosX+18,timerPosY,"score : "+string(obj_arenaStatCounter.killScore),global.font,fa_left,global.txtColHighlight,uiAlpha*arenaUIAlpha,1)
+	scr_textStyle1(timerPosX+18,timerPosY-20,"score : "+string(obj_arenaStatCounter.killScore),global.font,fa_left,global.txtColHighlight,uiAlpha*arenaUIAlpha,1)
 	//scr_textStyle1(timerPosX,timerPosY,"Kills: " +string(obj_arenaStatCounter.kills),global.font,fa_left,global.txtColHighlight,1,1)
-	draw_sprite_ext(spr_star,0,timerPosX,timerPosY,1,1,0,c_white,arenaUIAlpha)
+	draw_sprite_ext(spr_star,0,timerPosX,timerPosY-20,1,1,0,c_white,arenaUIAlpha)
 }
 
 
@@ -114,15 +124,21 @@ if instance_exists(obj_player) {
 	if playerDQSavesPrevious != playerDQSaveCurrent {playerDQSaveExpended = true} else {playerDQSaveExpended = false}
 	playerDQSavesPrevious = obj_player.currentDQSaves
 	
-	//playerIsDashing = lerp(playerIsDashing,obj_player.isDashing,.5)
+	playerIsAttacking = lerp(playerIsAttacking,ceil(obj_player.isAttacking),.5)
+	playerAttackScale = lerp(playerAttackScale,obj_player.isAttacking,.5)
 	//playerDashScale = obj_player.dashPower
-	
-
 	
 } else {
 	playerLifeScale = 0
 	playerLifeScaleAnim = 0
 	playerCurrentLife = 0
+	playerCurrentTriggers = 0
+	playerCurrentTriggersCooldown = 0
+	playerDQSaveCooldown = 0
+	playerDQSaveCurrent = 0
+	playerTriggersCooldownScale = 0
+	playerIsAttacking = 0
+	playerAttackScale = 0
 }
 
 if room == room_arena || global.guiTestEnable {
@@ -234,14 +250,14 @@ if room == room_arena || global.guiTestEnable {
 			draw_sprite_ext(spr_DQSaves_cooldown,cooldownSpriteNumber,DQSaveBaseX + DQSaveDisplaceBarXHighlight,DQSaveBaseY,1,1,0,c_white,playerUIAlpha)
 		}
 	
-	/*
-		var indicatorXOffset = triggersCooldownWidth/2+16
-		
-		var shootCol = merge_color(c_yellow,c_ltgray,.5)
-		draw_sprite_ext(spr_shooting_toggle,0,triggersCooldownPosX + indicatorXOffset,triggersCooldownPosY-8,1,1,0,shootCol,1)
-		draw_sprite_ext(spr_shooting_toggle,1,triggersCooldownPosX + indicatorXOffset,triggersCooldownPosY-8,1,1,0,shootCol,playerIsAttacking)
-		draw_sprite_ext(spr_toggle_bar,floor(playerAttackScale*sprite_get_number(spr_toggle_bar))-1,triggersCooldownPosX + indicatorXOffset,triggersCooldownPosY-8,1,1,0,global.txtColHighlight,playerIsAttacking)
 	
+		var indicatorXOffset = triggersCooldownWidth/2+8
+		
+		var shootCol = playerEnergyColor
+		draw_sprite_ext(spr_shooting_toggle,0,triggersCooldownPosX + indicatorXOffset,triggersCooldownPosY-8,1,1,0,playerEnergyColor,1)
+		draw_sprite_ext(spr_shooting_toggle,1,triggersCooldownPosX + indicatorXOffset,triggersCooldownPosY-8,1,1,0,playerEnergyColor,playerIsAttacking)
+		draw_sprite_ext(spr_shooting_toggle_bar,floor(playerAttackScale*sprite_get_number(spr_shooting_toggle_bar)),triggersCooldownPosX + indicatorXOffset,triggersCooldownPosY-8,1,1,0,playerLightColor,ceil(playerIsAttacking))
+	/*
 		//dash indicator
 		var dashCol = merge_color(c_orange,c_ltgray,.5)
 		draw_sprite_ext(spr_dashing_toggle,0,triggersCooldownPosX - indicatorXOffset,triggersCooldownPosY-8,1,1,0,dashCol,1)
@@ -259,12 +275,12 @@ if instance_exists(obj_wave_director) {
 		var waveTypeNames = ["ALL","HORIZONTAL","VERTICAL","TOP","BOT","LEFT","RIGHT"]
 		var waveDisplayName = obj_wave_director.waveList[i].waveName
 		var waveDisplayElapsed = string(obj_wave_director.waveList[i].timer)
-		var waveDisplayDirection = "Direction: "+string(waveTypeNames[obj_wave_director.waveList[i].waveDirection])
+		//var waveDisplayDirection = "Direction: "+string(waveTypeNames[obj_wave_director.waveList[i].waveDirection])
 		
 		//top part
-		scr_textStyle1(waveListPosX,waveListPosY-yWaveListOffset-50,waveDisplayName,global.font,fa_right,global.txtColHighlight,uiAlpha*arenaUIAlpha,2)
+		scr_textStyle1(waveListPosX,waveListPosY-yWaveListOffset-20,waveDisplayName,global.font,fa_right,global.txtColHighlight,uiAlpha*arenaUIAlpha,1)
 		//bottom part
-		scr_textStyle1(waveListPosX,waveListPosY-yWaveListOffset-20,waveDisplayDirection,global.font,fa_right,global.txtColHighlight,uiAlpha*arenaUIAlpha,1)
+		//scr_textStyle1(waveListPosX,waveListPosY-yWaveListOffset-20,waveDisplayDirection,global.font,fa_right,global.txtColHighlight,uiAlpha*arenaUIAlpha,1)
 
 		if !surface_exists(waveTimerSurf) {
 			waveTimerSurf = surface_create(waveTimerWidth,waveTimerHeight);
@@ -286,7 +302,7 @@ if instance_exists(obj_wave_director) {
 		
 		draw_surface_ext(waveTimerSurf,waveListPosX-waveTimerWidth,waveListPosY,1,1,0,c_white,arenaUIAlpha)
 		
-			//current wave kill count
+		//current wave kill count
 		var paddingX = 10
 		scr_textStyle1(waveListPosX-waveTimerWidth-paddingX,waveListPosY-yWaveListOffset,"|",global.font,fa_right,global.txtColHighlight,uiAlpha*arenaUIAlpha,1)
 		
@@ -298,3 +314,7 @@ if instance_exists(obj_wave_director) {
 	}
 }
 #endregion
+
+draw_set_alpha(overlayAlpha)
+draw_set_color(c_black)
+draw_rectangle(0,0,960,540,false)

@@ -6,7 +6,8 @@ var listColor = global.txtColHighlight
 var highlightColor = global.txtColPositive
 
 //header
-scr_textStyle1(x,y-80,"Highscore",font,fa_center,listColor,alpha,2)
+
+//scr_textStyle1(x,y-80,"Highscore",font,fa_center,listColor,alpha,2)
 
 
 //displacement
@@ -75,5 +76,5 @@ repeat (min(array_length(text.scores),listLengthMax)) {
 	i++
 }
 
-
-if newHighScoreFlag {scr_textStyle1(x,y-displaceMentY*2,"*NEW HIGHSCORE*",font,fa_center,highlightColor,alpha,size)}
+//remake to show new top 10 high score
+//if newHighScoreFlag {scr_textStyle1(x,y-displaceMentY*i,"*NEW HIGHSCORE*",font,fa_center,highlightColor,alpha,size)}

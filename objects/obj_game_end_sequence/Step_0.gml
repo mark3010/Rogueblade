@@ -1,6 +1,10 @@
 /// @description Insert description here
 // You can write your code in this editor
 
+if gameActivePrevious != global.gameActive {
+	saveRun()
+}
+gameActivePrevious = global.gameActive
 timer++
 //alarm_set(1,60) // alarm 1 is to show overlay
 //alarm_set(2,90) // alarm 2 is to show overlay1 text
@@ -10,14 +14,15 @@ timer++
 if keyboard_check_pressed(vk_space) || keyboard_check_pressed(vk_enter) {
 	timer = delay
 	
-	if array_length(queue) == 0 {
+	if array_length(queue) == 0{
 		//from end screen go to highscores
-		instance_create_layer(x,y,layer,obj_text_highscore_list)
-		textDisplay = false
-		//room_goto(room_highscore)
+		//if obj_ui_selector.getCurrentPage() == "lay_menu0" {
+		//	obj_ui_selector.goToPage("lay_menu1")
+		//	textDisplay = false
+		//}
+
 	}
 }
-
 
 if timer == delay && array_length(queue) > 0 {
 	queue[array_length(queue)-1]()

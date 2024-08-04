@@ -30,23 +30,23 @@ if room == room_menu {
 	if keyboard_check_pressed(ord("R")) {
 		room_restart()
 	}
+	
+	if keyboard_check_pressed(vk_f3) {
+		obj_file_handler.resetProgress()
+		room_restart()
+	}
 }
 #endregion
 #region ARENA
 if room == room_arena {
 
 	if keyboard_check_pressed(vk_escape) {
+		
 		if sprite_exists(pauseScreen) {sprite_delete(pauseScreen)}
 		if sprite_exists(pauseScreenLight) {sprite_delete(pauseScreenLight)}
-		if instance_exists(obj_arena) {
-			//go to menu
-			audio_play_sound(snd_ui_select, 10, false)
-			audio_stop_sound(snd_music)
-			var transition = instance_create_layer(x,y,layer,obj_room_transition)
-			transition.targetRoom = room_menu
-			if instance_exists(obj_cam) {obj_cam.zoomOut()}
-			global.inputHighjack = true
-			
+		
+		if instance_exists(obj_arena) && global.gameActive{
+			closeRun()
 		} else {
 			unpause()
 		}

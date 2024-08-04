@@ -38,9 +38,11 @@ function goToPage(_layerName) {
 	obj_menu_page_handler.goTo(_layerName)
 	
 	findStarterMenuOption()
-	
 }
 
+function getCurrentPage() {
+	return obj_menu_page_handler.pageCurrent
+}
 function goBack() {
 	var lastPage = menuPath[array_length(menuPath)-1]
 	obj_menu_page_handler.goTo(lastPage[0])

@@ -1,1 +1,1 @@
-text = "Blade overview"
+text = "BLADE OVERVIEW"

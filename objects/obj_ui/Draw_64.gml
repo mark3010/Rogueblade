@@ -20,6 +20,8 @@ if global.debugMode {
 		draw_set_halign(fa_left)
 		draw_text(xpos,ypos+lineDist+shadowDist,string_hash_to_newline("fps: "+ string(fps)))
 		draw_text(xpos,ypos+lineDist*2+shadowDist,string_hash_to_newline("real fps: "+ string(fps_real)))
+		draw_text(xpos,ypos+lineDist*3+shadowDist,string_hash_to_newline("input highjack: "+ string(global.inputHighjack)))
+		
 
 		var gw = view_wport[0], gh = view_hport[0]
 		

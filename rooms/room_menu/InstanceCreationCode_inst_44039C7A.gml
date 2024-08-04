@@ -1,1 +1,1 @@
-text = "Game modifier selection"
+text = "GAME DIFFICULTY SELECTION"
